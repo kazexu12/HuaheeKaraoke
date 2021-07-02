@@ -32,4 +32,38 @@ public class ConsoleUtlity {
         Function SetConsoleModeFunc = Function.getFunction("kernel32", "SetConsoleMode");
         SetConsoleModeFunc.invoke(WinDef.BOOL.class, new Object[]{hOut, dwMode});
     }
+    
+    /**
+     * Calls SetConsoleTextAttribute to change console color<br>
+     * Supports older version of windows<br>
+     * 
+     * <b>int color:</b><br>
+     * 0 - black<br>
+     * 1 - blue<br>
+     * 2 - green<br>
+     * 3 - light blue<br>
+     * 4 - red<br>
+     * 5 - purple<br>
+     * 6 - gold<br>
+     * 7 - white<br>
+     * 8 - grey<br>
+     * 9 - strong blue<br>
+     * 10 - strong green<br>
+     * 11 - strong light blue<br>
+     * 12 - strong red<br>
+     * 13 - strong purple<br>
+     * 14 - strong gold<br>
+     * 15 - strong white<br>
+     * @param foreground int color
+     * @param background int color
+     */
+    public static final void setConsoleColor(int background, int foreground) {
+        int colorValue = background * 16 + foreground;
+        Function GetStdHandleFunc = Function.getFunction("kernel32", "GetStdHandle");
+        WinDef.DWORD STD_OUTPUT_HANDLE = new WinDef.DWORD(-11);
+        WinNT.HANDLE hOut = (WinNT.HANDLE) GetStdHandleFunc.invoke(WinNT.HANDLE.class, new Object[]{STD_OUTPUT_HANDLE});
+
+        Function SetConsoleModeFunc = Function.getFunction("kernel32", "SetConsoleTextAttribute");
+        SetConsoleModeFunc.invoke(WinDef.BOOL.class, new Object[]{hOut, colorValue});
+    }
 }
