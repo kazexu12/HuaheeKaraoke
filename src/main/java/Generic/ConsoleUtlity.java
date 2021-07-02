@@ -6,10 +6,16 @@ import com.sun.jna.platform.win32.WinNT;
 
 public class ConsoleUtlity {
 
+    /**
+     * This function make use of JNA to call windows specific function to enable virtual terminal sequence
+     * It attempts to call GetStdHandle, GetConsoleMode and SetConsoleMode from kernel32.dll
+     * Note: This will ONLY work in windows 10
+     */
     public static final void enableVirtualTerminalSequence() {
         // References:
         // https://stackoverflow.com/questions/52767585/how-can-you-use-vt100-escape-codes-in-java-on-windows
         // https://docs.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences
+        // https://www.programmersought.com/article/2941621212/
         
         // Set output mode to handle virtual terminal sequences
         Function GetStdHandleFunc = Function.getFunction("kernel32", "GetStdHandle");
