@@ -35,4 +35,9 @@ public class ConsoleColor {
     public static final String ANSI_B_BCYAN = "\u001B[106m";
     public static final String ANSI_F_BWHITE = "\u001B[97m";
     public static final String ANSI_B_BWHITE = "\u001B[107m";
+    
+    public static final String WIN_CUR_UP = "\u001B[1A";
+    public static final String WIN_CUR_DOWN = "\u001B[1B";
+    public static final String WIN_CUR_LEFT = "\u001B[1D";
+    public static final String WIN_CUR_RIGHT = "\u001B[1C";
 }

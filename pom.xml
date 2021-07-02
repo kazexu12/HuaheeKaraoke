@@ -58,5 +58,15 @@
             <artifactId>jna-platform</artifactId>
             <version>5.8.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.jline</groupId>
+            <artifactId>jline</artifactId>
+            <version>3.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jline</groupId>
+            <artifactId>jline-terminal-jna</artifactId>
+            <version>3.20.0</version>
+        </dependency>
     </dependencies>
 </project>
