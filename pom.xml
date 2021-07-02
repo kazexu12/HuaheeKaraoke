@@ -38,12 +38,25 @@
         </plugins>
     </build>
     
-    <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
+    
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.34.0</version>
+        </dependency>
+        <!-- https://search.maven.org/artifact/net.java.dev.jna/jna/5.8.0/jar -->
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.8.0</version>
+        </dependency>
+        <!-- https://search.maven.org/artifact/net.java.dev.jna/jna-platform/5.8.0/jar -->
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>5.8.0</version>
         </dependency>
     </dependencies>
 </project>

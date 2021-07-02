@@ -1,8 +1,12 @@
 package MainDriver;
+
 public class MainClass {
 
     public static void main(String[] args) throws Exception {
-        System.out.println("I just ran");
+        Generic.ConsoleUtlity.enableVirtualTerminalSequence();
+        System.out.print(Generic.ConsoleColor.ANSI_B_BLUE);
+        System.out.print(Generic.ConsoleColor.ANSI_F_BWHITE);
+        System.out.println("Hello, I am blue");
         new java.util.Scanner(System.in).nextLine();
     }
 }
