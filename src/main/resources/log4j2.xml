@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">
+			%d{HH:mm:ss.SSS} [%t] %-5level %logger{36}:%L - %msg%n
+        </Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="RollingFileAppender"
+                     fileName="${env:appdata}\HuaheeKaraoke\Logs\app.log"
+                     filePattern="${env:appdata}\HuaheeKaraoke\Logs\app-%d{dd-MM-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy
+                        size="5 KB" />
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="RollingFileAppender" />
+        </Root>
+    </Loggers>
+</Configuration>
