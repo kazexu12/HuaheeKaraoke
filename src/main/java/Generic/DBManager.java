@@ -23,10 +23,6 @@ public class DBManager {
     private final String dbPath = System.getenv("APPDATA") + "\\HuaheeKaraoke\\";
     private final String dbName = "data.db";
 
-    /**
-     * Only call once throughout the project and pass the reference around
-     * thanks
-     */
     public DBManager() {
 
     }
