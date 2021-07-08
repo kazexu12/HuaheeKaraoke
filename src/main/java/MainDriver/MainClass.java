@@ -13,6 +13,8 @@ public class MainClass {
 
     private static final Logger logger = LogManager.getLogger(MainClass.class.getName());
 
+    public static Terminal terminal;
+    
     public static void init() {
         // Initializing DB
         try {
@@ -24,11 +26,11 @@ public class MainClass {
 
         // Initialising terminal
         try {
-            Terminal terminal = TerminalBuilder.builder()
+            terminal = TerminalBuilder.builder()
                     .system(true).jna(true).type("windows-vtp")
                     .build();
             terminal.enterRawMode();
-            // Playground.charInputPlayground(terminal);
+            // Playground.charInputPlayground();
         } catch (IOException err) {
             logger.error("Unable to initialise terminal", err);
         }
