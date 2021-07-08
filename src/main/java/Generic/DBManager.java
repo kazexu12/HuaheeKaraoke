@@ -58,65 +58,65 @@ public class DBManager {
      * @throws SQLException
      */
     public void prepareTable() throws SQLException {
-        try ( Connection conn = connectDB()) {
-            String tab1 = "CREATE TABLE IF NOT EXISTS Gifts (\n"
-                    + "	gift_id TEXT,\n"
-                    + "	gift_name TEXT,\n"
-                    + "	member_level_min INTEGER,\n"
-                    + "	PRIMARY KEY(gift_id)\n"
-                    + ");\n";
-            String tab2 = "CREATE TABLE IF NOT EXISTS Songs (\n"
-                    + "	song_id TEXT,\n"
-                    + "	name TEXT,\n"
-                    + "	artist TEXT,\n"
-                    + "	album TEXT,\n"
-                    + "	genre TEXT,\n"
-                    + "	duration INTEGER,\n"
-                    + "	date_created NUMERIC,\n"
-                    + "	PRIMARY KEY(song_id)\n"
-                    + ");\n";
-            String tab3 = "CREATE TABLE IF NOT EXISTS Users (\n"
-                    + "	user_id TEXT,\n"
-                    + "	privillage INTEGER,\n"
-                    + "	name TEXT,\n"
-                    + "	pw_hash TEXT,\n"
-                    + "	first_name TEXT,\n"
-                    + "	last_name TEXT,\n"
-                    + "	member_point INTEGER,\n"
-                    + "	member_level TEXT,\n"
-                    + "	date_created NUMERIC,\n"
-                    + "	PRIMARY KEY(user_id)\n"
-                    + ");\n";
-            String tab4 = "CREATE TABLE IF NOT EXISTS Transactions (\n"
-                    + "	transaction_id TEXT,\n"
-                    + "	room_size TEXT,\n"
-                    + "	head_count INTEGER,\n"
-                    + "	discount REAL,\n"
-                    + "	final_price REAL,\n"
-                    + "	member_id TEXT,\n"
-                    + "	member_level_atm TEXT,\n"
-                    + "	staff_id TEXT,\n"
-                    + "	PRIMARY KEY(transaction_id),\n"
-                    + "	FOREIGN KEY(member_id) REFERENCES Users(user_id),\n"
-                    + "	FOREIGN KEY(staff_id) REFERENCES Users(user_id)\n"
-                    + ");\n";
-            String tab5 = "CREATE TABLE IF NOT EXISTS GiftRecords (\n"
-                    + "	transaction_id TEXT,\n"
-                    + "	gift_id TEXT,\n"
-                    + "	amount INTEGER,\n"
-                    + "	PRIMARY KEY(transaction_id, gift_id),\n"
-                    + "	FOREIGN KEY(transaction_id) REFERENCES Transactions(transaction_id),\n"
-                    + "	FOREIGN KEY(gift_id) REFERENCES Gifts(gift_id)\n"
-                    + ");";
+        Connection conn = connectDB();
+        String tab1 = "CREATE TABLE IF NOT EXISTS Gifts (\n"
+                + "	gift_id TEXT,\n"
+                + "	gift_name TEXT,\n"
+                + "	member_level_min INTEGER,\n"
+                + "	PRIMARY KEY(gift_id)\n"
+                + ");\n";
+        String tab2 = "CREATE TABLE IF NOT EXISTS Songs (\n"
+                + "	song_id TEXT,\n"
+                + "	name TEXT,\n"
+                + "	artist TEXT,\n"
+                + "	album TEXT,\n"
+                + "	genre TEXT,\n"
+                + "	duration INTEGER,\n"
+                + "	date_created NUMERIC,\n"
+                + "	PRIMARY KEY(song_id)\n"
+                + ");\n";
+        String tab3 = "CREATE TABLE IF NOT EXISTS Users (\n"
+                + "	user_id TEXT,\n"
+                + "	privillage INTEGER,\n"
+                + "	name TEXT,\n"
+                + "	pw_hash TEXT,\n"
+                + "	first_name TEXT,\n"
+                + "	last_name TEXT,\n"
+                + "	member_point INTEGER,\n"
+                + "	member_level TEXT,\n"
+                + "	date_created NUMERIC,\n"
+                + "	PRIMARY KEY(user_id)\n"
+                + ");\n";
+        String tab4 = "CREATE TABLE IF NOT EXISTS Transactions (\n"
+                + "	transaction_id TEXT,\n"
+                + "	room_size TEXT,\n"
+                + "	head_count INTEGER,\n"
+                + "	discount REAL,\n"
+                + "	final_price REAL,\n"
+                + "	member_id TEXT,\n"
+                + "	member_level_atm TEXT,\n"
+                + "	staff_id TEXT,\n"
+                + "	PRIMARY KEY(transaction_id),\n"
+                + "	FOREIGN KEY(member_id) REFERENCES Users(user_id),\n"
+                + "	FOREIGN KEY(staff_id) REFERENCES Users(user_id)\n"
+                + ");\n";
+        String tab5 = "CREATE TABLE IF NOT EXISTS GiftRecords (\n"
+                + "	transaction_id TEXT,\n"
+                + "	gift_id TEXT,\n"
+                + "	amount INTEGER,\n"
+                + "	PRIMARY KEY(transaction_id, gift_id),\n"
+                + "	FOREIGN KEY(transaction_id) REFERENCES Transactions(transaction_id),\n"
+                + "	FOREIGN KEY(gift_id) REFERENCES Gifts(gift_id)\n"
+                + ");";
 
-            Statement stmt = conn.createStatement();
-            stmt.addBatch(tab1);
-            stmt.addBatch(tab2);
-            stmt.addBatch(tab3);
-            stmt.addBatch(tab4);
-            stmt.addBatch(tab5);
-            stmt.executeBatch();
-        }
+        Statement stmt = conn.createStatement();
+        stmt.addBatch(tab1);
+        stmt.addBatch(tab2);
+        stmt.addBatch(tab3);
+        stmt.addBatch(tab4);
+        stmt.addBatch(tab5);
+        stmt.executeBatch();
+        conn.close();
     }
 
     /**
