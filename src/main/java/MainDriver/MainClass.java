@@ -30,11 +30,11 @@ public class MainClass {
                     .system(true).jna(true).type("windows-vtp")
                     .build();
             terminal.enterRawMode();
-            // Playground.charInputPlayground();
+            Playground.charInputPlayground();
         } catch (IOException err) {
             logger.error("Unable to initialise terminal", err);
         }
-        Playground.linkedQueuePG();
+//        Playground.linkedQueuePG();
     }
 
     /**
