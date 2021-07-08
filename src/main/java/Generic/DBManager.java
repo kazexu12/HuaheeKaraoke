@@ -13,6 +13,7 @@ import java.sql.*;
  * - Remove lastErrorMessage member from class <br>
  * - Connection will be closed upon completion of any DB operations <br>
  * - Removed disconnectDB() <br>
+ * - Now expects the developer to handle SQLException on their own
  *
  * @author Looz
  * @version 1.1
@@ -27,7 +28,7 @@ public class DBManager {
      * thanks
      */
     public DBManager() {
-        prepareTable();
+
     }
 
     /**
@@ -35,7 +36,7 @@ public class DBManager {
      *
      * @return Connection instance
      */
-    private Connection connectDB() {
+    private Connection connectDB() throws SQLException {
         // make sure directory exist
         new File(dbPath).mkdir();
         String url = "jdbc:sqlite:" + dbPath + dbName;
@@ -43,16 +44,9 @@ public class DBManager {
         Connection conn;
 
         // Connecting to the database
-        try {
-            conn = DriverManager.getConnection(url);
-            if (conn == null) {
-                throw new SQLException();
-            }
-        } catch (SQLException err) {
-            System.out.println("Failed to connect to database.\nMissing APPDATA env ?");
-            System.out.println(err.getMessage());
-            System.exit(1);
-            return null;
+        conn = DriverManager.getConnection(url);
+        if (conn == null) {
+            throw new SQLException();
         }
 
         return conn;
@@ -60,67 +54,68 @@ public class DBManager {
 
     /**
      * Set up database schema
+     *
+     * @throws SQLException
      */
-    private void prepareTable() {
-        Connection conn = connectDB();
-//        String tab1 = "CREATE TABLE IF NOT EXISTS staff (\n"
-//                + "	id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-//                + "	date datetime default (datetime('now','localtime')),\n"
-//                + "	name TEXT NOT NULL UNIQUE,\n"
-//                + "	password TEXT NOT NULL\n"
-//                + ");";
-//        String tab2 = "CREATE TABLE IF NOT EXISTS member (\n"
-//                + "id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-//                + "date datetime default (datetime('now','localtime')),\n"
-//                + "name TEXT NOT NULL,\n"
-//                + "phoneNo TEXT,\n"
-//                + "email TEXT,\n"
-//                + "IC TEXT NOT NULL UNIQUE,\n"
-//                + "points INTEGER\n"
-//                + ");";
-//        String tab3 = "CREATE TABLE IF NOT EXISTS book (\n"
-//                + "id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-//                + "date datetime default (datetime('now','localtime')),\n"
-//                + "title TEXT NOT NULL,\n"
-//                + "author TEXT,\n"
-//                + "retailPrice DOUBLE NOT NULL,\n"
-//                + "lastRentedBy INTEGER,\n"
-//                + "lastReservedBy INTEGER,\n"
-//                + "isRented INTEGER,\n"
-//                + "isReserved INTEGER,\n"
-//                + "FOREIGN KEY (lastRentedBy) REFERENCES member(id),\n"
-//                + "FOREIGN KEY (lastReservedBy) REFERENCES member(id)\n"
-//                + ");";
-//
-//        String tab4 = "CREATE TABLE IF NOT EXISTS transactions (\n"
-//                + "id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-//                + "date datetime default (datetime('now','localtime')),\n"
-//                + "rentDurationInDays INTEGER,\n"
-//                + "type TEXT,\n"
-//                + "staffHandled INTEGER,\n"
-//                + "memberInvolved INTEGER,\n"
-//                + "bookInvolved INTEGER,\n"
-//                + "cashFlow DOUBLE,\n"
-//                + "FOREIGN KEY (staffHandled) REFERENCES staff(id),\n"
-//                + "FOREIGN KEY (memberInvolved) REFERENCES member(id),\n"
-//                + "FOREIGN KEY (bookInvolved) REFERENCES book(id)\n"
-//                + ");";
-//
-//        try {
-//            Statement stmt = conn.createStatement();
-//            stmt.addBatch(tab1);
-//            stmt.addBatch(tab2);
-//            stmt.addBatch(tab3);
-//            stmt.addBatch(tab4);
-//            stmt.executeBatch();
-//        } catch (SQLException err) {
-//            System.out.println(err.getMessage());
-//        
-        // Close DB Connection
-        try {
-            conn.close();
-        } catch (SQLException err) {
-            System.out.println(err.getMessage());
+    public void prepareTable() throws SQLException {
+        try ( Connection conn = connectDB()) {
+            String tab1 = "CREATE TABLE IF NOT EXISTS Gifts (\n"
+                    + "	gift_id TEXT,\n"
+                    + "	gift_name TEXT,\n"
+                    + "	member_level_min INTEGER,\n"
+                    + "	PRIMARY KEY(gift_id)\n"
+                    + ");\n";
+            String tab2 = "CREATE TABLE IF NOT EXISTS Songs (\n"
+                    + "	song_id TEXT,\n"
+                    + "	name TEXT,\n"
+                    + "	artist TEXT,\n"
+                    + "	album TEXT,\n"
+                    + "	genre TEXT,\n"
+                    + "	duration INTEGER,\n"
+                    + "	date_created NUMERIC,\n"
+                    + "	PRIMARY KEY(song_id)\n"
+                    + ");\n";
+            String tab3 = "CREATE TABLE IF NOT EXISTS Users (\n"
+                    + "	user_id TEXT,\n"
+                    + "	privillage INTEGER,\n"
+                    + "	name TEXT,\n"
+                    + "	pw_hash TEXT,\n"
+                    + "	first_name TEXT,\n"
+                    + "	last_name TEXT,\n"
+                    + "	member_point INTEGER,\n"
+                    + "	member_level TEXT,\n"
+                    + "	date_created NUMERIC,\n"
+                    + "	PRIMARY KEY(user_id)\n"
+                    + ");\n";
+            String tab4 = "CREATE TABLE IF NOT EXISTS Transactions (\n"
+                    + "	transaction_id TEXT,\n"
+                    + "	room_size TEXT,\n"
+                    + "	head_count INTEGER,\n"
+                    + "	discount REAL,\n"
+                    + "	final_price REAL,\n"
+                    + "	member_id TEXT,\n"
+                    + "	member_level_atm TEXT,\n"
+                    + "	staff_id TEXT,\n"
+                    + "	PRIMARY KEY(transaction_id),\n"
+                    + "	FOREIGN KEY(member_id) REFERENCES Users(user_id),\n"
+                    + "	FOREIGN KEY(staff_id) REFERENCES Users(user_id)\n"
+                    + ");\n";
+            String tab5 = "CREATE TABLE IF NOT EXISTS GiftRecords (\n"
+                    + "	transaction_id TEXT,\n"
+                    + "	gift_id TEXT,\n"
+                    + "	amount INTEGER,\n"
+                    + "	PRIMARY KEY(transaction_id, gift_id),\n"
+                    + "	FOREIGN KEY(transaction_id) REFERENCES Transactions(transaction_id),\n"
+                    + "	FOREIGN KEY(gift_id) REFERENCES Gifts(gift_id)\n"
+                    + ");";
+
+            Statement stmt = conn.createStatement();
+            stmt.addBatch(tab1);
+            stmt.addBatch(tab2);
+            stmt.addBatch(tab3);
+            stmt.addBatch(tab4);
+            stmt.addBatch(tab5);
+            stmt.executeBatch();
         }
     }
 
@@ -128,9 +123,10 @@ public class DBManager {
      * Execute update Query
      *
      * @param q SQLITE query
-     * @return rows are affected, return -1 if SQLException thrown
+     * @return rows are affected
+     * @throws SQLException
      */
-    public int updateQuery(String q) {
+    public int updateQuery(String q) throws SQLException {
         Connection conn = connectDB();
         int rowsAffected = -1;
         try {
@@ -155,8 +151,9 @@ public class DBManager {
      *
      * @param q SQLITE Query
      * @return true if the query returned a ResultSet
+     * @throws SQLException
      */
-    public boolean execQuery(String q) {
+    public boolean execQuery(String q) throws SQLException {
         Connection conn = connectDB();
         boolean status = false;
         try {
@@ -179,9 +176,10 @@ public class DBManager {
      * Execute query that returns rows of data
      *
      * @param q SQLITE query
-     * @return ResultSet of the query, will return null if SQLException thrown
+     * @return ResultSet of the query
+     * @throws SQLException
      */
-    public ResultSet resultQuery(String q) {
+    public ResultSet resultQuery(String q) throws SQLException {
         Connection conn = connectDB();
         ResultSet result = null;
         try {
