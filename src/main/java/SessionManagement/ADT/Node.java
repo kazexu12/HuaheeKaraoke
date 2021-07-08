@@ -8,7 +8,18 @@ package SessionManagement.ADT;
 /**
  *
  * @author zkang
+ * @param <T> type of the node
  */
-public class LinkedStack {
+public class Node<T> {
+
+    public T data;
+    public Node next;
     
+    public Node() {
+        this.data = null;
+    }
+
+    public Node(T data) {
+        this.data = data;
+    }    
 }

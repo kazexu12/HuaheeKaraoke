@@ -1,5 +1,8 @@
 package SessionManagement;
 
+import DTO.Song;
+import DTO.User;
+
 /**
  * Class that store ongoing karaoke session
  *
@@ -10,12 +13,12 @@ public class KaraokeSession {
     /**
      * Stores songs
      */
-    private String[] nowPlayingQueue;
+    private Song[] nowPlayingQueue;
 
     /**
      * Store participant list
      */
-    private String[] participants;
+    private User[] participants;
 
     /**
      * Playing mode of the session
@@ -67,14 +70,22 @@ public class KaraokeSession {
         this.songsPlayed = songsPlayed;
     }
 
-    public String[] getNowPlayingQueue() {
+    public Song[] getNowPlayingQueue() {
         return nowPlayingQueue;
     }
 
-    public String[] getParticipants() {
-        return participants;
-
+    public void setNowPlayingQueue(Song[] nowPlayingQueue) {
+        this.nowPlayingQueue = nowPlayingQueue;
     }
+
+    public User[] getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(User[] participants) {
+        this.participants = participants;
+    } 
+
     // ================================
     // ================================
 

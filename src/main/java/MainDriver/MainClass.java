@@ -28,10 +28,11 @@ public class MainClass {
                     .system(true).jna(true).type("windows-vtp")
                     .build();
             terminal.enterRawMode();
-            Playground.charInputPlayground(terminal);
+            // Playground.charInputPlayground(terminal);
         } catch (IOException err) {
             logger.error("Unable to initialise terminal", err);
         }
+        Playground.linkedQueuePG();
     }
 
     /**
@@ -52,5 +53,6 @@ public class MainClass {
         Thread.setDefaultUncaughtExceptionHandler(new ErrorHandler());
 
         init();
+        new java.util.Scanner(System.in).nextLine();
     }
 }

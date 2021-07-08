@@ -5,9 +5,8 @@
  */
 package MainDriver;
 
+import SessionManagement.ADT.LinkedQueue;
 import java.io.IOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jline.terminal.Terminal;
 
 /**
@@ -47,5 +46,15 @@ public class Playground {
                 terminal.writer().print(Generic.ConsoleColor.ANSI_RESET + c + " ");
             }
         }
+    }
+    
+    public static void linkedQueuePG() {
+        LinkedQueue<String> myqueue = new LinkedQueue<>();
+        myqueue.enqueue("Item 1");
+        myqueue.enqueue("Item 2");
+        myqueue.enqueue("Item 3");
+        System.out.println(myqueue.dequeue());
+        System.out.println(myqueue.dequeue());
+        System.out.println(myqueue.dequeue());
     }
 }
