@@ -1,9 +1,6 @@
 package MainDriver;
 
-import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
 import Generic.DBManager;
-import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
@@ -12,10 +9,8 @@ import org.apache.logging.log4j.Logger;
 public class MainClass {
 
     private static final Logger logger = LogManager.getLogger(MainClass.class.getName());
-
-    public static Terminal terminal;
     
-    public static void init() {
+    public static void init() throws Exception {
         // Initializing DB
         try {
             DBManager db = new DBManager();
@@ -24,17 +19,9 @@ public class MainClass {
             logger.error("Unable to create database", err);
         }
 
-        // Initialising terminal
-        try {
-            terminal = TerminalBuilder.builder()
-                    .system(true).jna(true).type("windows-vtp")
-                    .build();
-            terminal.enterRawMode();
-            Playground.charInputPlayground();
-        } catch (IOException err) {
-            logger.error("Unable to initialise terminal", err);
-        }
-//        Playground.linkedQueuePG();
+        System.out.println("Clear me pls");
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        System.out.println("henlo");
     }
 
     /**

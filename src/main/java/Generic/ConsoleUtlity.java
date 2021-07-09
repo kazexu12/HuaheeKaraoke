@@ -3,20 +3,22 @@ package Generic;
 import com.sun.jna.Function;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinNT;
+import java.io.IOException;
 
 public class ConsoleUtlity {
 
     /**
-     * This function make use of JNA to call windows specific function to enable virtual terminal sequence
-     * It attempts to call GetStdHandle, GetConsoleMode and SetConsoleMode from kernel32.dll
-     * Note: This will ONLY work in windows 10
+     * This function make use of JNA to call windows specific function to enable
+     * virtual terminal sequence It attempts to call GetStdHandle,
+     * GetConsoleMode and SetConsoleMode from kernel32.dll Note: This will ONLY
+     * work in windows 10
      */
     public static final void enableVirtualTerminalSequence() {
         // References:
         // https://stackoverflow.com/questions/52767585/how-can-you-use-vt100-escape-codes-in-java-on-windows
         // https://docs.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences
         // https://www.programmersought.com/article/2941621212/
-        
+
         // Set output mode to handle virtual terminal sequences
         Function GetStdHandleFunc = Function.getFunction("kernel32", "GetStdHandle");
         WinDef.DWORD STD_OUTPUT_HANDLE = new WinDef.DWORD(-11);
@@ -32,11 +34,11 @@ public class ConsoleUtlity {
         Function SetConsoleModeFunc = Function.getFunction("kernel32", "SetConsoleMode");
         SetConsoleModeFunc.invoke(WinDef.BOOL.class, new Object[]{hOut, dwMode});
     }
-    
+
     /**
      * Calls SetConsoleTextAttribute to change console color<br>
      * Supports older version of windows<br>
-     * 
+     *
      * <b>int color:</b><br>
      * 0 - black<br>
      * 1 - blue<br>
@@ -54,6 +56,7 @@ public class ConsoleUtlity {
      * 13 - strong purple<br>
      * 14 - strong gold<br>
      * 15 - strong white<br>
+     *
      * @param foreground int color
      * @param background int color
      */
@@ -65,5 +68,9 @@ public class ConsoleUtlity {
 
         Function SetConsoleModeFunc = Function.getFunction("kernel32", "SetConsoleTextAttribute");
         SetConsoleModeFunc.invoke(WinDef.BOOL.class, new Object[]{hOut, colorValue});
+    }
+
+    public static final void clearScreen() throws IOException, InterruptedException {
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
     }
 }

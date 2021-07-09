@@ -6,7 +6,6 @@
 package MainDriver;
 
 import SessionManagement.ADT.LinkedQueue;
-import java.io.IOException;
 
 /**
  *
@@ -14,39 +13,6 @@ import java.io.IOException;
  */
 public class Playground {
 
-    public static void charInputPlayground() throws IOException {
-        MainClass.terminal.writer().println(Generic.ConsoleColor.ANSI_F_BRED + "Enter keys to show its integer values");
-        MainClass.terminal.writer().println("Press 'enter' to go to next line");
-        while (true) {
-            int c = MainClass.terminal.reader().read();
-            if (c == 27) {
-                if (MainClass.terminal.reader().peek(0) == 79) {
-                    MainClass.terminal.reader().read();
-                    switch (MainClass.terminal.reader().read()) {
-                        case 65:
-                            MainClass.terminal.writer().print(Generic.ConsoleColor.WIN_CUR_UP);
-                            break;
-                        case 66:
-                            MainClass.terminal.writer().print(Generic.ConsoleColor.WIN_CUR_DOWN);
-                            break;
-                        case 67:
-                            MainClass.terminal.writer().print(Generic.ConsoleColor.WIN_CUR_RIGHT);
-                            break;
-                        case 68:
-                            MainClass.terminal.writer().print(Generic.ConsoleColor.WIN_CUR_LEFT);
-                            break;
-                    }
-                }
-                continue;
-            }
-            if (c == 13) {
-                MainClass.terminal.writer().println();
-            } else {
-                MainClass.terminal.writer().print(Generic.ConsoleColor.ANSI_RESET + c + " ");
-            }
-        }
-    }
-    
     public static void linkedQueuePG() {
         LinkedQueue<String> myqueue = new LinkedQueue<>();
         myqueue.enqueue("Item 1");
