@@ -46,7 +46,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JEditorPane" name="jEditorPane1">
+            <Component class="javax.swing.JEditorPane" name="lyricsPane">
               <Properties>
                 <Property name="contentType" type="java.lang.String" value="text/html" noResource="true"/>
               </Properties>
@@ -183,7 +183,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
+            <Property name="text" type="java.lang.String" value="Now Playing: "/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -246,7 +246,7 @@
                         </Constraint>
                       </Constraints>
                       <SubComponents>
-                        <Component class="javax.swing.JButton" name="jButton3">
+                        <Component class="javax.swing.JButton" name="addSongBtn">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Add Song"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -265,7 +265,7 @@
                             </Constraint>
                           </Constraints>
                         </Component>
-                        <Component class="javax.swing.JButton" name="jButton6">
+                        <Component class="javax.swing.JButton" name="removeSongBtn">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Remove Song"/>
                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -415,11 +415,11 @@
                             <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                           </StatementProvider>
                           <Parameters>
-                            <CodeExpression id="18_jButton3">
-                              <CodeVariable name="jButton3" type="8194" declaredType="javax.swing.JButton"/>
+                            <CodeExpression id="18_addSongBtn">
+                              <CodeVariable name="addSongBtn" type="8194" declaredType="javax.swing.JButton"/>
                               <ExpressionOrigin>
                                 <ExpressionProvider type="ComponentRef">
-                                  <ComponentRef name="jButton3"/>
+                                  <ComponentRef name="addSongBtn"/>
                                 </ExpressionProvider>
                               </ExpressionOrigin>
                             </CodeExpression>
@@ -499,11 +499,11 @@
                             <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                           </StatementProvider>
                           <Parameters>
-                            <CodeExpression id="24_jButton6">
-                              <CodeVariable name="jButton6" type="8194" declaredType="javax.swing.JButton"/>
+                            <CodeExpression id="24_removeSongBtn">
+                              <CodeVariable name="removeSongBtn" type="8194" declaredType="javax.swing.JButton"/>
                               <ExpressionOrigin>
                                 <ExpressionProvider type="ComponentRef">
-                                  <ComponentRef name="jButton6"/>
+                                  <ComponentRef name="removeSongBtn"/>
                                 </ExpressionProvider>
                               </ExpressionOrigin>
                             </CodeExpression>
@@ -531,7 +531,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTable1">
+                    <Component class="javax.swing.JTable" name="nowPlayingListTable">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="4" rowCount="4">
@@ -851,7 +851,7 @@
             <Property name="horizontalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel2">
+            <Component class="javax.swing.JLabel" name="nowPlayingTimestampLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0:00"/>
               </Properties>
@@ -861,7 +861,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel3">
+            <Component class="javax.swing.JLabel" name="maxDurationTimestampLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0:00"/>
               </Properties>
@@ -871,7 +871,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JSlider" name="jSlider1">
+            <Component class="javax.swing.JSlider" name="progressSlider">
               <Properties>
                 <Property name="maximum" type="int" value="0"/>
               </Properties>
@@ -883,7 +883,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="jButton4">
+        <Component class="javax.swing.JButton" name="skipSongBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Skip Song"/>
           </Properties>
@@ -893,10 +893,13 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton5">
+        <Component class="javax.swing.JButton" name="stopSessionBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Stop Session"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopSessionBtnActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="0" gridY="2" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="5" insetsLeft="10" insetsBottom="5" insetsRight="10" anchor="10" weightX="0.0" weightY="0.0"/>
@@ -1160,11 +1163,11 @@
             <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
           </StatementProvider>
           <Parameters>
-            <CodeExpression id="61_jButton4">
-              <CodeVariable name="jButton4" type="8194" declaredType="javax.swing.JButton"/>
+            <CodeExpression id="61_skipSongBtn">
+              <CodeVariable name="skipSongBtn" type="8194" declaredType="javax.swing.JButton"/>
               <ExpressionOrigin>
                 <ExpressionProvider type="ComponentRef">
-                  <ComponentRef name="jButton4"/>
+                  <ComponentRef name="skipSongBtn"/>
                 </ExpressionProvider>
               </ExpressionOrigin>
             </CodeExpression>
@@ -1244,11 +1247,11 @@
             <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
           </StatementProvider>
           <Parameters>
-            <CodeExpression id="67_jButton5">
-              <CodeVariable name="jButton5" type="8194" declaredType="javax.swing.JButton"/>
+            <CodeExpression id="67_stopSessionBtn">
+              <CodeVariable name="stopSessionBtn" type="8194" declaredType="javax.swing.JButton"/>
               <ExpressionOrigin>
                 <ExpressionProvider type="ComponentRef">
-                  <ComponentRef name="jButton5"/>
+                  <ComponentRef name="stopSessionBtn"/>
                 </ExpressionProvider>
               </ExpressionOrigin>
             </CodeExpression>
