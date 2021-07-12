@@ -77,6 +77,11 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.add(Title, gridBagConstraints);
 
         enterSessKeyBtn.setText("Enter session key");
+        enterSessKeyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterSessKeyBtnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -131,6 +136,15 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_quitBtnActionPerformed
+
+    private void enterSessKeyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterSessKeyBtnActionPerformed
+        // TODO add your handling code here:
+        String userInputSessionKey = JOptionPane.showInputDialog(this, "Enter session key:", "Session", JOptionPane.QUESTION_MESSAGE);
+        if(userInputSessionKey == null) {
+            return;
+        }
+        System.out.println("Do something with the session key here");
+    }//GEN-LAST:event_enterSessKeyBtnActionPerformed
 
     /**
      * Self-made class to capture uncaught exceptions
