@@ -12,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- *
+ * Data access object for RegisteredSession from SQLite DB
  * @author zkang
  */
 public class RegisteredSessions implements DAO<RegisteredSession> {
