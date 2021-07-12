@@ -65,7 +65,7 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
 
     @Override
     public void save(RegisteredSession t) {
-
+        
     }
 
     @Override

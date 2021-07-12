@@ -8,6 +8,7 @@ package MainDriver;
 import DAO.RegisteredSessions;
 import DTO.RegisteredSession;
 import Generic.DBManager;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ import org.apache.logging.log4j.Logger;
  * @author zkang
  */
 public class MainFrame extends javax.swing.JFrame {
-
+    
     private static final Logger logger = LogManager.getLogger(MainFrame.class.getName());
 
     /**
@@ -150,19 +151,30 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         System.out.println("Do something with the session key here");
+        // Future code to validate session_key
+        if (true) {
+            // Code to pass session data into the JFrame
+            new KaraokeSessionFrame().setVisible(true);
+            
+            // Close the menu jframe
+            this.setVisible(false);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid session key", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_enterSessKeyBtnActionPerformed
 
     /**
      * Self-made class to capture uncaught exceptions
      */
     static class ErrorHandler implements UncaughtExceptionHandler {
-
+        
         @Override
         public void uncaughtException(Thread t, Throwable e) {
             // Logs the exception using log4j 2
             logger.error("Uncaught exception in thread: " + t.getName(), e);
         }
-
+        
     }
 
     /**
