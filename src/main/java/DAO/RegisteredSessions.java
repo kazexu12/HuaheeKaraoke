@@ -19,12 +19,11 @@ public class RegisteredSessions implements DAO<RegisteredSession> {
 
     private final Logger logger = LogManager.getLogger(RegisteredSessions.class.getName());
     private List<DTO.RegisteredSession> sessions;
-    private boolean ready;
 
     public RegisteredSessions() {
-        ready = false;
-        DBManager db = new DBManager();
         sessions = new ArrayList<>();
+        
+        DBManager db = new DBManager();
         String query = "SELECT * FROM RegisteredSessions;";
         Pair<Connection, ResultSet> queryResult;
         Connection dbconn;
@@ -55,9 +54,7 @@ public class RegisteredSessions implements DAO<RegisteredSession> {
             }
         } catch (SQLException e) {
             logger.error("Unable to read ResultSet of registered session query", e);
-            return;
         }
-        ready = true;
     }
 
     @Override
