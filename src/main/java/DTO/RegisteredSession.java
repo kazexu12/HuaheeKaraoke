@@ -10,6 +10,7 @@ package DTO;
  * @author zkang
  */
 public class RegisteredSession {
+
     private String session_id;
     private String session_key;
     private char room_size;
@@ -19,6 +20,22 @@ public class RegisteredSession {
     private String session_end_time;
     private int date_created;
     private int date_modified;
+
+    public RegisteredSession() {
+
+    }
+
+    public RegisteredSession(String session_id, String session_key, char room_size, int head_count, String session_date, String session_start_time, String session_end_time, int date_created, int date_modified) {
+        this.session_id = session_id;
+        this.session_key = session_key;
+        this.room_size = room_size;
+        this.head_count = head_count;
+        this.session_date = session_date;
+        this.session_start_time = session_start_time;
+        this.session_end_time = session_end_time;
+        this.date_created = date_created;
+        this.date_modified = date_modified;
+    }
 
     public String getSession_id() {
         return session_id;
@@ -91,6 +108,5 @@ public class RegisteredSession {
     public void setDate_modified(int date_modified) {
         this.date_modified = date_modified;
     }
-    
-    
+
 }

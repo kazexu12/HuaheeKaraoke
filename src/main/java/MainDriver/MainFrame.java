@@ -5,10 +5,13 @@
  */
 package MainDriver;
 
+import DAO.RegisteredSessions;
+import DTO.RegisteredSession;
 import Generic.DBManager;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +28,12 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
+        // Init this JFrame
         initComponents();
+        this.setLocationRelativeTo(null);
+        logger.info("MainFrame loaded successfully");
+
+        // Initialize DB
         DBManager db = new DBManager();
         try {
             db.prepareTable();
@@ -38,8 +46,6 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Unable to find TABLE_SCHEMA.sql in classpath", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
-        this.setLocationRelativeTo(null);
-        logger.info("MainFrame loaded successfully");
     }
 
     /**
@@ -140,7 +146,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void enterSessKeyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterSessKeyBtnActionPerformed
         // TODO add your handling code here:
         String userInputSessionKey = JOptionPane.showInputDialog(this, "Enter session key:", "Session", JOptionPane.QUESTION_MESSAGE);
-        if(userInputSessionKey == null) {
+        if (userInputSessionKey == null) {
             return;
         }
         System.out.println("Do something with the session key here");
