@@ -5,7 +5,9 @@
  */
 package MainDriver;
 
+import Generic.DBManager;
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +24,15 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
-        this.setLocationRelativeTo(null);    }
+        DBManager db = new DBManager();
+        try {
+            db.prepareTable();
+        } catch (SQLException e) {
+            logger.error("Unable to prepare DB tables", e);
+        }
+        this.setLocationRelativeTo(null);
+        logger.info("MainFrame loaded successfully");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

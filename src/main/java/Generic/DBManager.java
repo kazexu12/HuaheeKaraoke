@@ -55,13 +55,14 @@ public class DBManager {
      */
     public void prepareTable() throws SQLException {
         Connection conn = connectDB();
-        String tab1 = "CREATE TABLE IF NOT EXISTS Gifts (\n"
+        String schemaQuery = "CREATE TABLE IF NOT EXISTS Gifts (\n"
                 + "	gift_id TEXT,\n"
                 + "	gift_name TEXT,\n"
                 + "	member_level_min INTEGER,\n"
                 + "	PRIMARY KEY(gift_id)\n"
-                + ");\n";
-        String tab2 = "CREATE TABLE IF NOT EXISTS Songs (\n"
+                + ");\n"
+                + "\n"
+                + "CREATE TABLE IF NOT EXISTS Songs (\n"
                 + "	song_id TEXT,\n"
                 + "	name TEXT,\n"
                 + "	artist TEXT,\n"
@@ -69,9 +70,11 @@ public class DBManager {
                 + "	genre TEXT,\n"
                 + "	duration INTEGER,\n"
                 + "	date_created NUMERIC,\n"
+                + "        date_modified NUMERIC,\n"
                 + "	PRIMARY KEY(song_id)\n"
-                + ");\n";
-        String tab3 = "CREATE TABLE IF NOT EXISTS Users (\n"
+                + ");\n"
+                + "\n"
+                + "CREATE TABLE IF NOT EXISTS Users (\n"
                 + "	user_id TEXT,\n"
                 + "	privillage INTEGER,\n"
                 + "	name TEXT,\n"
@@ -81,22 +84,40 @@ public class DBManager {
                 + "	member_point INTEGER,\n"
                 + "	member_level TEXT,\n"
                 + "	date_created NUMERIC,\n"
+                + "        date_modified NUMERIC,\n"
                 + "	PRIMARY KEY(user_id)\n"
-                + ");\n";
-        String tab4 = "CREATE TABLE IF NOT EXISTS Transactions (\n"
+                + ");\n"
+                + "\n"
+                + "CREATE TABLE IF NOT EXISTS RegisteredSessions (\n"
+                + "        session_id TEXT,\n"
+                + "        session_key TEXT,\n"
+                + "        room_size TEXT,\n"
+                + "        head_count INTEGER,\n"
+                + "        session_date TEXT,\n"
+                + "        session_start_time TEXT,\n"
+                + "        session_end_time TEXT,\n"
+                + "        date_created NUMERIC,\n"
+                + "        date_modified NUMERIC,\n"
+                + "        PRIMARY KEY(session_id)\n"
+                + ");\n"
+                + "\n"
+                + "CREATE TABLE IF NOT EXISTS Transactions (\n"
                 + "	transaction_id TEXT,\n"
-                + "	room_size TEXT,\n"
-                + "	head_count INTEGER,\n"
+                + "        session_id TEXT,\n"
                 + "	discount REAL,\n"
                 + "	final_price REAL,\n"
                 + "	member_id TEXT,\n"
                 + "	member_level_atm TEXT,\n"
                 + "	staff_id TEXT,\n"
+                + "        date_created NUMERIC,\n"
+                + "        date_modified NUMERIC,\n"
                 + "	PRIMARY KEY(transaction_id),\n"
                 + "	FOREIGN KEY(member_id) REFERENCES Users(user_id),\n"
+                + "        FOREIGN KEY(session_id) REFERENCES RegisteredSessions(session_id),\n"
                 + "	FOREIGN KEY(staff_id) REFERENCES Users(user_id)\n"
-                + ");\n";
-        String tab5 = "CREATE TABLE IF NOT EXISTS GiftRecords (\n"
+                + ");\n"
+                + "\n"
+                + "CREATE TABLE IF NOT EXISTS GiftRecords (\n"
                 + "	transaction_id TEXT,\n"
                 + "	gift_id TEXT,\n"
                 + "	amount INTEGER,\n"
@@ -106,11 +127,10 @@ public class DBManager {
                 + ");";
 
         Statement stmt = conn.createStatement();
-        stmt.addBatch(tab1);
-        stmt.addBatch(tab2);
-        stmt.addBatch(tab3);
-        stmt.addBatch(tab4);
-        stmt.addBatch(tab5);
+        String[] queries = schemaQuery.split(";");
+        for (String query : queries) {
+            stmt.addBatch(query);
+        }
         stmt.executeBatch();
         conn.close();
     }

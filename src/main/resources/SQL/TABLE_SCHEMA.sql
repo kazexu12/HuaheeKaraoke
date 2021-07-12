@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS Songs (
 	genre TEXT,
 	duration INTEGER,
 	date_created NUMERIC,
+        date_modified NUMERIC,
 	PRIMARY KEY(song_id)
 );
 
@@ -26,20 +27,36 @@ CREATE TABLE IF NOT EXISTS Users (
 	member_point INTEGER,
 	member_level TEXT,
 	date_created NUMERIC,
+        date_modified NUMERIC,
 	PRIMARY KEY(user_id)
+);
+
+CREATE TABLE IF NOT EXISTS RegisteredSessions (
+        session_id TEXT,
+        session_key TEXT,
+        room_size TEXT,
+        head_count INTEGER,
+        session_date TEXT,
+        session_start_time TEXT,
+        session_end_time TEXT,
+        date_created NUMERIC,
+        date_modified NUMERIC,
+        PRIMARY KEY(session_id)
 );
 
 CREATE TABLE IF NOT EXISTS Transactions (
 	transaction_id TEXT,
-	room_size TEXT,
-	head_count INTEGER,
+        session_id TEXT,
 	discount REAL,
 	final_price REAL,
 	member_id TEXT,
 	member_level_atm TEXT,
 	staff_id TEXT,
+        date_created NUMERIC,
+        date_modified NUMERIC,
 	PRIMARY KEY(transaction_id),
 	FOREIGN KEY(member_id) REFERENCES Users(user_id),
+        FOREIGN KEY(session_id) REFERENCES RegisteredSessions(session_id),
 	FOREIGN KEY(staff_id) REFERENCES Users(user_id)
 );
 
@@ -49,5 +66,5 @@ CREATE TABLE IF NOT EXISTS GiftRecords (
 	amount INTEGER,
 	PRIMARY KEY(transaction_id, gift_id),
 	FOREIGN KEY(transaction_id) REFERENCES Transactions(transaction_id),
-	FOREIGN KEY(gift_id) REFERENCES Gifts(gift_id),
+	FOREIGN KEY(gift_id) REFERENCES Gifts(gift_id)
 );
