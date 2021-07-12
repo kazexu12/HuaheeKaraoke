@@ -181,7 +181,7 @@
         </Constraint>
       </Constraints>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="nowPlayingLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Now Playing: "/>
           </Properties>
@@ -736,11 +736,11 @@
             <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
           </StatementProvider>
           <Parameters>
-            <CodeExpression id="36_jLabel1">
-              <CodeVariable name="jLabel1" type="8194" declaredType="javax.swing.JLabel"/>
+            <CodeExpression id="36_nowPlayingLabel">
+              <CodeVariable name="nowPlayingLabel" type="8194" declaredType="javax.swing.JLabel"/>
               <ExpressionOrigin>
                 <ExpressionProvider type="ComponentRef">
-                  <ComponentRef name="jLabel1"/>
+                  <ComponentRef name="nowPlayingLabel"/>
                 </ExpressionProvider>
               </ExpressionOrigin>
             </CodeExpression>

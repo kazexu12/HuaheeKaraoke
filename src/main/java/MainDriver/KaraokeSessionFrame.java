@@ -34,7 +34,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         lyricsPane = new javax.swing.JEditorPane();
         topPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        nowPlayingLabel = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -75,7 +75,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         topPanelLayout.rowWeights = new double[] {1.0, 1.0, 3.0};
         topPanel.setLayout(topPanelLayout);
 
-        jLabel1.setText("Now Playing: ");
+        nowPlayingLabel.setText("Now Playing: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -83,7 +83,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 674;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
-        topPanel.add(jLabel1, gridBagConstraints);
+        topPanel.add(nowPlayingLabel, gridBagConstraints);
 
         jPanel4.setLayout(new java.awt.BorderLayout());
 
@@ -229,7 +229,6 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     private javax.swing.JButton addSongBtn;
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel centerPanel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -239,6 +238,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JEditorPane lyricsPane;
     private javax.swing.JLabel maxDurationTimestampLabel;
+    private javax.swing.JLabel nowPlayingLabel;
     private javax.swing.JTable nowPlayingListTable;
     private javax.swing.JLabel nowPlayingTimestampLabel;
     private javax.swing.JSlider progressSlider;
