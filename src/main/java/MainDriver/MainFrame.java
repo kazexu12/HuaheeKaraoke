@@ -8,6 +8,7 @@ package MainDriver;
 import Generic.DBManager;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +30,8 @@ public class MainFrame extends javax.swing.JFrame {
             db.prepareTable();
         } catch (SQLException e) {
             logger.error("Unable to prepare DB tables", e);
+            JOptionPane.showMessageDialog(null, "Unable to prepare DB tables", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
         this.setLocationRelativeTo(null);
         logger.info("MainFrame loaded successfully");
