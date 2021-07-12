@@ -17,6 +17,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     public KaraokeSessionFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.jEditorPane1.setText("<b>Hi</b> Im not bold");
     }
 
     /**
@@ -30,8 +31,8 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         centerPanel = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jEditorPane1 = new javax.swing.JEditorPane();
         topPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -52,27 +53,20 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Huahee Karaoke >> Karaoke Session (SESSION_ID)");
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
-        centerPanel.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagLayout centerPanelLayout = new java.awt.GridBagLayout();
+        centerPanelLayout.columnWeights = new double[] {1.0};
+        centerPanelLayout.rowWeights = new double[] {1.0};
+        centerPanel.setLayout(centerPanelLayout);
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Text Here");
-        jScrollPane2.setViewportView(jTextArea1);
+        jEditorPane1.setContentType("text/html"); // NOI18N
+        jScrollPane3.setViewportView(jEditorPane1);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 861;
-        gridBagConstraints.ipady = 244;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
-        centerPanel.add(jScrollPane2, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
+        centerPanel.add(jScrollPane3, gridBagConstraints);
 
         getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
 
@@ -101,13 +95,16 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         jPanel5.setMinimumSize(new java.awt.Dimension(160, 42));
-        jPanel5.setPreferredSize(new java.awt.Dimension(160, 32));
+        jPanel5.setPreferredSize(new java.awt.Dimension(305, 22));
         java.awt.GridBagLayout jPanel5Layout = new java.awt.GridBagLayout();
         jPanel5Layout.columnWeights = new double[] {1.0, 1.0};
         jPanel5Layout.rowWeights = new double[] {1.0};
         jPanel5.setLayout(jPanel5Layout);
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Add Song");
+        jButton3.setMaximumSize(new java.awt.Dimension(150, 22));
+        jButton3.setMinimumSize(new java.awt.Dimension(150, 22));
+        jButton3.setPreferredSize(new java.awt.Dimension(150, 22));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -115,7 +112,9 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
         jPanel5.add(jButton3, gridBagConstraints);
 
-        jButton6.setText("jButton6");
+        jButton6.setText("Remove Song");
+        jButton6.setMinimumSize(new java.awt.Dimension(150, 22));
+        jButton6.setPreferredSize(new java.awt.Dimension(150, 22));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -137,10 +136,22 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "No.", "Title", "Artist", "Genre"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(40);
+            jTable1.getColumnModel().getColumn(1).setMinWidth(450);
+        }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -162,11 +173,13 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.BorderLayout(10, 0));
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("0:00");
         jPanel2.add(jLabel2, java.awt.BorderLayout.WEST);
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("0:00");
         jPanel2.add(jLabel3, java.awt.BorderLayout.EAST);
+
+        jSlider1.setMaximum(0);
         jPanel2.add(jSlider1, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -178,7 +191,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
         bottomPanel.add(jPanel2, gridBagConstraints);
 
-        jButton4.setText("jButton4");
+        jButton4.setText("Skip Song");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -187,7 +200,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
         bottomPanel.add(jButton4, gridBagConstraints);
 
-        jButton5.setText("jButton4");
+        jButton5.setText("Stop Session");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -207,6 +220,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -216,10 +230,9 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }
