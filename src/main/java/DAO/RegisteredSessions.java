@@ -13,16 +13,17 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * Data access object for RegisteredSession from SQLite DB
+ *
  * @author zkang
  */
-public class RegisteredSessions implements DAO<RegisteredSession> {
+public class RegisteredSessions implements DAOInterface<RegisteredSession> {
 
     private final Logger logger = LogManager.getLogger(RegisteredSessions.class.getName());
     private List<DTO.RegisteredSession> sessions;
 
     public RegisteredSessions() {
         sessions = new ArrayList<>();
-        
+
         DBManager db = new DBManager();
         String query = "SELECT * FROM RegisteredSessions;";
         Pair<Connection, ResultSet> queryResult;

@@ -4,11 +4,11 @@ package DAO;
 import java.util.List;
 
 /**
- * ADT for Data Access Objects used in this program
+ * Abstract class for Data Access Objects used in this program
  * @author zkang
  * @param <T> type used in this DAO
  */
-public interface DAO<T> {
+public interface DAOInterface<T> {
 
     List<T> getAll();
 
