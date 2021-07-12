@@ -5,6 +5,8 @@
  */
 package MainDriver;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author zkang
@@ -130,17 +132,14 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
         nowPlayingListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "No.", "Title", "Artist", "Genre"
+                "No.", "Title", "Artist", "Genre", "Duration"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -151,6 +150,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         if (nowPlayingListTable.getColumnModel().getColumnCount() > 0) {
             nowPlayingListTable.getColumnModel().getColumn(0).setMaxWidth(40);
             nowPlayingListTable.getColumnModel().getColumn(1).setMinWidth(450);
+            nowPlayingListTable.getColumnModel().getColumn(4).setMaxWidth(100);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
