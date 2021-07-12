@@ -6,6 +6,7 @@
 package MainDriver;
 
 import Generic.DBManager;
+import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -31,6 +32,10 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (SQLException e) {
             logger.error("Unable to prepare DB tables", e);
             JOptionPane.showMessageDialog(null, "Unable to prepare DB tables", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        } catch (IOException e) {
+            logger.error("Unable to find TABLE_SCHEMA.sql in classpath", e);
+            JOptionPane.showMessageDialog(null, "Unable to find TABLE_SCHEMA.sql in classpath", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
         this.setLocationRelativeTo(null);

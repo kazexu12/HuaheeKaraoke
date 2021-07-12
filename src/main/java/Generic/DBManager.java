@@ -1,7 +1,13 @@
 package Generic;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class used to execute queries for database <br>
@@ -22,6 +28,7 @@ public class DBManager {
 
     private final String dbPath = System.getenv("APPDATA") + "\\HuaheeKaraoke\\";
     private final String dbName = "data.db";
+    private final Logger logger = LogManager.getLogger(DBManager.class.getName());
 
     public DBManager() {
 
@@ -52,87 +59,33 @@ public class DBManager {
      * Set up database schema
      *
      * @throws SQLException
+     * @throws IOException
      */
-    public void prepareTable() throws SQLException {
+    public void prepareTable() throws SQLException, IOException {
         Connection conn = connectDB();
-        String schemaQuery = "CREATE TABLE IF NOT EXISTS Gifts (\n"
-                + "	gift_id TEXT,\n"
-                + "	gift_name TEXT,\n"
-                + "	member_level_min INTEGER,\n"
-                + "	PRIMARY KEY(gift_id)\n"
-                + ");\n"
-                + "\n"
-                + "CREATE TABLE IF NOT EXISTS Songs (\n"
-                + "	song_id TEXT,\n"
-                + "	name TEXT,\n"
-                + "	artist TEXT,\n"
-                + "	album TEXT,\n"
-                + "	genre TEXT,\n"
-                + "	duration INTEGER,\n"
-                + "	date_created NUMERIC,\n"
-                + "        date_modified NUMERIC,\n"
-                + "	PRIMARY KEY(song_id)\n"
-                + ");\n"
-                + "\n"
-                + "CREATE TABLE IF NOT EXISTS Users (\n"
-                + "	user_id TEXT,\n"
-                + "	privillage INTEGER,\n"
-                + "	name TEXT,\n"
-                + "	pw_hash TEXT,\n"
-                + "	first_name TEXT,\n"
-                + "	last_name TEXT,\n"
-                + "	member_point INTEGER,\n"
-                + "	member_level TEXT,\n"
-                + "	date_created NUMERIC,\n"
-                + "        date_modified NUMERIC,\n"
-                + "	PRIMARY KEY(user_id)\n"
-                + ");\n"
-                + "\n"
-                + "CREATE TABLE IF NOT EXISTS RegisteredSessions (\n"
-                + "        session_id TEXT,\n"
-                + "        session_key TEXT,\n"
-                + "        room_size TEXT,\n"
-                + "        head_count INTEGER,\n"
-                + "        session_date TEXT,\n"
-                + "        session_start_time TEXT,\n"
-                + "        session_end_time TEXT,\n"
-                + "        date_created NUMERIC,\n"
-                + "        date_modified NUMERIC,\n"
-                + "        PRIMARY KEY(session_id)\n"
-                + ");\n"
-                + "\n"
-                + "CREATE TABLE IF NOT EXISTS Transactions (\n"
-                + "	transaction_id TEXT,\n"
-                + "        session_id TEXT,\n"
-                + "	discount REAL,\n"
-                + "	final_price REAL,\n"
-                + "	member_id TEXT,\n"
-                + "	member_level_atm TEXT,\n"
-                + "	staff_id TEXT,\n"
-                + "        date_created NUMERIC,\n"
-                + "        date_modified NUMERIC,\n"
-                + "	PRIMARY KEY(transaction_id),\n"
-                + "	FOREIGN KEY(member_id) REFERENCES Users(user_id),\n"
-                + "        FOREIGN KEY(session_id) REFERENCES RegisteredSessions(session_id),\n"
-                + "	FOREIGN KEY(staff_id) REFERENCES Users(user_id)\n"
-                + ");\n"
-                + "\n"
-                + "CREATE TABLE IF NOT EXISTS GiftRecords (\n"
-                + "	transaction_id TEXT,\n"
-                + "	gift_id TEXT,\n"
-                + "	amount INTEGER,\n"
-                + "	PRIMARY KEY(transaction_id, gift_id),\n"
-                + "	FOREIGN KEY(transaction_id) REFERENCES Transactions(transaction_id),\n"
-                + "	FOREIGN KEY(gift_id) REFERENCES Gifts(gift_id)\n"
-                + ");";
+
+        // Read SQL file from resource folder
+        InputStream is = getClass().getClassLoader().getResourceAsStream("SQL/TABLE_SCHEMA.sql");
+        BufferedReader buf = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+        String line = buf.readLine();
+        StringBuilder sb = new StringBuilder();
+        while (line != null) {
+            sb.append(line).append("\n");
+            line = buf.readLine();
+        }
+        String schemaQuery = sb.toString();
 
         Statement stmt = conn.createStatement();
         String[] queries = schemaQuery.split(";");
         for (String query : queries) {
+            if(query.trim().compareTo("") == 0) {
+                continue;
+            }
             stmt.addBatch(query);
         }
         stmt.executeBatch();
         conn.close();
+        logger.info("Finished preparing the SQL tables");
     }
 
     /**
