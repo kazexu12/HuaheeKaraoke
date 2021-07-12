@@ -78,7 +78,7 @@ public class DBManager {
         Statement stmt = conn.createStatement();
         String[] queries = schemaQuery.split(";");
         for (String query : queries) {
-            if(query.trim().compareTo("") == 0) {
+            if (query.trim().compareTo("") == 0) {
                 continue;
             }
             stmt.addBatch(query);
@@ -98,19 +98,12 @@ public class DBManager {
     public int updateQuery(String q) throws SQLException {
         Connection conn = connectDB();
         int rowsAffected = -1;
-        try {
-            Statement stmt = conn.createStatement();
-            rowsAffected = stmt.executeUpdate(q);
-        } catch (SQLException err) {
-            System.out.println(err.getMessage());
-        }
+
+        Statement stmt = conn.createStatement();
+        rowsAffected = stmt.executeUpdate(q);
 
         // Close DB Connection
-        try {
-            conn.close();
-        } catch (SQLException err) {
-            System.out.println(err.getMessage());
-        }
+        conn.close();
 
         return rowsAffected;
     }
@@ -125,46 +118,33 @@ public class DBManager {
     public boolean execQuery(String q) throws SQLException {
         Connection conn = connectDB();
         boolean status = false;
-        try {
-            Statement stmt = conn.createStatement();
-            status = stmt.execute(q);
-        } catch (SQLException err) {
-            System.out.println(err.getMessage());
-        }
+
+        Statement stmt = conn.createStatement();
+        status = stmt.execute(q);
 
         // Close DB Connection
-        try {
-            conn.close();
-        } catch (SQLException err) {
-            System.out.println(err.getMessage());
-        }
+        conn.close();
+
         return status;
     }
 
     /**
      * Execute query that returns rows of data
-     *
+     * As ResultSet cant be read after connection is closed, Connection instance will be returned
+     * 
+     * Developer are expected to close the connection after usage
      * @param q SQLITE query
-     * @return ResultSet of the query
+     * @return Connection and ResultSet instance in a pair
+     * @see Generic.Pair
      * @throws SQLException
      */
-    public ResultSet resultQuery(String q) throws SQLException {
+    public Pair<Connection, ResultSet> resultQuery(String q) throws SQLException {
         Connection conn = connectDB();
         ResultSet result = null;
-        try {
-            Statement stmt = conn.createStatement();
-            result = stmt.executeQuery(q);
-        } catch (SQLException err) {
-            System.out.println(err.getMessage());
-        }
 
-        // Close DB Connection
-        try {
-            conn.close();
-        } catch (SQLException err) {
-            System.out.println(err.getMessage());
-        }
+        Statement stmt = conn.createStatement();
+        result = stmt.executeQuery(q);
 
-        return result;
+        return new Pair<>(conn, result);
     }
 }
