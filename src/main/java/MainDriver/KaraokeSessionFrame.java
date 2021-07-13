@@ -18,6 +18,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.lyricsPane.setText("<b>Hi</b> Im not bold");
+       
     }
 
     /**

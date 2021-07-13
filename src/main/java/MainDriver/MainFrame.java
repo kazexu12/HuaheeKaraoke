@@ -5,14 +5,11 @@
  */
 package MainDriver;
 
-import DAO.RegisteredSessions;
-import DTO.RegisteredSession;
 import Generic.DBManager;
-import java.awt.event.WindowEvent;
+import SessionManagement.ADT.ArrayList;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.sql.SQLException;
-import java.util.List;
 import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +19,7 @@ import org.apache.logging.log4j.Logger;
  * @author zkang
  */
 public class MainFrame extends javax.swing.JFrame {
-    
+
     private static final Logger logger = LogManager.getLogger(MainFrame.class.getName());
 
     /**
@@ -47,6 +44,7 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Unable to find TABLE_SCHEMA.sql in classpath", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
+
     }
 
     /**
@@ -65,6 +63,7 @@ public class MainFrame extends javax.swing.JFrame {
         adminLoginBtn = new javax.swing.JButton();
         memberLoginBtn = new javax.swing.JButton();
         quitBtn = new javax.swing.JButton();
+        playgroundBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Huahee Karaoke");
@@ -73,7 +72,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.setMinimumSize(new java.awt.Dimension(0, 0));
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWeights = new double[] {1.0};
-        jPanel1Layout.rowWeights = new double[] {1.0, 1.0, 1.0, 1.0, 1.0};
+        jPanel1Layout.rowWeights = new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
         jPanel1.setLayout(jPanel1Layout);
 
         Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -125,6 +124,19 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel1.add(quitBtn, gridBagConstraints);
 
+        playgroundBtn.setText("Playground");
+        playgroundBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playgroundBtnActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        jPanel1.add(playgroundBtn, gridBagConstraints);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,7 +145,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
         );
 
         pack();
@@ -155,7 +167,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (true) {
             // Code to pass session data into the JFrame
             new KaraokeSessionFrame().setVisible(true);
-            
+
             // Close the menu jframe
             this.setVisible(false);
             this.dispose();
@@ -164,17 +176,25 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_enterSessKeyBtnActionPerformed
 
+    private void playgroundBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playgroundBtnActionPerformed
+        // TODO add your handling code here:|
+        // Close the menu jframe
+        this.setVisible(false);
+        this.dispose();
+        new Playground().setVisible(true);
+    }//GEN-LAST:event_playgroundBtnActionPerformed
+
     /**
      * Self-made class to capture uncaught exceptions
      */
     static class ErrorHandler implements UncaughtExceptionHandler {
-        
+
         @Override
         public void uncaughtException(Thread t, Throwable e) {
             // Logs the exception using log4j 2
             logger.error("Uncaught exception in thread: " + t.getName(), e);
         }
-        
+
     }
 
     /**
@@ -221,6 +241,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton enterSessKeyBtn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton memberLoginBtn;
+    private javax.swing.JButton playgroundBtn;
     private javax.swing.JButton quitBtn;
     // End of variables declaration//GEN-END:variables
 }
