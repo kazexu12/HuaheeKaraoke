@@ -193,6 +193,7 @@ public class MainFrame extends javax.swing.JFrame {
         public void uncaughtException(Thread t, Throwable e) {
             // Logs the exception using log4j 2
             logger.error("Uncaught exception in thread: " + t.getName(), e);
+            e.printStackTrace();
         }
 
     }

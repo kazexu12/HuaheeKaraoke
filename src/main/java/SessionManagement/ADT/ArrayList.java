@@ -43,12 +43,13 @@ public class ArrayList<T> implements List<T> {
         final int newSize = size() + 1;
         Object[] newArr = new Object[newSize];
         int i;
-        for (i = 0; i < pos; i++) {
-            newArr[i] = arr[i];
+        int j;
+        for (i = 0, j = 0; i < pos; i++) {
+            newArr[j++] = arr[i];
         }
-        newArr[i] = item;
-        for (; i < newSize; i++) {
-            newArr[i] = arr[i];
+        newArr[j++] = item;
+        for (; i < size(); i++) {
+            newArr[j++] = arr[i];
         }
         arr = newArr;
     }
