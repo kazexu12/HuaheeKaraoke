@@ -5,8 +5,6 @@
  */
 package MainDriver;
 
-import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author zkang
