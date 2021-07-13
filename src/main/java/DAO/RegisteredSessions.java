@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Data access object for RegisteredSession from SQLite DB
  *
- * @author zkang
+ * @author Loo Zi Kang
  */
 public class RegisteredSessions implements DAOInterface<RegisteredSession> {
 

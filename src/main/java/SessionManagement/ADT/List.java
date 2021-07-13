@@ -7,7 +7,7 @@ package SessionManagement.ADT;
 
 /**
  *
- * @author zkang
+ * @author Loo Zi Kang
  * @param <T> Type of the list
  */
 public interface List<T> {

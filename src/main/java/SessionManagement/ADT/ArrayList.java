@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SessionManagement.ADT;
 
 /**
- *
- * @author zkang
+ * 
+ * @author Loo Zi Kang
  * @param <T> type of objects to store
  */
 public class ArrayList<T> implements List<T> {
@@ -56,6 +51,11 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean contains(T item) {
+        for (int i = 0; i < size(); i++) {
+            if (arr[i].equals(item)) {
+                return true;
+            }
+        }
         return false;
     }
 

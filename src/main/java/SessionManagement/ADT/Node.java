@@ -7,7 +7,7 @@ package SessionManagement.ADT;
 
 /**
  *
- * @author zkang
+ * @author Loo Zi Kang
  * @param <T> type of the node
  */
 public class Node<T> {

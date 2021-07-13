@@ -7,7 +7,7 @@ package SessionManagement.ADT;
 
 /**
  *
- * @author zkang
+ * @author Loo Zi Kang
  * @param <T> type of this queue
  */
 public interface QueueInterface<T> {

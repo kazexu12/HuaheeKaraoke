@@ -7,7 +7,7 @@ package DTO;
 
 /**
  *
- * @author zkang
+ * @author Loo Zi Kang
  */
 public class User {
 

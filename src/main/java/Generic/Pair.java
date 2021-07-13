@@ -8,7 +8,7 @@ package Generic;
 /**
  * Store variable of 2 type in a pair
  *
- * @author zkang
+ * @author Loo Zi Kang
  * @param <T> Type of first item in pair
  * @param <K> Type of second item in pair
  */

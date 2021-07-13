@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 /**
  *
- * @author zkang
+ * @author Loo Zi Kang
  * @param <T> type of data this LinkedQueue stores
  */
 public class LinkedQueue<T> implements QueueInterface<T> {

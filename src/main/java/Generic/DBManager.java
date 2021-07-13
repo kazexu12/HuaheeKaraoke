@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
  * - Removed disconnectDB() <br>
  * - Now expects the developer to handle SQLException on their own
  *
- * @author Looz
+ * @author Loo Zi Kang
  * @version 1.1
  */
 public class DBManager {

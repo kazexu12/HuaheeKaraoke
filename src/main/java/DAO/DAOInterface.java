@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Abstract class for Data Access Objects used in this program
- * @author zkang
+ * @author Loo Zi Kang
  * @param <T> type used in this DAO
  */
 public interface DAOInterface<T> {
