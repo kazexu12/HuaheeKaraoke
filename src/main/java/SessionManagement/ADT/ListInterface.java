@@ -10,7 +10,7 @@ package SessionManagement.ADT;
  * @author Loo Zi Kang
  * @param <T> Type of the list
  */
-public interface List<T> {
+public interface ListInterface<T> {
     public abstract void add(T item);
     public abstract void add(int pos, T item);
     public abstract boolean contains(T item);

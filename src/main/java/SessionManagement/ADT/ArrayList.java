@@ -5,7 +5,7 @@ package SessionManagement.ADT;
  * @author Loo Zi Kang
  * @param <T> type of objects to store
  */
-public class ArrayList<T> implements List<T> {
+public class ArrayList<T> implements ListInterface<T> {
 
     private Object[] arr;
 
