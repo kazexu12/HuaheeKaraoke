@@ -1,7 +1,7 @@
 
 package DAO;
 
-import java.util.List;
+import SessionManagement.ADT.ArrayList;
 
 /**
  * Abstract class for Data Access Objects used in this program
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface DAOInterface<T> {
 
-    List<T> getAll();
+    ArrayList<T> getAll();
 
     void save(T t);
 

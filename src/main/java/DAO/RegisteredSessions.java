@@ -3,11 +3,10 @@ package DAO;
 import DTO.RegisteredSession;
 import Generic.DBManager;
 import Generic.Pair;
+import SessionManagement.ADT.ArrayList;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 public class RegisteredSessions implements DAOInterface<RegisteredSession> {
 
     private final Logger logger = LogManager.getLogger(RegisteredSessions.class.getName());
-    private List<DTO.RegisteredSession> sessions;
+    private ArrayList<DTO.RegisteredSession> sessions;
 
     public RegisteredSessions() {
         sessions = new ArrayList<>();
@@ -59,7 +58,7 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
     }
 
     @Override
-    public List<RegisteredSession> getAll() {
+    public ArrayList<RegisteredSession> getAll() {
         return sessions;
     }
 
