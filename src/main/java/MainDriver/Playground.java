@@ -120,7 +120,8 @@ public class Playground extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here
         RegisteredSessions rs = new RegisteredSessions();
-        RegisteredSession r = new RegisteredSession("S002", "key", 'A', 100, "date", "start", "end", 0, 0);
+        // RegisteredSession r = new RegisteredSession("S002", "key", 'A', 100, "date", "start", "end", 0, 0);
+        RegisteredSession r = new RegisteredSession();
         try {
             rs.save(r);
         } catch (SQLException e) {

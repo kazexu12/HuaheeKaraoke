@@ -15,7 +15,7 @@ public interface DAOInterface<T> {
 
     void save(T t) throws SQLException;
 
-    void update(T t, String[] params);
+    void update(T t, Object[] params) throws SQLException ;
 
-    void delete(T t);
+    void delete(T t) throws SQLException;
 }

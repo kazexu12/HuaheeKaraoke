@@ -85,7 +85,6 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
                 + "strftime('%%s', 'now'),"
                 + "strftime('%%s', 'now')"
                 + ");", args);
-        
         db.execQuery(query);
         logger.info("Successfully added record in DB");
         
@@ -93,12 +92,12 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
     }
 
     @Override
-    public void update(RegisteredSession t, String[] params) {
+    public void update(RegisteredSession t, Object[] params) throws SQLException {
 
     }
 
     @Override
-    public void delete(RegisteredSession t) {
+    public void delete(RegisteredSession t) throws SQLException {
 
     }
 
