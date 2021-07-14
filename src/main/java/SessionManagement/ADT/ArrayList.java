@@ -98,5 +98,26 @@ public class ArrayList<T> implements ListInterface<T> {
         arr = newArr;
         return removedItem;
     }
+    
+    @Override
+    public T remove(Object o) {
+        if(isEmpty()) {
+            throw new RuntimeException("List is empty");
+        }
+        final int newSize = size() - 1;
+        Object[] newArr = new Object[newSize];
+        int i;
+        int j;
+        T removedItem = null;
+        for (i = 0, j = 0; i < size(); i++) {
+            if (arr[i].equals(o)) {
+                removedItem = (T) arr[i];
+                continue;
+            }
+            newArr[j++] = arr[i];
+        }
+        arr = newArr;
+        return removedItem;
+    }
 
 }

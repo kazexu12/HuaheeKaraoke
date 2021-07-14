@@ -18,4 +18,5 @@ public interface ListInterface<T> {
     public abstract boolean isEmpty();
     public abstract T get(int pos);
     public abstract T remove(int pos);
+    public abstract T remove(Object o);
 }
