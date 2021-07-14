@@ -10,7 +10,6 @@ import DTO.RegisteredSession;
 import SessionManagement.ADT.ArrayList;
 import java.sql.SQLException;
 import java.util.HashMap;
-import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

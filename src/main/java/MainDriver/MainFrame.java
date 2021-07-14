@@ -6,7 +6,6 @@
 package MainDriver;
 
 import Generic.DBManager;
-import SessionManagement.ADT.ArrayList;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.sql.SQLException;
