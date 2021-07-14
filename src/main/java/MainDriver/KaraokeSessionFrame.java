@@ -18,7 +18,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.lyricsPane.setText("<b>Hi</b> Im not bold");
-       
+
     }
 
     /**
@@ -106,6 +106,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         addSongBtn.setMaximumSize(new java.awt.Dimension(150, 22));
         addSongBtn.setMinimumSize(new java.awt.Dimension(150, 22));
         addSongBtn.setPreferredSize(new java.awt.Dimension(150, 22));
+        addSongBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSongBtnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -223,6 +228,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         this.dispose();
         new MainFrame().setVisible(true);
     }//GEN-LAST:event_stopSessionBtnActionPerformed
+
+    private void addSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongBtnActionPerformed
+        // TODO add your handling code here:
+        new KaraokeSessionAddSongDialog(this).setVisible(true);
+    }//GEN-LAST:event_addSongBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSongBtn;
