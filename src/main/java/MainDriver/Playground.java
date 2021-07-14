@@ -9,6 +9,7 @@ import DAO.RegisteredSessions;
 import DTO.RegisteredSession;
 import SessionManagement.ADT.ArrayList;
 import java.sql.SQLException;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -120,13 +121,16 @@ public class Playground extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here
         RegisteredSessions rs = new RegisteredSessions();
-        // RegisteredSession r = new RegisteredSession("S002", "key", 'A', 100, "date", "start", "end", 0, 0);
-        RegisteredSession r = new RegisteredSession();
+        ArrayList<RegisteredSession> al = rs.getAll();
+        RegisteredSession updateMe = al.get(1);
         try {
-            rs.save(r);
+            rs.update(updateMe, new HashMap<String, Object>() {
+                {
+                    put("session_key", "This is a new set of keys");
+                }
+            });
         } catch (SQLException e) {
-            logger.error("Fail to add session record", e);
-            JOptionPane.showMessageDialog(this, "Kenot add :<");
+            logger.error("Failed", e);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

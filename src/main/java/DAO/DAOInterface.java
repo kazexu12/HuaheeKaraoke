@@ -3,6 +3,7 @@ package DAO;
 
 import SessionManagement.ADT.ArrayList;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
  * Abstract class for Data Access Objects used in this program
@@ -15,7 +16,7 @@ public interface DAOInterface<T> {
 
     void save(T t) throws SQLException;
 
-    void update(T t, Object[] params) throws SQLException ;
+    void update(T t, HashMap<String, Object> params) throws SQLException;
 
     void delete(T t) throws SQLException;
 }

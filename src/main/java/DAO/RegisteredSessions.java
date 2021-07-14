@@ -7,6 +7,7 @@ import SessionManagement.ADT.ArrayList;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,19 +87,58 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
                 + "strftime('%%s', 'now')"
                 + ");", args);
         db.execQuery(query);
-        logger.info("Successfully added record in DB");
-        
+        logger.info("Successfully added record in DB (session_id: " + t.getSession_id() + ")");
+
         this.sessions.add(t);
     }
 
     @Override
-    public void update(RegisteredSession t, Object[] params) throws SQLException {
+    public void update(RegisteredSession t, HashMap<String, Object> params) throws SQLException {
+        DBManager db = new DBManager();
+        String setClause = "SET ";
+        String whereClause = String.format(" WHERE session_id='%s'", t.getSession_id());
 
+        boolean useSetClause = false;
+        if (params.containsKey("session_key")) {
+            setClause += String.format("session_key = '%s',", params.get("session_key"));
+            useSetClause = true;
+        }
+        if (params.containsKey("room_size")) {
+            setClause += String.format("room_size = '%s',", params.get("room_size"));
+            useSetClause = true;
+        }
+        if (params.containsKey("head_count")) {
+            setClause += String.format("head_count = %d,", params.get("head_count"));
+            useSetClause = true;
+        }
+        if (params.containsKey("session_date")) {
+            setClause += String.format("session_date = '%s',", params.get("session_date"));
+            useSetClause = true;
+        }
+        if (params.containsKey("session_start_time")) {
+            setClause += String.format("session_start_time = '%s',", params.get("session_start_time"));
+            useSetClause = true;
+        }
+        if (params.containsKey("session_end_time")) {
+            setClause += String.format("session_end_time = '%s',", params.get("session_end_time"));
+            useSetClause = true;
+        }
+
+        // Remove last character from setClause to remove additional ',' from string
+        setClause = setClause.substring(0, setClause.length() - 1);
+
+        String query = "UPDATE RegisteredSessions " + (useSetClause ? setClause : "") + whereClause;
+        logger.info("Executing query: " + query);
+        db.execQuery(query);
+        logger.info("Successfully updated record in DB (session_id: " + t.getSession_id() + ")");
     }
 
     @Override
     public void delete(RegisteredSession t) throws SQLException {
-
+        DBManager db = new DBManager();
+        this.sessions.remove(t);
+        String query = String.format("DELETE FROM RegisteredSessions WHERE session_id='%s'", new Object[]{t.getSession_id()});
+        db.execQuery(query);
+        logger.info("Successfully deleted record in DB (session_id: " + t.getSession_id() + ")");
     }
-
 }
