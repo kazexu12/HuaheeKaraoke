@@ -7,6 +7,7 @@ package MainDriver;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,19 +16,19 @@ import java.awt.event.WindowEvent;
 public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
     /**
-     * 
+     *
      * @param parent parent window calling this dialog
      */
     public KaraokeSessionAddSongDialog(javax.swing.JFrame parent) {
         // Call JDialog constructor
         super(parent, true);
-        
+
         // Prepare page
         initComponents();
-        
+
         this.setTitle(parent.getTitle() + " >> Add Song");
         this.setLocationRelativeTo(parent);
-        
+
         // Make sure the window is properly disposed
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -128,7 +129,9 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
         addSongListingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "1", "2", "3", null}
+                {null, "立ち入り禁止", "まふまふ", "", "03:37"},
+                {null, "嘘つきの世界", "鹿乃", "Utaite", "03:28"},
+                {null, "夕凪、某、花惑い", "ヨルシカ", "", "03:18"}
             },
             new String [] {
                 "", "Title", "Artist", "Genre", "Duration"
@@ -147,6 +150,11 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        addSongListingTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                addSongListingTableMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(addSongListingTable);
@@ -211,6 +219,29 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
     private void searchSongQueryTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchSongQueryTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchSongQueryTextFieldActionPerformed
+
+    private void addSongListingTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addSongListingTableMousePressed
+        // TODO add your handling code here:
+        DefaultTableModel tableModel = (DefaultTableModel) this.addSongListingTable.getModel();
+        int selectedRow = this.addSongListingTable.getSelectedRow();
+        // System.out.println("Selected Row: " + selectedRow);
+        boolean oldValue = tableModel.getValueAt(selectedRow, 0) == null ? false : (boolean) tableModel.getValueAt(selectedRow, 0);
+        tableModel.setValueAt(!oldValue, selectedRow, 0);
+        
+        int rowCount = tableModel.getRowCount();
+        int checkedCount = 0;
+        for(int i = 0; i < rowCount; i++) {
+            boolean isChecked = tableModel.getValueAt(i, 0) == null ? false : (boolean) tableModel.getValueAt(i, 0);
+            if(isChecked) {
+                checkedCount++;
+            }
+        }
+        if(checkedCount != 0) {
+            this.addSongBtn.setText("Add " + checkedCount + " song(s)");
+        } else {
+            this.addSongBtn.setText("Add song(s)");
+        }
+    }//GEN-LAST:event_addSongListingTableMousePressed
 
     public Object[] run() {
         this.setVisible(true);
