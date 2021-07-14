@@ -2,6 +2,7 @@
 package DAO;
 
 import SessionManagement.ADT.ArrayList;
+import java.sql.SQLException;
 
 /**
  * Abstract class for Data Access Objects used in this program
@@ -12,7 +13,7 @@ public interface DAOInterface<T> {
 
     ArrayList<T> getAll();
 
-    void save(T t);
+    void save(T t) throws SQLException;
 
     void update(T t, String[] params);
 

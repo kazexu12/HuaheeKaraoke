@@ -63,8 +63,33 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
     }
 
     @Override
-    public void save(RegisteredSession t) {
+    public void save(RegisteredSession t) throws SQLException {
+        DBManager db = new DBManager();
+        Object[] args = new Object[]{
+            t.getSession_id(),
+            t.getSession_key(),
+            t.getRoom_size(),
+            t.getHead_count(),
+            t.getSession_date(),
+            t.getSession_start_time(),
+            t.getSession_end_time()
+        };
+        String query = String.format("INSERT INTO RegisteredSessions VALUES("
+                + "'%s',"
+                + "'%s',"
+                + "'%c',"
+                + "%d,"
+                + "'%s',"
+                + "'%s',"
+                + "'%s',"
+                + "strftime('%%s', 'now'),"
+                + "strftime('%%s', 'now')"
+                + ");", args);
         
+        db.execQuery(query);
+        logger.info("Successfully added record in DB");
+        
+        this.sessions.add(t);
     }
 
     @Override

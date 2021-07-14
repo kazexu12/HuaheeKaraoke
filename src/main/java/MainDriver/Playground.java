@@ -5,7 +5,13 @@
  */
 package MainDriver;
 
+import DAO.RegisteredSessions;
+import DTO.RegisteredSession;
 import SessionManagement.ADT.ArrayList;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -14,6 +20,7 @@ import SessionManagement.ADT.ArrayList;
 public class Playground extends javax.swing.JFrame {
 
     private ArrayList<String> testList;
+    private static final Logger logger = LogManager.getLogger(Playground.class.getName());
 
     /**
      * Creates new form Playground
@@ -37,6 +44,7 @@ public class Playground extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,6 +66,13 @@ public class Playground extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,6 +85,8 @@ public class Playground extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -79,7 +96,8 @@ public class Playground extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
                 .addContainerGap())
@@ -99,10 +117,22 @@ public class Playground extends javax.swing.JFrame {
         updateLabel();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here
+        RegisteredSessions rs = new RegisteredSessions();
+        RegisteredSession r = new RegisteredSession("S002", "key", 'A', 100, "date", "start", "end", 0, 0);
+        try {
+            rs.save(r);
+        } catch (SQLException e) {
+            logger.error("Fail to add session record", e);
+            JOptionPane.showMessageDialog(this, "Kenot add :<");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     private void updateLabel() {
         String hm = "";
         for (int i = 0; i < testList.size(); i++) {
-            hm += (i+1) + ". " + testList.get(i) + "\n";
+            hm += (i + 1) + ". " + testList.get(i) + "\n";
         }
         this.jLabel1.setText(hm);
     }
@@ -110,6 +140,7 @@ public class Playground extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JTextArea jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
