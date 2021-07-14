@@ -231,7 +231,8 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     private void addSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongBtnActionPerformed
         // TODO add your handling code here:
-        new KaraokeSessionAddSongDialog(this).setVisible(true);
+        Object[] response = new KaraokeSessionAddSongDialog(this).run();
+        System.out.println(response[0]);
     }//GEN-LAST:event_addSongBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

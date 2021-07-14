@@ -5,6 +5,9 @@
  */
 package MainDriver;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 /**
  *
  * @author zkang
@@ -14,6 +17,11 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
     public KaraokeSessionAddSongDialog(javax.swing.JFrame parent) {
         super(parent, true);
         initComponents();
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                e.getWindow().dispose();
+            }
+        });
     }
 
     /**
@@ -24,13 +32,88 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        centerPanel = new javax.swing.JPanel();
+        topPanel = new javax.swing.JPanel();
+        bottomPanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        addSongBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        javax.swing.GroupLayout centerPanelLayout = new javax.swing.GroupLayout(centerPanel);
+        centerPanel.setLayout(centerPanelLayout);
+        centerPanelLayout.setHorizontalGroup(
+            centerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        centerPanelLayout.setVerticalGroup(
+            centerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 158, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
+
+        javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
+        topPanel.setLayout(topPanelLayout);
+        topPanelLayout.setHorizontalGroup(
+            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        topPanelLayout.setVerticalGroup(
+            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(topPanel, java.awt.BorderLayout.PAGE_START);
+
+        bottomPanel.setLayout(new java.awt.BorderLayout());
+
+        java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
+        jPanel1Layout.columnWeights = new double[] {1.0, 1.0};
+        jPanel1Layout.rowWeights = new double[] {1.0};
+        jPanel1.setLayout(jPanel1Layout);
+
+        addSongBtn.setText("Add Song");
+        addSongBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSongBtnActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 10);
+        jPanel1.add(addSongBtn, gridBagConstraints);
+
+        cancelBtn.setText("Cancel");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 10);
+        jPanel1.add(cancelBtn, gridBagConstraints);
+
+        bottomPanel.add(jPanel1, java.awt.BorderLayout.EAST);
+
+        getContentPane().add(bottomPanel, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongBtnActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_addSongBtnActionPerformed
+
+    public Object[] run() {
+        this.setVisible(true);
+        return new Object[]{"Test"};
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addSongBtn;
+    private javax.swing.JPanel bottomPanel;
+    private javax.swing.JButton cancelBtn;
+    private javax.swing.JPanel centerPanel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }
