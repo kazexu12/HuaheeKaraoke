@@ -1,7 +1,7 @@
 package SessionManagement.ADT;
 
 /**
- * 
+ *
  * @author Loo Zi Kang
  * @param <T> type of objects to store
  */
@@ -98,26 +98,24 @@ public class ArrayList<T> implements ListInterface<T> {
         arr = newArr;
         return removedItem;
     }
-    
+
     @Override
     public T remove(Object o) {
-        if(isEmpty()) {
+        if (isEmpty()) {
             throw new RuntimeException("List is empty");
         }
-        final int newSize = size() - 1;
-        Object[] newArr = new Object[newSize];
+        boolean found = false;
         int i;
-        int j;
-        T removedItem = null;
-        for (i = 0, j = 0; i < size(); i++) {
+        for (i = 0; i < arr.length; i++) {
             if (arr[i].equals(o)) {
-                removedItem = (T) arr[i];
-                continue;
+                found = true;
+                break;
             }
-            newArr[j++] = arr[i];
         }
-        arr = newArr;
-        return removedItem;
+        if(!found) {
+            throw new RuntimeException("Object is not in the list");
+        }
+        return remove(i);
     }
 
 }
