@@ -145,15 +145,23 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(nowPlayingListTable);
         if (nowPlayingListTable.getColumnModel().getColumnCount() > 0) {
             nowPlayingListTable.getColumnModel().getColumn(0).setMaxWidth(40);
-            nowPlayingListTable.getColumnModel().getColumn(1).setMinWidth(450);
+            nowPlayingListTable.getColumnModel().getColumn(2).setMaxWidth(200);
+            nowPlayingListTable.getColumnModel().getColumn(3).setMaxWidth(200);
             nowPlayingListTable.getColumnModel().getColumn(4).setMaxWidth(100);
         }
 

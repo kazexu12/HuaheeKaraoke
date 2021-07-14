@@ -55,6 +55,8 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         searchSongQueryTextField = new javax.swing.JTextField();
         centerPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        addSongListingTable = new javax.swing.JTable();
         bottomPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         addSongBtn = new javax.swing.JButton();
@@ -119,16 +121,46 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
         getContentPane().add(topPanel, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout centerPanelLayout = new javax.swing.GroupLayout(centerPanel);
+        java.awt.GridBagLayout centerPanelLayout = new java.awt.GridBagLayout();
+        centerPanelLayout.columnWeights = new double[] {1.0};
+        centerPanelLayout.rowWeights = new double[] {1.0};
         centerPanel.setLayout(centerPanelLayout);
-        centerPanelLayout.setHorizontalGroup(
-            centerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
-        );
-        centerPanelLayout.setVerticalGroup(
-            centerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 216, Short.MAX_VALUE)
-        );
+
+        addSongListingTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, "1", "2", "3", null}
+            },
+            new String [] {
+                "", "Title", "Artist", "Genre", "Duration"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(addSongListingTable);
+        if (addSongListingTable.getColumnModel().getColumnCount() > 0) {
+            addSongListingTable.getColumnModel().getColumn(0).setMaxWidth(30);
+            addSongListingTable.getColumnModel().getColumn(2).setMaxWidth(200);
+            addSongListingTable.getColumnModel().getColumn(3).setMaxWidth(200);
+            addSongListingTable.getColumnModel().getColumn(4).setMaxWidth(100);
+        }
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
+        centerPanel.add(jScrollPane1, gridBagConstraints);
 
         getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
 
@@ -139,7 +171,7 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         jPanel1Layout.rowWeights = new double[] {1.0};
         jPanel1.setLayout(jPanel1Layout);
 
-        addSongBtn.setText("Add Song");
+        addSongBtn.setText("Add song(s)");
         addSongBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addSongBtnActionPerformed(evt);
@@ -187,6 +219,7 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSongBtn;
+    private javax.swing.JTable addSongListingTable;
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JPanel centerPanel;
@@ -195,6 +228,7 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel searchLabel;
     private javax.swing.JTextField searchSongQueryTextField;
     private javax.swing.JPanel topPanel;
