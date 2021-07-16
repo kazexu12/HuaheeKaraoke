@@ -5,11 +5,19 @@
  */
 package MainDriver;
 
+import java.awt.Point;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  *
  * @author zkang
  */
 public class KaraokeSessionFrame extends javax.swing.JFrame {
+
+    private static final Logger logger = LogManager.getLogger(KaraokeSessionFrame.class.getName());
 
     /**
      * Creates new form Temp
@@ -18,7 +26,6 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.lyricsPane.setText("<b>Hi</b> Im not bold");
-
     }
 
     /**
@@ -121,6 +128,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         removeSongBtn.setText("Remove Song");
         removeSongBtn.setMinimumSize(new java.awt.Dimension(150, 22));
         removeSongBtn.setPreferredSize(new java.awt.Dimension(150, 22));
+        removeSongBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeSongBtnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -136,7 +148,9 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
         nowPlayingListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {"1", "Title C", "Artist C", "Genre A", "3:33"},
+                {"2", "Title B", "Artist B", "Genre A", "2:59"},
+                {"3", "Title A", "Artist A", "Genre A", "1:11"}
             },
             new String [] {
                 "No.", "Title", "Artist", "Genre", "Duration"
@@ -146,7 +160,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -155,6 +169,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        nowPlayingListTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                nowPlayingListTableMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(nowPlayingListTable);
@@ -242,6 +261,44 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         Object[] response = new KaraokeSessionAddSongDialog(this).run();
         System.out.println(response[0]);
     }//GEN-LAST:event_addSongBtnActionPerformed
+
+    private void removeSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSongBtnActionPerformed
+        // TODO add your handling code here
+    }//GEN-LAST:event_removeSongBtnActionPerformed
+
+    private void nowPlayingListTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nowPlayingListTableMousePressed
+        // TODO add your handling code here:
+        JTable table = (JTable) evt.getSource();
+        Point point = evt.getPoint();
+        int row = table.rowAtPoint(point);
+        if (evt.getClickCount() == 2 && table.getSelectedRow() != -1) {
+            // your valueChanged overridden method 
+            removeHtmlTagsFromTable(table);
+            boldTableRow(table, row);
+        }
+    }//GEN-LAST:event_nowPlayingListTableMousePressed
+
+    private void boldTableRow(JTable table, int row) {
+        int colCount = table.getColumnCount();
+        for (int i = 0; i < colCount; i++) {
+            table.setValueAt("<html><b>" + table.getValueAt(row, i) + "</b></html>", row, i);
+        }
+    }
+
+    private void removeHtmlTagsFromTable(JTable table) {
+        int colCount = table.getColumnCount();
+        int rowCount = table.getRowCount();
+        for (int row = 0; row < rowCount; row++) {
+            for (int col = 0; col < colCount; col++) {
+                String newValue = (String) table.getValueAt(row, col);
+                newValue = newValue.replace("<html>", "");
+                newValue = newValue.replace("</html>", "");
+                newValue = newValue.replace("<b>", "");
+                newValue = newValue.replace("</b>", "");
+                table.setValueAt(newValue, row, col);
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSongBtn;
