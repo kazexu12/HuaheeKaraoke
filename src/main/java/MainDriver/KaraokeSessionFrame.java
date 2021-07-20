@@ -6,6 +6,10 @@
 package MainDriver;
 
 import java.awt.Point;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import javax.swing.JTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +34,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         player.addSong(new DTO.Song());
         player.addSong(new DTO.Song());
         player.addSong(new DTO.Song());
+        loadLyrics();
     }
 
     /**
@@ -285,6 +290,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     /**
      * Bold the values on table by add <b> tags to the values
+     *
      * @param table which table
      * @param row which row
      */
@@ -309,10 +315,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             }
         }
     }
-    
+
     /**
      * Change the tableView of now playing song and switch songs
-     * @param row 
+     *
+     * @param row
      */
     private void playSong(int row) {
         if (!this.player.isAlive()) {
@@ -325,14 +332,33 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     /**
      * Update the timestamp on the frame
+     *
      * @param now
-     * @param max 
+     * @param max
      */
     public void updateTimestamp(int now, int max) {
         nowPlayingTimestampLabel.setText((int) (now / 60) + ":" + String.format("%02d", (now % 60)));
         maxDurationTimestampLabel.setText((int) (max / 60) + ":" + String.format("%02d", (max % 60)));
         progressSlider.setMaximum(max);
         progressSlider.setValue(now);
+    }
+
+    private void loadLyrics() {
+        try {
+            InputStream is = getClass().getClassLoader().getResourceAsStream("LRC/lyrics.lrc");
+            BufferedReader buf = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            String line;
+            String lyricsText = "<html><center>";
+            int lineCounter = 0;
+            while ((line = buf.readLine()) != null) {
+                lyricsText += "<a name='" + lineCounter++ + "'>" + line + "</a><br>";
+            }
+            lyricsText += "</center></html>";
+            lyricsPane.setText(lyricsText);
+            lyricsPane.scrollToReference("0");
+        } catch (IOException e) {
+            logger.error("Failed to read file from resources folder", e);
+        }
     }
 
     // ====================================
