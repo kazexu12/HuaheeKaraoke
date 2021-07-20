@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- *
+ * Class that creates a new Thread upon creation and serve as a timer and PlayerStateManager to KaraokeSessionFrame
  * @author Loo Zi Kang
  */
 public class BackgroundPlayer extends Thread {
