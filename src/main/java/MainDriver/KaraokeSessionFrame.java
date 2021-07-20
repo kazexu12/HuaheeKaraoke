@@ -6,7 +6,6 @@
 package MainDriver;
 
 import java.awt.Point;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
