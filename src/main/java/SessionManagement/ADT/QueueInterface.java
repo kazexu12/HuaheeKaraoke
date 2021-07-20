@@ -19,4 +19,6 @@ public interface QueueInterface<T> {
     public T peek();
 
     public boolean isEmpty();
+    
+    public void clear();
 }

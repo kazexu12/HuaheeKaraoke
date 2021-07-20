@@ -55,5 +55,11 @@ public class LinkedQueue<T> implements QueueInterface<T> {
     public boolean isEmpty() {
         return size == 0;
     }
-
+    
+    @Override
+    public void clear() {
+        first = null;
+        last = null;
+        size = 0;
+    }
 }
