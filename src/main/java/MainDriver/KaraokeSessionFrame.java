@@ -6,6 +6,7 @@
 package MainDriver;
 
 import java.awt.Point;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,14 +18,19 @@ import org.apache.logging.log4j.Logger;
 public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     private static final Logger logger = LogManager.getLogger(KaraokeSessionFrame.class.getName());
+    private BackgroundPlayer player;
 
     /**
      * Creates new form Temp
      */
     public KaraokeSessionFrame() {
+        player = new BackgroundPlayer(this);
         initComponents();
         this.setLocationRelativeTo(null);
         this.lyricsPane.setText("<b>Hi</b> Im not bold");
+        player.addSong(new DTO.Song());
+        player.addSong(new DTO.Song());
+        player.addSong(new DTO.Song());
     }
 
     /**
@@ -274,6 +280,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             // your valueChanged overridden method 
             removeHtmlTagsFromTable(table);
             boldTableRow(table, row);
+            playSong();
         }
     }//GEN-LAST:event_nowPlayingListTableMousePressed
 
@@ -299,6 +306,21 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         }
     }
 
+    private void playSong() {
+        if (!this.player.isAlive()) {
+            this.player.start();
+        }
+        this.player.setPlayerState(PlayerState.PLAYING);
+    }
+
+    public void updateTimestamp(int now, int max) {
+        nowPlayingTimestampLabel.setText((int) (now / 60) + ":" + String.format("%02d", (now % 60)));
+        maxDurationTimestampLabel.setText((int) (max / 60) + ":" + String.format("%02d", (max % 60)));
+        progressSlider.setMaximum(max);
+        progressSlider.setValue(now);
+    }
+
+    // ====================================
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSongBtn;
     private javax.swing.JPanel bottomPanel;
@@ -321,4 +343,6 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     private javax.swing.JButton stopSessionBtn;
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
+    // ====================================
+    // ====================================
 }
