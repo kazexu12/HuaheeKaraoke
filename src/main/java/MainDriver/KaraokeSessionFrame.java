@@ -277,12 +277,17 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         int row = table.rowAtPoint(point);
         if (evt.getClickCount() == 2 && table.getSelectedRow() != -1) {
             // your valueChanged overridden method 
-            removeHtmlTagsFromTable(table);
-            boldTableRow(table, row);
-            playSong();
+            // removeHtmlTagsFromTable(table);
+            // boldTableRow(table, row);
+            playSong(row);
         }
     }//GEN-LAST:event_nowPlayingListTableMousePressed
 
+    /**
+     * Bold the values on table by add <b> tags to the values
+     * @param table which table
+     * @param row which row
+     */
     private void boldTableRow(JTable table, int row) {
         int colCount = table.getColumnCount();
         for (int i = 0; i < colCount; i++) {
@@ -304,14 +309,25 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             }
         }
     }
-
-    private void playSong() {
+    
+    /**
+     * Change the tableView of now playing song and switch songs
+     * @param row 
+     */
+    private void playSong(int row) {
         if (!this.player.isAlive()) {
             this.player.start();
         }
         this.player.setPlayerState(PlayerState.PLAYING);
+        removeHtmlTagsFromTable(nowPlayingListTable);
+        boldTableRow(nowPlayingListTable, row);
     }
 
+    /**
+     * Update the timestamp on the frame
+     * @param now
+     * @param max 
+     */
     public void updateTimestamp(int now, int max) {
         nowPlayingTimestampLabel.setText((int) (now / 60) + ":" + String.format("%02d", (now % 60)));
         maxDurationTimestampLabel.setText((int) (max / 60) + ":" + String.format("%02d", (max % 60)));
