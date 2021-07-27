@@ -8,6 +8,7 @@ package MainDriver;
 import DAO.RegisteredSessions;
 import DTO.RegisteredSession;
 import SessionManagement.ADT.ArrayList;
+import SessionManagement.ADT.LinkedQueue;
 import java.sql.SQLException;
 import java.util.HashMap;
 import org.apache.logging.log4j.LogManager;
@@ -20,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 public class Playground extends javax.swing.JFrame {
 
     private ArrayList<String> testList;
+    private LinkedQueue<String> testQueue;
     private static final Logger logger = LogManager.getLogger(Playground.class.getName());
 
     /**
@@ -29,6 +31,7 @@ public class Playground extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         testList = new ArrayList<>();
+        testQueue = new LinkedQueue<>();
     }
 
     /**
@@ -108,7 +111,7 @@ public class Playground extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        testList.add("hi");
+        testQueue.enqueue("Data 1");
         updateLabel();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -134,11 +137,16 @@ public class Playground extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void updateLabel() {
-        String hm = "";
-        for (int i = 0; i < testList.size(); i++) {
-            hm += (i + 1) + ". " + testList.get(i) + "\n";
+        java.util.Iterator<String> i = this.testQueue.getIterator();
+        String s = "";
+        i.forEachRemaining((String data) -> {
+            System.out.println(data);
+        });
+        i = this.testQueue.getIterator();
+        while(i.hasNext()) {
+            s += i.next() + "\n";
         }
-        this.jLabel1.setText(hm);
+        jLabel1.setText(s);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

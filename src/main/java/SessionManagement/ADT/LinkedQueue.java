@@ -1,5 +1,6 @@
 package SessionManagement.ADT;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -55,11 +56,39 @@ public class LinkedQueue<T> implements QueueInterface<T> {
     public boolean isEmpty() {
         return size == 0;
     }
-    
+
     @Override
     public void clear() {
         first = null;
         last = null;
         size = 0;
     }
+
+    private class LinkedQueueIterator implements java.util.Iterator<T> {
+
+        private Node currentNode;
+
+        public LinkedQueueIterator() {
+            currentNode = first;
+        }
+ 
+       @Override
+        public boolean hasNext() {
+            return currentNode != null;
+        }
+
+        @Override
+        public T next() {
+            T data = (T) currentNode.data;
+            currentNode = currentNode.next;
+            return data;
+        }
+
+    }
+
+    @Override
+    public Iterator<T> getIterator() {
+        return new LinkedQueueIterator();
+    }
+
 }
