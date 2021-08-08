@@ -21,4 +21,6 @@ public interface QueueInterface<T> {
     public boolean isEmpty();
     
     public void clear();
+            
+    public java.util.Iterator<T> getIterator();
 }
