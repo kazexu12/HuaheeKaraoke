@@ -37,10 +37,20 @@ public class ArrayList<T> implements ListInterface<T> {
         if (getClass() != obj.getClass()) {
             return false;
         }
+
         final ArrayList<?> other = (ArrayList<?>) obj;
-        return Arrays.deepEquals(this.arr, other.arr);
+        if (other.size() != this.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < this.size(); i++) {
+            if (!arr[i].equals(other.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
-    
+
     @Override
     public void add(int pos, T item) {
         if (pos < 0) {
@@ -99,15 +109,15 @@ public class ArrayList<T> implements ListInterface<T> {
         if (pos > size()) {
             throw new RuntimeException("Cannot delete in position that do not exists: " + pos);
         }
-        
-        if(pos == size-1) {
+
+        if (pos == size - 1) {
             size--;
-            return arr[size-1];
+            return arr[size - 1];
         }
 
         T returnObj = arr[pos];
 
-        for (int i = pos; i < size-1; i++) {
+        for (int i = pos; i < size - 1; i++) {
             arr[i] = arr[i + 1];
         }
 
