@@ -35,6 +35,22 @@
                     </descriptorRefs>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
+                        <version>3.0</version>
+                        <usePhrasedFileName>true</usePhrasedFileName>
+                        <usePhrasedTestSuiteClassName>true</usePhrasedTestSuiteClassName>
+                        <usePhrasedTestCaseClassName>true</usePhrasedTestCaseClassName>
+                        <usePhrasedTestCaseMethodName>true</usePhrasedTestCaseMethodName>
+                    </statelessTestsetReporter>
+                    <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoReporter">
+                        <usePhrasedClassNameInRunning>true</usePhrasedClassNameInRunning>
+                    </statelessTestsetInfoReporter>
+                </configuration>                                
+            </plugin>
         </plugins>
     </build>
     
@@ -47,18 +63,18 @@
             <version>3.34.0</version>
         </dependency>
         <!-- https://search.maven.org/artifact/net.java.dev.jna/jna/5.8.0/jar -->
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
             <version>5.8.0</version>
         </dependency>-->
         <!-- https://search.maven.org/artifact/net.java.dev.jna/jna-platform/5.8.0/jar -->
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
             <version>5.8.0</version>
         </dependency>-->
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>
             <version>3.20.0</version>
@@ -67,7 +83,15 @@
             <groupId>org.jline</groupId>
             <artifactId>jline-terminal-jna</artifactId>
             <version>3.20.0</version>
-        </dependency>-->
+        </dependency> -->
+        
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.7.2</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
