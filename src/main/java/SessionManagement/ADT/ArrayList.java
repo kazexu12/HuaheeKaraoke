@@ -1,5 +1,7 @@
 package SessionManagement.ADT;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Loo Zi Kang
@@ -24,6 +26,21 @@ public class ArrayList<T> implements ListInterface<T> {
         arr[size++] = item;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ArrayList<?> other = (ArrayList<?>) obj;
+        return Arrays.deepEquals(this.arr, other.arr);
+    }
+    
     @Override
     public void add(int pos, T item) {
         if (pos < 0) {
