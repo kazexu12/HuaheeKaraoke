@@ -7,22 +7,21 @@ package SessionManagement.ADT;
  */
 public class ArrayList<T> implements ListInterface<T> {
 
-    private Object[] arr;
+    private T[] arr;
+    private final int DEFAULT_CAPACITY = 5;
+    private int size;
 
     public ArrayList() {
-        arr = new Object[]{};
+        size = 0;
+        arr = (T[]) new Object[DEFAULT_CAPACITY];
     }
 
     @Override
     public void add(T item) {
-        final int newSize = size() + 1;
-        Object[] newArr = new Object[newSize];
-        int i;
-        for (i = 0; i < arr.length; i++) {
-            newArr[i] = arr[i];
+        if (size == arr.length) {
+            expandArray();
         }
-        newArr[i] = item;
-        arr = newArr;
+        arr[size++] = item;
     }
 
     @Override
@@ -35,18 +34,15 @@ public class ArrayList<T> implements ListInterface<T> {
             throw new RuntimeException("Cannot insert at position that exceed list size: " + pos);
         }
 
-        final int newSize = size() + 1;
-        Object[] newArr = new Object[newSize];
-        int i;
-        int j;
-        for (i = 0, j = 0; i < pos; i++) {
-            newArr[j++] = arr[i];
+        if (size == arr.length) {
+            expandArray();
         }
-        newArr[j++] = item;
-        for (; i < size(); i++) {
-            newArr[j++] = arr[i];
+
+        for (int i = size; i > pos; i--) {
+            arr[i] = arr[i - 1];
         }
-        arr = newArr;
+        arr[pos] = item;
+        size++;
     }
 
     @Override
@@ -61,7 +57,7 @@ public class ArrayList<T> implements ListInterface<T> {
 
     @Override
     public int size() {
-        return arr.length;
+        return this.size;
     }
 
     @Override
@@ -71,6 +67,9 @@ public class ArrayList<T> implements ListInterface<T> {
 
     @Override
     public T get(int pos) {
+        if (pos >= size || pos < 0) {
+            throw new RuntimeException("Cannot get item at pos: " + pos + "; Reason: Out of bound");
+        }
         return (T) arr[pos];
     }
 
@@ -83,20 +82,20 @@ public class ArrayList<T> implements ListInterface<T> {
         if (pos > size()) {
             throw new RuntimeException("Cannot delete in position that do not exists: " + pos);
         }
-        final int newSize = size() - 1;
-        Object[] newArr = new Object[newSize];
-        int i;
-        int j;
-        T removedItem = null;
-        for (i = 0, j = 0; i < size(); i++) {
-            if (i == pos) {
-                removedItem = (T) arr[i];
-                continue;
-            }
-            newArr[j++] = arr[i];
+        
+        if(pos == size-1) {
+            size--;
+            return arr[size-1];
         }
-        arr = newArr;
-        return removedItem;
+
+        T returnObj = arr[pos];
+
+        for (int i = pos; i < size-1; i++) {
+            arr[i] = arr[i + 1];
+        }
+
+        size--;
+        return returnObj;
     }
 
     @Override
@@ -112,10 +111,16 @@ public class ArrayList<T> implements ListInterface<T> {
                 break;
             }
         }
-        if(!found) {
+        if (!found) {
             throw new RuntimeException("Object is not in the list");
         }
         return remove(i);
     }
 
+    private void expandArray() {
+        final int newLength = arr.length * 2;
+        T[] newArr = (T[]) new Object[newLength];
+        System.arraycopy(arr, 0, newArr, 0, size());
+        arr = newArr;
+    }
 }
