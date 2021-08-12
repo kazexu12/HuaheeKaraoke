@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.swing.JTable;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,11 +33,9 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         player = new BackgroundPlayer(this);
         initComponents();
         this.setLocationRelativeTo(null);
-        this.lyricsPane.setText("<b>Hi</b> Im not bold");
         player.addSong(new DTO.Song());
         player.addSong(new DTO.Song());
         player.addSong(new DTO.Song());
-        loadLyrics();
     }
 
     /**
@@ -78,6 +79,8 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         centerPanel.setLayout(centerPanelLayout);
 
         lyricsPane.setContentType("text/html"); // NOI18N
+        lyricsPane.setEditorKit(new HTMLEditorKit());
+        lyricsPane.setText("<html>\r\n  <head>\r\n\r\n  </head>\r\n  <body>\r\n    <center>\n      <p style=\"margin-top: 0\" id=\"body\">\r\n      \r\n      </p>\r\n    </center>\n  </body>\r\n</html>\r\n");
         jScrollPane3.setViewportView(lyricsPane);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -343,24 +346,36 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         progressSlider.setValue(now);
     }
 
-    private void loadLyrics() {
+    public void addLyric(String lyric) {
+        HTMLDocument doc = (HTMLDocument) lyricsPane.getDocument();
         try {
-            InputStream is = getClass().getClassLoader().getResourceAsStream("LRC/lyrics.lrc");
-            BufferedReader buf = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            String line;
-            String lyricsText = "<html><center>";
-            int lineCounter = 0;
-            while ((line = buf.readLine()) != null) {
-                lyricsText += "<a name='" + lineCounter++ + "'>" + line + "</a><br>";
-            }
-            lyricsText += "</center></html>";
-            lyricsPane.setText(lyricsText);
-            lyricsPane.scrollToReference("0");
-        } catch (IOException e) {
-            logger.error("Failed to read file from resources folder", e);
+            doc.insertBeforeEnd(doc.getElement("body"), lyric + "<br>");
+        } catch (IOException | BadLocationException e) {
+            logger.warn("Attempt to insert lyrics into pane failed");
         }
     }
 
+    public void clearLyric() {
+        lyricsPane.setText("");
+    }
+
+//    private void loadLyrics() {
+//        try {
+//            InputStream is = getClass().getClassLoader().getResourceAsStream("LRC/lyrics.lrc");
+//            BufferedReader buf = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//            String line;
+//            String lyricsText = "<html><center>";
+//            int lineCounter = 0;
+//            while ((line = buf.readLine()) != null) {
+//                lyricsText += "<a name='" + lineCounter++ + "'>" + line + "</a><br>";
+//            }
+//            lyricsText += "</center></html>";
+//            lyricsPane.setText(lyricsText);
+//            lyricsPane.scrollToReference("0");
+//        } catch (IOException e) {
+//            logger.error("Failed to read file from resources folder", e);
+//        }
+//    }
     // ====================================
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSongBtn;

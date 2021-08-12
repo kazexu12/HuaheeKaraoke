@@ -71,6 +71,16 @@ public class BackgroundPlayer extends Thread {
 
     public void updateParentView() {
         this.parent.updateTimestamp(timestampNow, timestampMax);
+        try {
+            Pair<Integer, String> lrcObj = this.lyricReader.getLyricsAt(timestampNow);
+//            int min = lrcObj.getLeft() / 60;
+//            int sec = lrcObj.getLeft() % 60;
+//            String lrc = String.format("[%02d:%02d]%s", new Object[]{min, sec, lrcObj.getRight()});
+//            this.parent.addLyric(lrc);
+            this.parent.addLyric(lrcObj.getRight());
+        } catch (IllegalStateException e) {
+
+        }
     }
 
     private void nextSong() {
@@ -147,10 +157,10 @@ public class BackgroundPlayer extends Thread {
                 logger.error("Failed to read file from resources folder", e);
             }
         }
-        
+
         public Pair<Integer, String> getLyricsAt(int timestamp) throws IllegalStateException {
             Pair<Integer, String> lyric = lyricsQueue.peek();
-            if(lyric.getLeft() > timestamp) {
+            if (lyric.getLeft() > timestamp) {
                 throw new IllegalStateException("No new lyrics found at this timestamp");
             }
             return lyricsQueue.dequeue();
@@ -167,16 +177,16 @@ public class BackgroundPlayer extends Thread {
                     Matcher m = r.matcher(line);
                     try {
                         if (m.find()) {
-                            int hour = Integer.parseInt(m.group(1));
-                            int min = Integer.parseInt(m.group(2));
-                            int sec = Integer.parseInt(m.group(3));
-                            int timestamp = hour * 360 + min * 60 + sec;
+                            int min = Integer.parseInt(m.group(1));
+                            int sec = Integer.parseInt(m.group(2));
+                            int ms = Integer.parseInt(m.group(3));
+                            int timestamp = min * 60 + sec;
                             String lyric = m.group(4);
                             Pair<Integer, String> lyricPair = new Pair<>(timestamp, lyric);
                             lyricsQueue.enqueue(lyricPair);
                         }
                     } catch (NumberFormatException e) {
-                        
+
                     }
                 }
             } catch (IOException e) {
