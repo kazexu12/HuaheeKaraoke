@@ -3,12 +3,24 @@ package MainDriver;
 import DTO.Song;
 import Generic.Pair;
 import SessionManagement.ADT.ArrayList;
+import SessionManagement.ADT.LinkedQueue;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Class that creates a new Thread upon creation and serve as a timer and PlayerStateManager to KaraokeSessionFrame
+ * Class that creates a new Thread upon creation and serve as a timer and
+ * PlayerStateManager to KaraokeSessionFrame
+ *
  * @author Loo Zi Kang
  */
 public class BackgroundPlayer extends Thread {
@@ -18,6 +30,7 @@ public class BackgroundPlayer extends Thread {
     private PlayerState playerState;
     private int timestampNow;
     private int timestampMax;
+    private LRCReader lyricReader;
     /**
      * Boolean on the right indicate is the song is being played at the moment
      */
@@ -27,6 +40,7 @@ public class BackgroundPlayer extends Thread {
         this.parent = parent;
         this.nowPlayingSongList = new ArrayList<>();
         this.playerState = PlayerState.STOPPED;
+        this.lyricReader = new LRCReader("LRC/lyrics.lrc", true);
     }
 
     @Override
@@ -93,6 +107,82 @@ public class BackgroundPlayer extends Thread {
 
     public void addSong(Song newSong) {
         nowPlayingSongList.add(new Pair<>(newSong, false));
+    }
+
+    private class LRCReader {
+
+        /**
+         * Stores the lyrics queue
+         */
+        LinkedQueue<Pair<Integer, String>> lyricsQueue;
+
+        public LRCReader() {
+            lyricsQueue = new LinkedQueue();
+        }
+
+        public LRCReader(String filename) {
+            lyricsQueue = new LinkedQueue();
+            try {
+                Path path = Paths.get(filename);
+                BufferedReader buf = Files.newBufferedReader(path);
+                parse(buf);
+            } catch (IOException e) {
+                logger.error("Failed to read file from path: " + filename, e);
+            }
+        }
+
+        public LRCReader(String filename, boolean readFromResource) {
+            lyricsQueue = new LinkedQueue();
+            try {
+                if (!readFromResource) {
+                    Path path = Paths.get(filename);
+                    BufferedReader buf = Files.newBufferedReader(path);
+                    parse(buf);
+                } else {
+                    InputStream is = getClass().getClassLoader().getResourceAsStream(filename);
+                    BufferedReader buf = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                    parse(buf);
+                }
+            } catch (IOException e) {
+                logger.error("Failed to read file from resources folder", e);
+            }
+        }
+        
+        public Pair<Integer, String> getLyricsAt(int timestamp) throws IllegalStateException {
+            Pair<Integer, String> lyric = lyricsQueue.peek();
+            if(lyric.getLeft() > timestamp) {
+                throw new IllegalStateException("No new lyrics found at this timestamp");
+            }
+            return lyricsQueue.dequeue();
+        }
+
+        private void parse(BufferedReader buf) {
+            String pattern = "\\[(\\d{1,2})(?:\\:|.)(\\d{1,2})(?:\\:|.)(\\d{1,2})\\](.*)";
+            // Create a Pattern object
+            Pattern r = Pattern.compile(pattern);
+
+            try {
+                String line;
+                while ((line = buf.readLine()) != null) {
+                    Matcher m = r.matcher(line);
+                    try {
+                        if (m.find()) {
+                            int hour = Integer.parseInt(m.group(1));
+                            int min = Integer.parseInt(m.group(2));
+                            int sec = Integer.parseInt(m.group(3));
+                            int timestamp = hour * 360 + min * 60 + sec;
+                            String lyric = m.group(4);
+                            Pair<Integer, String> lyricPair = new Pair<>(timestamp, lyric);
+                            lyricsQueue.enqueue(lyricPair);
+                        }
+                    } catch (NumberFormatException e) {
+                        
+                    }
+                }
+            } catch (IOException e) {
+                logger.error("BufferedReader failed to readline()", e);
+            }
+        }
     }
 
 }
