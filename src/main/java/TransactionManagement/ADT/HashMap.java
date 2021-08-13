@@ -41,7 +41,7 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
         // Double hashing.
         int turn = 0;
         while (!isAdded) {
-            if (hashTable.length == numberOfEntries) {
+            if (hashTable.length >= numberOfEntries) {
                 expandTable();
             }
 
@@ -49,6 +49,7 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
             
             // Jump back to starting point if index is larger than array length.
             index %= hashTable.length;
+            if (index < 0) index *= -1;
 
             if (hashTable[index] == null) {
                 hashTable[index] = new Node(key, value);
@@ -70,17 +71,21 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
 
         // Double hashing.
         for (int turn = 0; turn < hashTable.length; turn++) {
+            
             index = hash1(key) + turn * hash2(key);
+            index %= hashTable.length;
+            if (index < 0) index *= -1;
 
             if (hashTable[index] == null) {
                 break;
-            } else if (hashTable[index].key == key) {
+            } else if (hashTable[index].key.equals(key)) {
                 removedValue = hashTable[index].value;
                 hashTable[index] = null;
                 
                 numberOfEntries--;
                 break;
             }
+            
         }
 
         return removedValue;
@@ -93,11 +98,14 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
 
         // Double hashing.
         for (int turn = 0; turn < hashTable.length; turn++) {
+            
             index = hash1(key) + turn * hash2(key);
-
+            index %= hashTable.length;
+            if (index < 0) index *= -1;
+            
             if (hashTable[index] == null) {
                 break;
-            } else if (hashTable[index].key == key) {
+            } else if (hashTable[index].key.equals(key)) {
                 getValue = hashTable[index].value;
                 break;
             }
@@ -117,7 +125,7 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
 
             if (hashTable[index] == null) {
                 break;
-            } else if (hashTable[index].key == key) {
+            } else if (hashTable[index].key.equals(key)) {
                 isContain = true;
                 break;
             }
@@ -131,7 +139,7 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
         boolean isContain = false;
         
         for (int i = 0; i < hashTable.length; i++) {
-            if (hashTable[i] != null && hashTable[i].value == value) {
+            if (hashTable[i] != null && hashTable[i].value.equals(value)) {
                 isContain = true;
                 break;
             }
@@ -161,7 +169,7 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
 
     // -------------------------------------------------------------------------
     private int hash1(K key) {
-        return key.hashCode() % hashTable.length;
+        return key.hashCode() % 7;
     }
 
     private int hash2(K key) {

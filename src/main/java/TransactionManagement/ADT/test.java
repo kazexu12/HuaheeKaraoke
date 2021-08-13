@@ -11,11 +11,12 @@ package TransactionManagement.ADT;
  */
 public class test {
     public static void main(String[] args) {
-        HashMap<Integer, String> test = new HashMap();
+        HashMap<String, String> test = new HashMap();
         
-        test.add(20, "Test");
-        test.add(121, "Aaaaaa");
+        for (int i = 0; i < 120; i++) {
+            test.add("test" + i, "test" + i);
+        }
         
-        System.out.print(test.remove(121));
+        System.out.print(test.get("test118"));
     }
 }
