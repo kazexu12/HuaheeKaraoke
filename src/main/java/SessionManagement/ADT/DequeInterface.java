@@ -7,19 +7,19 @@ package SessionManagement.ADT;
  */
 public interface DequeInterface<T> {
     /**
-     * Add item in front of the queue
+     * Add item behind of the queue
      * @param item 
      */
     void add(T item);
     
     /**
-     * Add Item behind the queue
+     * Add Item in front the queue
      * @param item 
      */
     void push(T item);
     
     /**
-     * Remove item from the front of the queue
+     * Remove item from the back of the queue
      * @return 
      */
     T remove();
@@ -32,7 +32,7 @@ public interface DequeInterface<T> {
     T remove(T item);
     
     /**
-     * Remove last item from queue
+     * Remove item from the front queue
      * @return 
      */
     T pop();
