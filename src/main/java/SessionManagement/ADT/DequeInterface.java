@@ -10,37 +10,37 @@ public interface DequeInterface<T> {
      * Add item behind of the queue
      * @param item 
      */
-    void add(T item);
+    void pushBack(T item);
     
     /**
      * Add Item in front of the queue
      * @param item 
      */
-    void push(T item);
+    void pushFront(T item);
     
     /**
      * Remove item from the back of the queue
      * @return 
      */
-    T remove();
+    T removeBack();
     
     /**
      * Remove item from the front of queue
      * @return 
      */
-    T pop();
+    T removeFront();
     
     /**
      * Return the first item in queue without removing it
      * @return 
      */
-    T poll();
+    T peekFront();
     
     /**
      * Return the last item in queue without removing it
      * @return 
      */
-    T peek();
+    T peekBack();
     
     /**
      * Get the amount of items in queue

@@ -38,7 +38,7 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
     }
 
     @Override
-    public void add(T item) {
+    public void pushBack(T item) {
         if (size == 0) {
             this.front = new Node<>(item);
             this.rear = this.front;
@@ -55,7 +55,7 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
     }
 
     @Override
-    public void push(T item) {
+    public void pushFront(T item) {
         if (size == 0) {
             this.front = new Node<>(item);
             this.rear = this.front;
@@ -70,7 +70,7 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
     }
 
     @Override
-    public T remove() {
+    public T removeBack() {
         if (size == 0) {
             throw new IllegalStateException("There are no items to remove");
         }
@@ -110,7 +110,7 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
 //    }
 
     @Override
-    public T pop() {
+    public T removeFront() {
         if (size == 0) {
             throw new IllegalStateException("There are no items to remove");
         }
@@ -128,7 +128,7 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
     }
 
     @Override
-    public T poll() {
+    public T peekFront() {
         if (this.front == null) {
             return null;
         }
@@ -136,7 +136,7 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
     }
 
     @Override
-    public T peek() {
+    public T peekBack() {
         if (this.rear == null) {
             return null;
         }
