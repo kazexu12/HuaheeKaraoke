@@ -87,27 +87,27 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
         return data;
     }
 
-    @Override
-    public T remove(T item) {
-        if (size == 0) {
-            throw new IllegalStateException("There are no items to remove");
-        }
-        Node<T> ptr = this.front;
-        while (ptr != null) {
-            if (ptr.data.equals(item)) {
-                ptr.prev.next = ptr.next;
-                ptr.next.prev = ptr.prev;
-                break;
-            }
-            ptr = ptr.next;
-        }
-        size--;
-        if (size == 0) {
-            this.front = null;
-            this.rear = null;
-        }
-        return item;
-    }
+//    @Override
+//    public T remove(T item) {
+//        if (size == 0) {
+//            throw new IllegalStateException("There are no items to remove");
+//        }
+//        Node<T> ptr = this.front;
+//        while (ptr != null) {
+//            if (ptr.data.equals(item)) {
+//                ptr.prev.next = ptr.next;
+//                ptr.next.prev = ptr.prev;
+//                break;
+//            }
+//            ptr = ptr.next;
+//        }
+//        size--;
+//        if (size == 0) {
+//            this.front = null;
+//            this.rear = null;
+//        }
+//        return item;
+//    }
 
     @Override
     public T pop() {

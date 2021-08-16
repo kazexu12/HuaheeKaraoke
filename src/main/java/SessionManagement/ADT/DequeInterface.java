@@ -13,7 +13,7 @@ public interface DequeInterface<T> {
     void add(T item);
     
     /**
-     * Add Item in front the queue
+     * Add Item in front of the queue
      * @param item 
      */
     void push(T item);
@@ -25,14 +25,7 @@ public interface DequeInterface<T> {
     T remove();
     
     /**
-     * Remove specific item from queue
-     * @param item
-     * @return 
-     */
-    T remove(T item);
-    
-    /**
-     * Remove item from the front queue
+     * Remove item from the front of queue
      * @return 
      */
     T pop();
