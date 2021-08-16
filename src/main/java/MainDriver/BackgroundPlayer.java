@@ -3,7 +3,6 @@ package MainDriver;
 import DTO.Song;
 import Generic.Pair;
 import SessionManagement.ADT.ArrayList;
-import SessionManagement.ADT.LinkedQueue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -124,14 +123,14 @@ public class BackgroundPlayer extends Thread {
         /**
          * Stores the lyrics queue
          */
-        LinkedQueue<Pair<Integer, String>> lyricsQueue;
+        // LinkedQueue<Pair<Integer, String>> lyricsQueue;
 
         public LRCReader() {
-            lyricsQueue = new LinkedQueue();
+            // lyricsQueue = new LinkedQueue();
         }
 
         public LRCReader(String filename) {
-            lyricsQueue = new LinkedQueue();
+            // lyricsQueue = new LinkedQueue();
             try {
                 Path path = Paths.get(filename);
                 BufferedReader buf = Files.newBufferedReader(path);
@@ -142,7 +141,7 @@ public class BackgroundPlayer extends Thread {
         }
 
         public LRCReader(String filename, boolean readFromResource) {
-            lyricsQueue = new LinkedQueue();
+            // lyricsQueue = new LinkedQueue();
             try {
                 if (!readFromResource) {
                     Path path = Paths.get(filename);
@@ -159,11 +158,12 @@ public class BackgroundPlayer extends Thread {
         }
 
         public Pair<Integer, String> getLyricsAt(int timestamp) throws IllegalStateException {
-            Pair<Integer, String> lyric = lyricsQueue.peek();
-            if (lyric.getLeft() > timestamp) {
-                throw new IllegalStateException("No new lyrics found at this timestamp");
-            }
-            return lyricsQueue.dequeue();
+            // Pair<Integer, String> lyric = lyricsQueue.peek();
+            // if (lyric.getLeft() > timestamp) {
+            //     throw new IllegalStateException("No new lyrics found at this timestamp");
+            // }
+            // return lyricsQueue.dequeue();
+            return null;
         }
 
         private void parse(BufferedReader buf) {
@@ -183,7 +183,7 @@ public class BackgroundPlayer extends Thread {
                             int timestamp = min * 60 + sec;
                             String lyric = m.group(4);
                             Pair<Integer, String> lyricPair = new Pair<>(timestamp, lyric);
-                            lyricsQueue.enqueue(lyricPair);
+                            // lyricsQueue.enqueue(lyricPair);
                         }
                     } catch (NumberFormatException e) {
 
