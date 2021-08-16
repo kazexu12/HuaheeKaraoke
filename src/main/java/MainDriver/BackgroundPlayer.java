@@ -3,6 +3,7 @@ package MainDriver;
 import DTO.Song;
 import Generic.Pair;
 import SessionManagement.ADT.ArrayList;
+import SessionManagement.ADT.DoublyLinkedDeque;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +31,8 @@ public class BackgroundPlayer extends Thread {
     private int timestampNow;
     private int timestampMax;
     private LRCReader lyricReader;
+    private DoublyLinkedDeque<Pair<Integer, String>> currentLyricsQueue;
+
     /**
      * Boolean on the right indicate is the song is being played at the moment
      */
@@ -38,6 +41,7 @@ public class BackgroundPlayer extends Thread {
     public BackgroundPlayer(KaraokeSessionFrame parent) {
         this.parent = parent;
         this.nowPlayingSongList = new ArrayList<>();
+        this.currentLyricsQueue = new DoublyLinkedDeque<>();
         this.playerState = PlayerState.STOPPED;
         this.lyricReader = new LRCReader("LRC/lyrics.lrc", true);
     }
@@ -62,6 +66,8 @@ public class BackgroundPlayer extends Thread {
             } catch (InterruptedException e) {
                 logger.error("Timer was interrupted", e);
             }
+            
+            
 
             // Update parent view
             updateParentView();
@@ -70,16 +76,7 @@ public class BackgroundPlayer extends Thread {
 
     public void updateParentView() {
         this.parent.updateTimestamp(timestampNow, timestampMax);
-        try {
-            Pair<Integer, String> lrcObj = this.lyricReader.getLyricsAt(timestampNow);
-//            int min = lrcObj.getLeft() / 60;
-//            int sec = lrcObj.getLeft() % 60;
-//            String lrc = String.format("[%02d:%02d]%s", new Object[]{min, sec, lrcObj.getRight()});
-//            this.parent.addLyric(lrc);
-            this.parent.addLyric(lrcObj.getRight());
-        } catch (IllegalStateException e) {
-
-        }
+        // this.parent.displayLyrics(top, middle, bottom, highlight);
     }
 
     private void nextSong() {
@@ -123,14 +120,14 @@ public class BackgroundPlayer extends Thread {
         /**
          * Stores the lyrics queue
          */
-        // LinkedQueue<Pair<Integer, String>> lyricsQueue;
+        DoublyLinkedDeque<Pair<Integer, String>> lyricsQueue;
 
         public LRCReader() {
-            // lyricsQueue = new LinkedQueue();
+            lyricsQueue = new DoublyLinkedDeque();
         }
 
         public LRCReader(String filename) {
-            // lyricsQueue = new LinkedQueue();
+            lyricsQueue = new DoublyLinkedDeque();
             try {
                 Path path = Paths.get(filename);
                 BufferedReader buf = Files.newBufferedReader(path);
@@ -141,7 +138,7 @@ public class BackgroundPlayer extends Thread {
         }
 
         public LRCReader(String filename, boolean readFromResource) {
-            // lyricsQueue = new LinkedQueue();
+            lyricsQueue = new DoublyLinkedDeque();
             try {
                 if (!readFromResource) {
                     Path path = Paths.get(filename);
@@ -155,15 +152,6 @@ public class BackgroundPlayer extends Thread {
             } catch (IOException e) {
                 logger.error("Failed to read file from resources folder", e);
             }
-        }
-
-        public Pair<Integer, String> getLyricsAt(int timestamp) throws IllegalStateException {
-            // Pair<Integer, String> lyric = lyricsQueue.peek();
-            // if (lyric.getLeft() > timestamp) {
-            //     throw new IllegalStateException("No new lyrics found at this timestamp");
-            // }
-            // return lyricsQueue.dequeue();
-            return null;
         }
 
         private void parse(BufferedReader buf) {
@@ -183,7 +171,7 @@ public class BackgroundPlayer extends Thread {
                             int timestamp = min * 60 + sec;
                             String lyric = m.group(4);
                             Pair<Integer, String> lyricPair = new Pair<>(timestamp, lyric);
-                            // lyricsQueue.enqueue(lyricPair);
+                            lyricsQueue.pushBack(lyricPair);
                         }
                     } catch (NumberFormatException e) {
 

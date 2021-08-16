@@ -5,6 +5,8 @@
  */
 package MainDriver;
 
+import Generic.Pair;
+import SessionManagement.ADT.DoublyLinkedDeque;
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,12 +27,16 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     private static final Logger logger = LogManager.getLogger(KaraokeSessionFrame.class.getName());
     private BackgroundPlayer player;
+    private Pair<Integer, String> lastLyric;
+    private DoublyLinkedDeque<Pair<Integer, String>> lyricsQueue;
 
     /**
      * Creates new form Temp
      */
     public KaraokeSessionFrame() {
         player = new BackgroundPlayer(this);
+        lastLyric = null;
+        lyricsQueue = new DoublyLinkedDeque<>();
         initComponents();
         this.setLocationRelativeTo(null);
         player.addSong(new DTO.Song());
@@ -346,17 +352,41 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         progressSlider.setValue(now);
     }
 
-    public void addLyric(String lyric) {
-        HTMLDocument doc = (HTMLDocument) lyricsPane.getDocument();
-        try {
-            doc.insertBeforeEnd(doc.getElement("body"), lyric + "<br>");
-        } catch (IOException | BadLocationException e) {
-            logger.warn("Attempt to insert lyrics into pane failed");
-        }
+    /**
+     * Display the lyrics
+     * @param top Lyrics to show on top of the lyricsPane
+     * @param middle Lyrics to show on middle of the lyricsPane
+     * @param bottom Lyrics to show on bottom of the lyricsPane
+     * @param highlight which lyric to bold? 1 = top; 2 = middle; 3 = bottom
+     */
+    public void displayLyrics(String top, String middle, String bottom, int highlight) {
+        lyricsPane.setText(
+                "<html>"
+                + "<head>"
+                + "</head>"
+                + "<body>"
+                + "<div>"
+                + "<font color='grey'>"
+                + "Upper Line"
+                + "</font>"
+                + "</div>"
+                + "<div>"
+                + "<font size='5' color='black'>"
+                + "Middle Line"
+                + "</font>"
+                + "</div>"
+                + "<div>"
+                + "<font color='grey'>"
+                + "Bottom Line"
+                + "</font>"
+                + "</div>"
+                + "</body>"
+                + "</html>");
     }
 
     public void clearLyric() {
         lyricsPane.setText("");
+        lyricsQueue.clear();
     }
 
 //    private void loadLyrics() {
