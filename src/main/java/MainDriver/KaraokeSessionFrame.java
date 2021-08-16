@@ -354,33 +354,45 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     /**
      * Display the lyrics
+     *
      * @param top Lyrics to show on top of the lyricsPane
      * @param middle Lyrics to show on middle of the lyricsPane
      * @param bottom Lyrics to show on bottom of the lyricsPane
      * @param highlight which lyric to bold? 1 = top; 2 = middle; 3 = bottom
      */
     public void displayLyrics(String top, String middle, String bottom, int highlight) {
+        switch (highlight) {
+            case 1:
+                top = "<font size='5' color='black'><b>" + top + "</b></font>";
+                middle = "<font color='#7D7D7D'>" + middle + "</font>";
+                bottom = "<font color='#7D7D7D'>" + bottom + "</font>";
+                break;
+            case 2:
+                middle = "<font size='5' color='black'><b>" + middle + "</b></font>";
+                top = "<font color='#7D7D7D'>" + top + "</font>";
+                bottom = "<font color='#7D7D7D'>" + bottom + "</font>";
+                break;
+            case 3:
+                top = "<font color='#7D7D7D'>" + top + "</font>";
+                middle = "<font color='#7D7D7D'>" + middle + "</font>";
+                bottom = "<font size='5' color='black'><b>" + bottom + "</b></font>";
+                break;
+        }
         lyricsPane.setText(
                 "<html>"
                 + "<head>"
                 + "</head>"
-                + "<body>"
+                + "<body><center>"
+                + "<br><div>"
+                + top
+                + "</div><br><br>"
                 + "<div>"
-                + "<font color='grey'>"
-                + "Upper Line"
-                + "</font>"
-                + "</div>"
+                + middle
+                + "</div><br><br>"
                 + "<div>"
-                + "<font size='5' color='black'>"
-                + "Middle Line"
-                + "</font>"
+                + bottom
                 + "</div>"
-                + "<div>"
-                + "<font color='grey'>"
-                + "Bottom Line"
-                + "</font>"
-                + "</div>"
-                + "</body>"
+                + "</center></body>"
                 + "</html>");
     }
 

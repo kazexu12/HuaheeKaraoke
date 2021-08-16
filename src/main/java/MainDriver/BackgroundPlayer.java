@@ -32,7 +32,9 @@ public class BackgroundPlayer extends Thread {
     private int timestampMax;
     private LRCReader lyricReader;
     private DoublyLinkedDeque<Pair<Integer, String>> currentLyricsQueue;
-
+    private Pair<Integer, String> lyricTop;
+    private Pair<Integer, String> lyricMiddle;
+    private Pair<Integer, String> lyricBottom;
     /**
      * Boolean on the right indicate is the song is being played at the moment
      */
@@ -66,8 +68,15 @@ public class BackgroundPlayer extends Thread {
             } catch (InterruptedException e) {
                 logger.error("Timer was interrupted", e);
             }
-            
-            
+
+            Pair<Integer, String> lyric = this.lyricReader.lyricsQueue.peekFront();
+            if (lyric.getLeft() <= timestampNow) {
+                if (this.lyricMiddle != null) {
+                    this.lyricTop = new Pair<>(this.lyricMiddle.getLeft(), this.lyricMiddle.getRight());
+                }
+                this.lyricMiddle = this.lyricReader.lyricsQueue.removeFront();
+                this.lyricBottom = this.lyricReader.lyricsQueue.peekFront();
+            }
 
             // Update parent view
             updateParentView();
@@ -76,7 +85,12 @@ public class BackgroundPlayer extends Thread {
 
     public void updateParentView() {
         this.parent.updateTimestamp(timestampNow, timestampMax);
-        // this.parent.displayLyrics(top, middle, bottom, highlight);
+        this.parent.displayLyrics(
+                lyricTop == null ? "" : lyricTop.getRight(), 
+                lyricMiddle == null ? "" : lyricMiddle.getRight(), 
+                lyricBottom == null ? "" : lyricBottom.getRight(), 
+                2
+        );
     }
 
     private void nextSong() {
