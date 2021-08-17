@@ -5,6 +5,8 @@
  */
 package MainDriver;
 
+import DTO.Song;
+import SessionManagement.ADT.ArrayList;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.table.DefaultTableModel;
@@ -15,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
+    private KaraokeSessionFrame parent;
+
     /**
      *
      * @param parent parent window calling this dialog
@@ -22,12 +26,17 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
     public KaraokeSessionAddSongDialog(javax.swing.JFrame parent) {
         // Call JDialog constructor
         super(parent, true);
-
+        this.parent = (KaraokeSessionFrame) parent;
         // Prepare page
         initComponents();
 
         this.setTitle(parent.getTitle() + " >> Add Song");
         this.setLocationRelativeTo(parent);
+        // Hide last column in view
+        this.addSongListingTable.removeColumn(addSongListingTable.getColumnModel().getColumn(5));
+        
+        // Custom Init
+        init();
 
         // Make sure the window is properly disposed
         this.addWindowListener(new WindowAdapter() {
@@ -37,6 +46,22 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
             }
         });
     }
+    
+    /**
+     * Get all songs list from db and add it into table
+     */
+    private void init() {
+        DefaultTableModel tabModel = (DefaultTableModel) this.addSongListingTable.getModel();
+        
+        Song a = new Song("1", "立ち入り禁止", "まふまふ", "", "", 217, 0);
+        Song b = new Song("2", "嘘つきの世界", "鹿乃", "", "Utaite", 208, 0);
+        Song c = new Song("3", "夕凪、某、花惑い", "ヨルシカ", "", "", 198, 0);
+        
+        tabModel.addRow(new Object[]{null, a.getName(), a.getArtist(), a.getGenre(), a.getDurationString(), a});
+        tabModel.addRow(new Object[]{null, b.getName(), b.getArtist(), b.getGenre(), b.getDurationString(), b});
+        tabModel.addRow(new Object[]{null, c.getName(), c.getArtist(), c.getGenre(), c.getDurationString(), c});
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -129,19 +154,17 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
         addSongListingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "立ち入り禁止", "まふまふ", "", "03:37"},
-                {null, "嘘つきの世界", "鹿乃", "Utaite", "03:28"},
-                {null, "夕凪、某、花惑い", "ヨルシカ", "", "03:18"}
+
             },
             new String [] {
-                "", "Title", "Artist", "Genre", "Duration"
+                "", "Title", "Artist", "Genre", "Duration", "song_item"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -208,6 +231,10 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
     private void addSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongBtnActionPerformed
         // TODO add your handling code here:
+        ArrayList<Song> s = this.getAllSelectedSongs();
+        for(int i =0 ; i < s.size(); i++) {
+            parent.addSong(s.get(i));
+        }
         this.dispose();
     }//GEN-LAST:event_addSongBtnActionPerformed
 
@@ -227,22 +254,36 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         // System.out.println("Selected Row: " + selectedRow);
         boolean oldValue = tableModel.getValueAt(selectedRow, 0) == null ? false : (boolean) tableModel.getValueAt(selectedRow, 0);
         tableModel.setValueAt(!oldValue, selectedRow, 0);
-        
+
         int rowCount = tableModel.getRowCount();
         int checkedCount = 0;
-        for(int i = 0; i < rowCount; i++) {
+        for (int i = 0; i < rowCount; i++) {
             boolean isChecked = tableModel.getValueAt(i, 0) == null ? false : (boolean) tableModel.getValueAt(i, 0);
-            if(isChecked) {
+            if (isChecked) {
                 checkedCount++;
             }
         }
-        if(checkedCount != 0) {
+        if (checkedCount != 0) {
             this.addSongBtn.setText("Add " + checkedCount + " song(s)");
         } else {
             this.addSongBtn.setText("Add song(s)");
         }
     }//GEN-LAST:event_addSongListingTableMousePressed
 
+    private ArrayList<Song> getAllSelectedSongs() {
+        ArrayList<Song> arr = new ArrayList<>();
+        DefaultTableModel tableModel = (DefaultTableModel) this.addSongListingTable.getModel();
+        for(int i = 0; i < tableModel.getRowCount(); i++) {
+            Object check = tableModel.getValueAt(i, 0);
+            if(check == null || !((boolean) check)) {
+                continue;
+            }
+            Song s = (Song) tableModel.getValueAt(i, 5);
+            arr.add(s);
+        }
+        return arr;
+    }
+    
     public Object[] run() {
         this.setVisible(true);
         return new Object[]{"Test"};

@@ -5,8 +5,10 @@
  */
 package MainDriver;
 
+import DTO.Song;
 import java.awt.Point;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.html.HTMLEditorKit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -154,9 +156,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
         nowPlayingListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Title C", "Artist C", "Genre A", "3:33"},
-                {"2", "Title B", "Artist B", "Genre A", "2:59"},
-                {"3", "Title A", "Artist A", "Genre A", "1:11"}
+
             },
             new String [] {
                 "No.", "Title", "Artist", "Genre", "Duration"
@@ -269,7 +269,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addSongBtnActionPerformed
 
     private void removeSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSongBtnActionPerformed
-        // TODO add your handling code here
+
     }//GEN-LAST:event_removeSongBtnActionPerformed
 
     private void nowPlayingListTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nowPlayingListTableMousePressed
@@ -325,6 +325,21 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         this.player.setPlayerState(PlayerState.PLAYING);
         removeHtmlTagsFromTable(nowPlayingListTable);
         boldTableRow(nowPlayingListTable, row);
+    }
+
+    public void addSong(Song item) {
+        DefaultTableModel tabModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
+        int maxIndex = 0;
+        for (int count = 0; count < tabModel.getRowCount(); count++) {
+            int idx = Integer.parseInt((String) tabModel.getValueAt(count, 0));
+            if (idx > maxIndex) {
+                maxIndex = idx;
+            }
+        }
+        tabModel.addRow(new Object[]{Integer.toString(maxIndex + 1), item.getName(), item.getArtist(), item.getGenre(), item.getDurationString(), item});
+    }
+
+    private void removeSongAt(int idx) {
     }
 
     /**
@@ -384,23 +399,6 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                 + "</html>");
     }
 
-//    private void loadLyrics() {
-//        try {
-//            InputStream is = getClass().getClassLoader().getResourceAsStream("LRC/lyrics.lrc");
-//            BufferedReader buf = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-//            String line;
-//            String lyricsText = "<html><center>";
-//            int lineCounter = 0;
-//            while ((line = buf.readLine()) != null) {
-//                lyricsText += "<a name='" + lineCounter++ + "'>" + line + "</a><br>";
-//            }
-//            lyricsText += "</center></html>";
-//            lyricsPane.setText(lyricsText);
-//            lyricsPane.scrollToReference("0");
-//        } catch (IOException e) {
-//            logger.error("Failed to read file from resources folder", e);
-//        }
-//    }
     // ====================================
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSongBtn;
