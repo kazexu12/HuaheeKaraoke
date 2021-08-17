@@ -67,13 +67,13 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
     public void save(RegisteredSession t) throws SQLException {
         DBManager db = new DBManager();
         Object[] args = new Object[]{
-            t.getSession_id(),
-            t.getSession_key(),
-            t.getRoom_size(),
-            t.getHead_count(),
-            t.getSession_date(),
-            t.getSession_start_time(),
-            t.getSession_end_time()
+            t.getSessionId(),
+            t.getSessionKey(),
+            t.getRoomSize(),
+            t.getHeadCount(),
+            t.getSessionDate(),
+            t.getSessionStartTime(),
+            t.getSessionEndTime()
         };
         String query = String.format("INSERT INTO RegisteredSessions VALUES("
                 + "'%s',"
@@ -87,7 +87,7 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
                 + "strftime('%%s', 'now')"
                 + ");", args);
         db.execQuery(query);
-        logger.info("Successfully added record in DB (session_id: " + t.getSession_id() + ")");
+        logger.info("Successfully added record in DB (session_id: " + t.getSessionId() + ")");
 
         this.sessions.add(t);
     }
@@ -96,7 +96,7 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
     public void update(RegisteredSession t, HashMap<String, Object> params) throws SQLException {
         DBManager db = new DBManager();
         String setClause = "SET ";
-        String whereClause = String.format(" WHERE session_id='%s'", t.getSession_id());
+        String whereClause = String.format(" WHERE session_id='%s'", t.getSessionId());
 
         boolean useSetClause = false;
         if (params.containsKey("session_key")) {
@@ -130,15 +130,15 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
         String query = "UPDATE RegisteredSessions " + (useSetClause ? setClause : "") + whereClause;
         logger.info("Executing query: " + query);
         db.execQuery(query);
-        logger.info("Successfully updated record in DB (session_id: " + t.getSession_id() + ")");
+        logger.info("Successfully updated record in DB (session_id: " + t.getSessionId() + ")");
     }
 
     @Override
     public void delete(RegisteredSession t) throws SQLException {
         DBManager db = new DBManager();
         this.sessions.remove(t);
-        String query = String.format("DELETE FROM RegisteredSessions WHERE session_id='%s'", new Object[]{t.getSession_id()});
+        String query = String.format("DELETE FROM RegisteredSessions WHERE session_id='%s'", new Object[]{t.getSessionId()});
         db.execQuery(query);
-        logger.info("Successfully deleted record in DB (session_id: " + t.getSession_id() + ")");
+        logger.info("Successfully deleted record in DB (session_id: " + t.getSessionId() + ")");
     }
 }
