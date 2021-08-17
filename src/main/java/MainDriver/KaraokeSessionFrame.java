@@ -5,16 +5,8 @@
  */
 package MainDriver;
 
-import Generic.Pair;
-import SessionManagement.ADT.DoublyLinkedDeque;
 import java.awt.Point;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import javax.swing.JTable;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,16 +19,12 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     private static final Logger logger = LogManager.getLogger(KaraokeSessionFrame.class.getName());
     private BackgroundPlayer player;
-    private Pair<Integer, String> lastLyric;
-    private DoublyLinkedDeque<Pair<Integer, String>> lyricsQueue;
 
     /**
      * Creates new form Temp
      */
     public KaraokeSessionFrame() {
         player = new BackgroundPlayer(this);
-        lastLyric = null;
-        lyricsQueue = new DoublyLinkedDeque<>();
         initComponents();
         this.setLocationRelativeTo(null);
         player.addSong(new DTO.Song());
@@ -394,11 +382,6 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                 + "</div>"
                 + "</center></body>"
                 + "</html>");
-    }
-
-    public void clearLyric() {
-        lyricsPane.setText("");
-        lyricsQueue.clear();
     }
 
 //    private void loadLyrics() {
