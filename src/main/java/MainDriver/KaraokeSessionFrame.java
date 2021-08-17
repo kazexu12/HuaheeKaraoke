@@ -30,6 +30,9 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         player = new BackgroundPlayer(this);
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        // Hide last column
+        this.nowPlayingListTable.removeColumn(nowPlayingListTable.getColumnModel().getColumn(5));
         // Add sorter to table
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) this.nowPlayingListTable.getModel());
         this.nowPlayingListTable.setRowSorter(sorter);
@@ -164,14 +167,14 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "No.", "Title", "Artist", "Genre", "Duration"
+                "No.", "Title", "Artist", "Genre", "Duration", "song_item"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -330,6 +333,10 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         this.player.setPlayerState(PlayerState.PLAYING);
         removeHtmlTagsFromTable(nowPlayingListTable);
         boldTableRow(nowPlayingListTable, row);
+        
+        DefaultTableModel tableModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
+        Song s = (Song) tableModel.getValueAt(row, 5);
+        this.nowPlayingLabel.setText(String.format("Now Playing: %s by %s [%s]", new Object[]{s.getName(), s.getArtist(), s.getAlbum()}));
     }
 
     public void addSong(Song item) {
