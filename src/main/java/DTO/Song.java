@@ -77,6 +77,10 @@ public class Song {
         return duration;
     }
 
+    public String getDurationString() {
+        return String.format("%02d:%02d", new Object[]{(int) (duration / 60), duration % 60});
+    }
+
     public void setDuration(int duration) {
         this.duration = duration;
     }
