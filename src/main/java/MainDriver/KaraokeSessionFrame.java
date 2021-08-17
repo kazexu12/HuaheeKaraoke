@@ -35,9 +35,6 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         
         // Hide last column
         this.nowPlayingListTable.removeColumn(nowPlayingListTable.getColumnModel().getColumn(5));
-        // Add sorter to table
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) this.nowPlayingListTable.getModel());
-        this.nowPlayingListTable.setRowSorter(sorter);
 
         player.addSong(new DTO.Song());
         player.addSong(new DTO.Song());
