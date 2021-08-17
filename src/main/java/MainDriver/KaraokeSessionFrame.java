@@ -347,7 +347,10 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         this.player.changeSong(s);
 
         this.player.setPlayerState(PlayerState.PLAYING);
-
+        setNowPlayingText(s);
+    }
+    
+    private void setNowPlayingText(Song s) {
         this.nowPlayingLabel.setText(String.format("Now Playing: %s by %s [%s]", new Object[]{s.getName(), s.getArtist(), s.getAlbum()}));
     }
     // =============================================================================
@@ -356,7 +359,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     // =============================================================================
     // Public Functions for Background Player
     // =============================================================================
-
+    
+    /**
+     * Update the playlist view
+     * @param currentPlaylist 
+     */
     public void updateCurrentPlaylistTable(ArrayList<Pair<Song, Boolean>> currentPlaylist) {
         DefaultTableModel tabModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
         tabModel.setRowCount(0);
@@ -365,27 +372,17 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             tabModel.addRow(new Object[]{Integer.toString(i + 1), s.getName(), s.getArtist(), s.getGenre(), s.getDurationString(), s});
             if(currentPlaylist.get(i).getRight()) {
                 boldTableRow(this.nowPlayingListTable, i);
+                setNowPlayingText(s);
             }
         }
     }
 
+    /**
+     * Add song into the current playlist view
+     * @param item 
+     */
     public void addSong(Song item) {
         this.player.addSong(item);
-        DefaultTableModel tabModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
-        int maxIndex = 0;
-        for (int count = 0; count < tabModel.getRowCount(); count++) {
-            // Perform html cleanup before parsing
-            String inp = (String) tabModel.getValueAt(count, 0);
-            inp = inp.replace("<html>", "");
-            inp = inp.replace("</html>", "");
-            inp = inp.replace("<b>", "");
-            inp = inp.replace("</b>", "");
-            int idx = Integer.parseInt(inp);
-            if (idx > maxIndex) {
-                maxIndex = idx;
-            }
-        }
-        tabModel.addRow(new Object[]{Integer.toString(maxIndex + 1), item.getName(), item.getArtist(), item.getGenre(), item.getDurationString(), item});
     }
 
     /**

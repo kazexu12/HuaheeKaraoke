@@ -98,25 +98,9 @@ public class BackgroundPlayer extends Thread {
         for (int i = 0; i < this.nowPlayingSongList.size(); i++) {
             Song song = nowPlayingSongList.get(i).getLeft();
             boolean isPlaying = nowPlayingSongList.get(i).getRight();
-            if (isPlaying) {
-                Song playSong = nowPlayingSongList.get(i + 1).getLeft();
-                // Suppose to be playSong.getDuration
-                this.timestampMax = 240;
-                this.timestampNow = 0;
-                nowPlayingSongList.get(0).setRight(Boolean.TRUE);
-                this.parent.updateCurrentPlaylistTable(this.nowPlayingSongList);
-                return;
+            if (isPlaying && i != nowPlayingSongList.size()-1) {
+                this.changeSong(nowPlayingSongList.get(i+1).getLeft());
             }
-        }
-        
-        if (this.nowPlayingSongList.size() != 0) {
-            Song playSong = nowPlayingSongList.get(0).getLeft();
-
-            // Suppose to be playSong.getDuration
-            this.timestampMax = 240;
-            this.timestampNow = 0;
-            nowPlayingSongList.get(0).setRight(Boolean.TRUE);
-            this.parent.updateCurrentPlaylistTable(this.nowPlayingSongList);
         }
     }
 
@@ -165,6 +149,7 @@ public class BackgroundPlayer extends Thread {
     
     public void addSong(Song newSong) {
         nowPlayingSongList.add(new Pair<>(newSong, false));
+        this.parent.updateCurrentPlaylistTable(nowPlayingSongList);
     }
     
     private class LRCReader {
