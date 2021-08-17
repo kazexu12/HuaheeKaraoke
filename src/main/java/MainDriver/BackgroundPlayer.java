@@ -116,9 +116,9 @@ public class BackgroundPlayer extends Thread {
             Pair<Song, Boolean> item = nowPlayingSongList.get(i);
             if (!item.getLeft().equals(song)) {
                 item.setRight(false);
-                found = true;
                 continue;
             }
+            found = true;
             item.setRight(true);
         }
         if (!found) {
