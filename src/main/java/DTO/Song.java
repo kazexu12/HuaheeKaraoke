@@ -17,4 +17,62 @@ public class Song {
     private String genre;
     private int duration;
     private int date_created;
+
+    public String getSongId() {
+        return song_id;
+    }
+
+    public void setSongId(String song_id) {
+        this.song_id = song_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getDateCreated() {
+        return date_created;
+    }
+
+    public void setDateCreated(int date_created) {
+        this.date_created = date_created;
+    }
+    
+    
 }

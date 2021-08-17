@@ -37,75 +37,75 @@ public class RegisteredSession {
         this.date_modified = date_modified;
     }
 
-    public String getSession_id() {
+    public String getSessionId() {
         return session_id;
     }
 
-    public void setSession_id(String session_id) {
+    public void setSessionId(String session_id) {
         this.session_id = session_id;
     }
 
-    public String getSession_key() {
+    public String getSessionKey() {
         return session_key;
     }
 
-    public void setSession_key(String session_key) {
+    public void setSessionKey(String session_key) {
         this.session_key = session_key;
     }
 
-    public char getRoom_size() {
+    public char getRoomSize() {
         return room_size;
     }
 
-    public void setRoom_size(char room_size) {
+    public void setRoomSize(char room_size) {
         this.room_size = room_size;
     }
 
-    public int getHead_count() {
+    public int getHeadCount() {
         return head_count;
     }
 
-    public void setHead_count(int head_count) {
+    public void setHeadCount(int head_count) {
         this.head_count = head_count;
     }
 
-    public String getSession_date() {
+    public String getSessionDate() {
         return session_date;
     }
 
-    public void setSession_date(String session_date) {
+    public void setSessionDate(String session_date) {
         this.session_date = session_date;
     }
 
-    public String getSession_start_time() {
+    public String getSessionStartTime() {
         return session_start_time;
     }
 
-    public void setSession_start_time(String session_start_time) {
+    public void setSessionStartTime(String session_start_time) {
         this.session_start_time = session_start_time;
     }
 
-    public String getSession_end_time() {
+    public String getSessionEndTime() {
         return session_end_time;
     }
 
-    public void setSession_end_time(String session_end_time) {
+    public void setSessionEndTime(String session_end_time) {
         this.session_end_time = session_end_time;
     }
 
-    public int getDate_created() {
+    public int getDateCreated() {
         return date_created;
     }
 
-    public void setDate_created(int date_created) {
+    public void setDateCreated(int date_created) {
         this.date_created = date_created;
     }
 
-    public int getDate_modified() {
+    public int getDateModified() {
         return date_modified;
     }
 
-    public void setDate_modified(int date_modified) {
+    public void setDateModified(int date_modified) {
         this.date_modified = date_modified;
     }
 
