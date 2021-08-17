@@ -32,13 +32,9 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         player = new BackgroundPlayer(this);
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         // Hide last column
         this.nowPlayingListTable.removeColumn(nowPlayingListTable.getColumnModel().getColumn(5));
-
-        player.addSong(new DTO.Song());
-        player.addSong(new DTO.Song());
-        player.addSong(new DTO.Song());
     }
 
     /**
@@ -261,6 +257,10 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // =============================================================================
+    // Event Callbacks
+    // =============================================================================
+    
     private void stopSessionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopSessionBtnActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
@@ -291,6 +291,13 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_nowPlayingListTableMousePressed
 
+    // =============================================================================
+    // =============================================================================
+    
+    // =============================================================================
+    // Utility Functions
+    // =============================================================================
+    
     /**
      * Bold the values on table by add <b> tags to the values
      *
@@ -318,6 +325,13 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             }
         }
     }
+    
+    // =============================================================================
+    // =============================================================================
+    
+    // =============================================================================
+    // Private function to modify the view
+    // =============================================================================
 
     /**
      * Change the tableView of now playing song and switch songs
@@ -331,12 +345,28 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
         Song s = (Song) tableModel.getValueAt(row, 5);
         this.player.changeSong(s);
-        
+
         this.player.setPlayerState(PlayerState.PLAYING);
-        removeHtmlTagsFromTable(nowPlayingListTable);
-        boldTableRow(nowPlayingListTable, row);
-        
+
         this.nowPlayingLabel.setText(String.format("Now Playing: %s by %s [%s]", new Object[]{s.getName(), s.getArtist(), s.getAlbum()}));
+    }
+    // =============================================================================
+    // =============================================================================
+    
+    // =============================================================================
+    // Public Functions for Background Player
+    // =============================================================================
+
+    public void updateCurrentPlaylistTable(ArrayList<Pair<Song, Boolean>> currentPlaylist) {
+        DefaultTableModel tabModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
+        tabModel.setRowCount(0);
+        for (int i = 0; i < currentPlaylist.size(); i++) {
+            Song s = currentPlaylist.get(i).getLeft();
+            tabModel.addRow(new Object[]{Integer.toString(i + 1), s.getName(), s.getArtist(), s.getGenre(), s.getDurationString(), s});
+            if(currentPlaylist.get(i).getRight()) {
+                boldTableRow(this.nowPlayingListTable, i);
+            }
+        }
     }
 
     public void addSong(Song item) {
@@ -356,9 +386,6 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             }
         }
         tabModel.addRow(new Object[]{Integer.toString(maxIndex + 1), item.getName(), item.getArtist(), item.getGenre(), item.getDurationString(), item});
-    }
-
-    private void removeSongAt(int idx) {
     }
 
     /**
