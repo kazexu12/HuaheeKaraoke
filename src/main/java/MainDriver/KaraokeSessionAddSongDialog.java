@@ -10,6 +10,7 @@ import SessionManagement.ADT.ArrayList;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -30,10 +31,14 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         // Prepare page
         initComponents();
 
+        // View Init
         this.setTitle(parent.getTitle() + " >> Add Song");
         this.setLocationRelativeTo(parent);
         // Hide last column in view
         this.addSongListingTable.removeColumn(addSongListingTable.getColumnModel().getColumn(5));
+        // Add sorter to table
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel)addSongListingTable.getModel());
+        this.addSongListingTable.setRowSorter(sorter);
         
         // Custom Init
         init();
@@ -250,7 +255,7 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
     private void addSongListingTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addSongListingTableMousePressed
         // TODO add your handling code here:
         DefaultTableModel tableModel = (DefaultTableModel) this.addSongListingTable.getModel();
-        int selectedRow = this.addSongListingTable.getSelectedRow();
+        int selectedRow = this.addSongListingTable.convertRowIndexToModel(this.addSongListingTable.getSelectedRow());
         // System.out.println("Selected Row: " + selectedRow);
         boolean oldValue = tableModel.getValueAt(selectedRow, 0) == null ? false : (boolean) tableModel.getValueAt(selectedRow, 0);
         tableModel.setValueAt(!oldValue, selectedRow, 0);

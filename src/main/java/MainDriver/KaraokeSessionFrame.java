@@ -9,6 +9,7 @@ import DTO.Song;
 import java.awt.Point;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import javax.swing.text.html.HTMLEditorKit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,6 +30,10 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         player = new BackgroundPlayer(this);
         initComponents();
         this.setLocationRelativeTo(null);
+        // Add sorter to table
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) this.nowPlayingListTable.getModel());
+        this.nowPlayingListTable.setRowSorter(sorter);
+
         player.addSong(new DTO.Song());
         player.addSong(new DTO.Song());
         player.addSong(new DTO.Song());
@@ -277,7 +282,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         JTable table = (JTable) evt.getSource();
         Point point = evt.getPoint();
         int row = table.rowAtPoint(point);
-        if (evt.getClickCount() == 2 && table.getSelectedRow() != -1) {
+        if (evt.getClickCount() == 2 && table.convertRowIndexToModel(table.getSelectedRow()) != -1) {
             // your valueChanged overridden method 
             // removeHtmlTagsFromTable(table);
             // boldTableRow(table, row);
