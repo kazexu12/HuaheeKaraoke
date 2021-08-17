@@ -260,7 +260,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     // =============================================================================
     // Event Callbacks
     // =============================================================================
-    
+
     private void stopSessionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopSessionBtnActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
@@ -293,11 +293,9 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     // =============================================================================
     // =============================================================================
-    
     // =============================================================================
     // Utility Functions
     // =============================================================================
-    
     /**
      * Bold the values on table by add <b> tags to the values
      *
@@ -325,14 +323,12 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             }
         }
     }
-    
+
     // =============================================================================
     // =============================================================================
-    
     // =============================================================================
     // Private function to modify the view
     // =============================================================================
-
     /**
      * Change the tableView of now playing song and switch songs
      *
@@ -349,37 +345,47 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         this.player.setPlayerState(PlayerState.PLAYING);
         setNowPlayingText(s);
     }
-    
+
     private void setNowPlayingText(Song s) {
+        if (s == null) {
+            this.nowPlayingLabel.setText("Now Playing: ");
+            return;
+        }
         this.nowPlayingLabel.setText(String.format("Now Playing: %s by %s [%s]", new Object[]{s.getName(), s.getArtist(), s.getAlbum()}));
     }
     // =============================================================================
     // =============================================================================
-    
+
     // =============================================================================
     // Public Functions for Background Player
     // =============================================================================
-    
     /**
      * Update the playlist view
-     * @param currentPlaylist 
+     *
+     * @param currentPlaylist
      */
     public void updateCurrentPlaylistTable(ArrayList<Pair<Song, Boolean>> currentPlaylist) {
         DefaultTableModel tabModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
         tabModel.setRowCount(0);
+        boolean songPlaying = false;
         for (int i = 0; i < currentPlaylist.size(); i++) {
             Song s = currentPlaylist.get(i).getLeft();
             tabModel.addRow(new Object[]{Integer.toString(i + 1), s.getName(), s.getArtist(), s.getGenre(), s.getDurationString(), s});
-            if(currentPlaylist.get(i).getRight()) {
+            if (currentPlaylist.get(i).getRight()) {
                 boldTableRow(this.nowPlayingListTable, i);
                 setNowPlayingText(s);
+                songPlaying = true;
             }
+        }
+        if (!songPlaying) {
+            setNowPlayingText(null);
         }
     }
 
     /**
      * Add song into the current playlist view
-     * @param item 
+     *
+     * @param item
      */
     public void addSong(Song item) {
         this.player.addSong(item);
