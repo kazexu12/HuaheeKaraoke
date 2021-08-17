@@ -6,6 +6,8 @@
 package MainDriver;
 
 import DTO.Song;
+import Generic.Pair;
+import SessionManagement.ADT.ArrayList;
 import java.awt.Point;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -329,20 +331,29 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         if (!this.player.isAlive()) {
             this.player.start();
         }
+        DefaultTableModel tableModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
+        Song s = (Song) tableModel.getValueAt(row, 5);
+        this.player.changeSong(s);
+        
         this.player.setPlayerState(PlayerState.PLAYING);
         removeHtmlTagsFromTable(nowPlayingListTable);
         boldTableRow(nowPlayingListTable, row);
         
-        DefaultTableModel tableModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
-        Song s = (Song) tableModel.getValueAt(row, 5);
         this.nowPlayingLabel.setText(String.format("Now Playing: %s by %s [%s]", new Object[]{s.getName(), s.getArtist(), s.getAlbum()}));
     }
 
     public void addSong(Song item) {
+        this.player.addSong(item);
         DefaultTableModel tabModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
         int maxIndex = 0;
         for (int count = 0; count < tabModel.getRowCount(); count++) {
-            int idx = Integer.parseInt((String) tabModel.getValueAt(count, 0));
+            // Perform html cleanup before parsing
+            String inp = (String) tabModel.getValueAt(count, 0);
+            inp = inp.replace("<html>", "");
+            inp = inp.replace("</html>", "");
+            inp = inp.replace("<b>", "");
+            inp = inp.replace("</b>", "");
+            int idx = Integer.parseInt(inp);
             if (idx > maxIndex) {
                 maxIndex = idx;
             }

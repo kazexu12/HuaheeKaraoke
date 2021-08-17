@@ -24,7 +24,7 @@ import org.apache.logging.log4j.Logger;
  * @author Loo Zi Kang
  */
 public class BackgroundPlayer extends Thread {
-
+    
     private static final Logger logger = LogManager.getLogger(BackgroundPlayer.class.getName());
     private KaraokeSessionFrame parent;
     private PlayerState playerState;
@@ -39,7 +39,7 @@ public class BackgroundPlayer extends Thread {
      * Boolean on the right indicate is the song is being played at the moment
      */
     private final ArrayList<Pair<Song, Boolean>> nowPlayingSongList;
-
+    
     public BackgroundPlayer(KaraokeSessionFrame parent) {
         this.parent = parent;
         this.nowPlayingSongList = new ArrayList<>();
@@ -47,19 +47,19 @@ public class BackgroundPlayer extends Thread {
         this.playerState = PlayerState.STOPPED;
         this.lyricReader = new LRCReader("LRC/lyrics.lrc", true);
     }
-
+    
     @Override
     public void run() {
         while (true) {
             if (this.playerState != PlayerState.PLAYING) {
                 continue;
             }
-
+            
             if (timestampNow >= timestampMax) {
                 nextSong();
                 continue;
             }
-
+            
             timestampNow++;
 
             // Timer to run this every 1 second
@@ -68,7 +68,7 @@ public class BackgroundPlayer extends Thread {
             } catch (InterruptedException e) {
                 logger.error("Timer was interrupted", e);
             }
-
+            
             Pair<Integer, String> lyric = this.lyricReader.lyricsQueue.peekFront();
             if (lyric.getLeft() <= timestampNow) {
                 if (this.lyricMiddle != null) {
@@ -82,18 +82,19 @@ public class BackgroundPlayer extends Thread {
             updateParentView();
         }
     }
-
+    
     public void updateParentView() {
         this.parent.updateTimestamp(timestampNow, timestampMax);
         this.parent.displayLyrics(
-                lyricTop == null ? "" : lyricTop.getRight(), 
-                lyricMiddle == null ? "" : lyricMiddle.getRight(), 
-                lyricBottom == null ? "" : lyricBottom.getRight(), 
+                lyricTop == null ? "" : lyricTop.getRight(),
+                lyricMiddle == null ? "" : lyricMiddle.getRight(),
+                lyricBottom == null ? "" : lyricBottom.getRight(),
                 2
         );
     }
-
+    
     private void nextSong() {
+        loadLyric();
         for (int i = 0; i < this.nowPlayingSongList.size(); i++) {
             Song song = nowPlayingSongList.get(i).getLeft();
             boolean isPlaying = nowPlayingSongList.get(i).getRight();
@@ -106,7 +107,7 @@ public class BackgroundPlayer extends Thread {
                 return;
             }
         }
-
+        
         if (this.nowPlayingSongList.size() != 0) {
             Song playSong = nowPlayingSongList.get(0).getLeft();
 
@@ -117,29 +118,63 @@ public class BackgroundPlayer extends Thread {
         }
     }
 
+    /**
+     * Change song. Song provided must exists in current list or else nothing
+     * will happen
+     *
+     * @param song
+     */
+    public void changeSong(Song song) {
+        boolean found = false;
+        for (int i = 0; i < nowPlayingSongList.size(); i++) {
+            Pair<Song, Boolean> item = nowPlayingSongList.get(i);
+            if (!item.getLeft().equals(song)) {
+                item.setRight(false);
+                found = true;
+                continue;
+            }
+            item.setRight(true);
+        }
+        if (!found) {
+            logger.warn("changeSong() was called but Song object provided does not exists in list");
+            return;
+        }
+        this.timestampMax = song.getDuration();
+        this.timestampNow = 0;
+        loadLyric();
+    }
+    
+    private void loadLyric() {
+        // Preload lyrics
+        this.lyricReader = new LRCReader("LRC/lyrics.lrc", true);
+        this.lyricTop = null;
+        this.lyricMiddle = null;
+        this.lyricBottom = this.lyricReader.lyricsQueue.peekFront();
+    }
+    
     public PlayerState getPlayerState() {
         return playerState;
     }
-
+    
     public void setPlayerState(PlayerState playerState) {
         this.playerState = playerState;
     }
-
+    
     public void addSong(Song newSong) {
         nowPlayingSongList.add(new Pair<>(newSong, false));
     }
-
+    
     private class LRCReader {
 
         /**
          * Stores the lyrics queue
          */
         DoublyLinkedDeque<Pair<Integer, String>> lyricsQueue;
-
+        
         public LRCReader() {
             lyricsQueue = new DoublyLinkedDeque();
         }
-
+        
         public LRCReader(String filename) {
             lyricsQueue = new DoublyLinkedDeque();
             try {
@@ -150,7 +185,7 @@ public class BackgroundPlayer extends Thread {
                 logger.error("Failed to read file from path: " + filename, e);
             }
         }
-
+        
         public LRCReader(String filename, boolean readFromResource) {
             lyricsQueue = new DoublyLinkedDeque();
             try {
@@ -167,12 +202,12 @@ public class BackgroundPlayer extends Thread {
                 logger.error("Failed to read file from resources folder", e);
             }
         }
-
+        
         private void parse(BufferedReader buf) {
             String pattern = "\\[(\\d{1,2})(?:\\:|.)(\\d{1,2})(?:\\:|.)(\\d{1,2})\\](.*)";
             // Create a Pattern object
             Pattern r = Pattern.compile(pattern);
-
+            
             try {
                 String line;
                 while ((line = buf.readLine()) != null) {
@@ -188,7 +223,7 @@ public class BackgroundPlayer extends Thread {
                             lyricsQueue.pushBack(lyricPair);
                         }
                     } catch (NumberFormatException e) {
-
+                        
                     }
                 }
             } catch (IOException e) {
@@ -196,5 +231,5 @@ public class BackgroundPlayer extends Thread {
             }
         }
     }
-
+    
 }
