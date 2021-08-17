@@ -26,7 +26,6 @@ import org.apache.logging.log4j.Logger;
 public class BackgroundPlayer extends Thread {
 
     private static final Logger logger = LogManager.getLogger(BackgroundPlayer.class.getName());
-    private KaraokeSessionFrame parent;
     private PlayerState playerState;
     private int timestampNow;
     private int timestampMax;
@@ -35,13 +34,17 @@ public class BackgroundPlayer extends Thread {
     private Pair<Integer, String> lyricTop;
     private Pair<Integer, String> lyricMiddle;
     private Pair<Integer, String> lyricBottom;
+
+    private EventListener onNextSongListener;
+    private EventListener onPlayingListener;
+    private EventListener onStoppedListener;
+
     /**
      * Boolean on the right indicate is the song is being played at the moment
      */
     private final ArrayList<Pair<Song, Boolean>> nowPlayingSongList;
 
-    public BackgroundPlayer(KaraokeSessionFrame parent) {
-        this.parent = parent;
+    public BackgroundPlayer() {
         this.nowPlayingSongList = new ArrayList<>();
         this.currentLyricsQueue = new DoublyLinkedDeque<>();
         this.playerState = PlayerState.STOPPED;
@@ -78,19 +81,11 @@ public class BackgroundPlayer extends Thread {
                 this.lyricBottom = this.lyricReader.lyricsQueue.peekFront();
             }
 
-            // Update parent view
-            updateParentView();
+            // onPlaying callback
+            if (onPlayingListener != null) {
+                onPlayingListener.callback(null);
+            }
         }
-    }
-
-    public void updateParentView() {
-        this.parent.updateTimestamp(timestampNow, timestampMax);
-        this.parent.displayLyrics(
-                lyricTop == null ? "" : lyricTop.getRight(),
-                lyricMiddle == null ? "" : lyricMiddle.getRight(),
-                lyricBottom == null ? "" : lyricBottom.getRight(),
-                2
-        );
     }
 
     private void nextSong() {
@@ -100,12 +95,15 @@ public class BackgroundPlayer extends Thread {
             boolean isPlaying = nowPlayingSongList.get(i).getRight();
             if (isPlaying && i != nowPlayingSongList.size() - 1) {
                 this.changeSong(nowPlayingSongList.get(i + 1).getLeft());
+                if (onNextSongListener != null) {
+                    onNextSongListener.callback(null);
+                }
                 return;
             }
         }
-        
+
         // Reset Player
-        for(int i = 0; i < nowPlayingSongList.size(); i++) {
+        for (int i = 0; i < nowPlayingSongList.size(); i++) {
             nowPlayingSongList.get(i).setRight(false);
         }
         this.playerState = PlayerState.STOPPED;
@@ -114,9 +112,36 @@ public class BackgroundPlayer extends Thread {
         this.lyricTop = null;
         this.lyricMiddle = null;
         this.lyricBottom = null;
-        updateParentView();
-        this.parent.updateCurrentPlaylistTable(this.nowPlayingSongList);
-        
+        if (onStoppedListener != null) {
+            onStoppedListener.callback(null);
+        }
+    }
+
+    /**
+     * What to do after next song have been chosen
+     *
+     * @param e
+     */
+    public void onNextSong(EventListener e) {
+        onNextSongListener = e;
+    }
+
+    /**
+     * What to do after each seconds of songs played
+     *
+     * @param e
+     */
+    public void onPlaying(EventListener e) {
+        onPlayingListener = e;
+    }
+
+    /**
+     * When the player is stopped because the songs finished playing
+     *
+     * @param e
+     */
+    public void onStopped(EventListener e) {
+        onStoppedListener = e;
     }
 
     /**
@@ -143,7 +168,6 @@ public class BackgroundPlayer extends Thread {
         this.timestampMax = song.getDuration();
         this.timestampNow = 0;
         loadLyric();
-        this.parent.updateCurrentPlaylistTable(this.nowPlayingSongList);
     }
 
     private void loadLyric() {
@@ -158,13 +182,36 @@ public class BackgroundPlayer extends Thread {
         return playerState;
     }
 
+    public ArrayList<Pair<Song, Boolean>> getNowPlayingSongList() {
+        return this.nowPlayingSongList;
+    }
+
     public void setPlayerState(PlayerState playerState) {
         this.playerState = playerState;
     }
 
     public void addSong(Song newSong) {
         nowPlayingSongList.add(new Pair<>(newSong, false));
-        this.parent.updateCurrentPlaylistTable(nowPlayingSongList);
+    }
+
+    public int getTimestampNow() {
+        return timestampNow;
+    }
+
+    public int getTimestampMax() {
+        return timestampMax;
+    }
+
+    public Pair<Integer, String> getLyricTop() {
+        return lyricTop;
+    }
+
+    public Pair<Integer, String> getLyricMiddle() {
+        return lyricMiddle;
+    }
+
+    public Pair<Integer, String> getLyricBottom() {
+        return lyricBottom;
     }
 
     private class LRCReader {

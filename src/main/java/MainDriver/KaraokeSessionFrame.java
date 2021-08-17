@@ -11,7 +11,6 @@ import SessionManagement.ADT.ArrayList;
 import java.awt.Point;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 import javax.swing.text.html.HTMLEditorKit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,7 +28,47 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
      * Creates new form Temp
      */
     public KaraokeSessionFrame() {
-        player = new BackgroundPlayer(this);
+        player = new BackgroundPlayer();
+        player.onNextSong(new EventListener() {
+            @Override
+            public void callback(Object[] args) {
+                updateCurrentPlaylistTable(player.getNowPlayingSongList());
+            }
+        });
+
+        player.onPlaying(new EventListener() {
+            @Override
+            public void callback(Object[] args) {
+                updateTimestamp(player.getTimestampNow(), player.getTimestampMax());
+                var lyricTop = player.getLyricTop();
+                var lyricMiddle = player.getLyricMiddle();
+                var lyricBottom = player.getLyricBottom();
+                displayLyrics(
+                        lyricTop == null ? "" : lyricTop.getRight(),
+                        lyricMiddle == null ? "" : lyricMiddle.getRight(),
+                        lyricBottom == null ? "" : lyricBottom.getRight(),
+                        2
+                );
+            }
+        });
+
+        player.onStopped(new EventListener() {
+            @Override
+            public void callback(Object[] args) {
+                updateCurrentPlaylistTable(player.getNowPlayingSongList());
+                updateTimestamp(player.getTimestampNow(), player.getTimestampMax());
+                var lyricTop = player.getLyricTop();
+                var lyricMiddle = player.getLyricMiddle();
+                var lyricBottom = player.getLyricBottom();
+                displayLyrics(
+                        lyricTop == null ? "" : lyricTop.getRight(),
+                        lyricMiddle == null ? "" : lyricMiddle.getRight(),
+                        lyricBottom == null ? "" : lyricBottom.getRight(),
+                        2
+                );
+            }
+        });
+
         initComponents();
         this.setLocationRelativeTo(null);
 
@@ -341,6 +380,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
         Song s = (Song) tableModel.getValueAt(row, 5);
         this.player.changeSong(s);
+        this.updateCurrentPlaylistTable(this.player.getNowPlayingSongList());
 
         this.player.setPlayerState(PlayerState.PLAYING);
         setNowPlayingText(s);
@@ -389,6 +429,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
      */
     public void addSong(Song item) {
         this.player.addSong(item);
+        this.updateCurrentPlaylistTable(player.getNowPlayingSongList());
     }
 
     /**
