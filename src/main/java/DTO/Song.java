@@ -10,6 +10,7 @@ package DTO;
  * @author Loo Zi Kang
  */
 public class Song {
+
     private String song_id;
     private String name;
     private String artist;
@@ -17,6 +18,20 @@ public class Song {
     private String genre;
     private int duration;
     private int date_created;
+
+    public Song() {
+
+    }
+
+    public Song(String song_id, String name, String artist, String album, String genre, int duration, int date_created) {
+        this.song_id = song_id;
+        this.name = name;
+        this.artist = artist;
+        this.album = album;
+        this.genre = genre;
+        this.duration = duration;
+        this.date_created = date_created;
+    }
 
     public String getSongId() {
         return song_id;
@@ -73,6 +88,5 @@ public class Song {
     public void setDateCreated(int date_created) {
         this.date_created = date_created;
     }
-    
-    
+
 }
