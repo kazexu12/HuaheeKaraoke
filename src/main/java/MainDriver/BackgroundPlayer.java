@@ -104,6 +104,7 @@ public class BackgroundPlayer extends Thread {
                 this.timestampMax = 240;
                 this.timestampNow = 0;
                 nowPlayingSongList.get(0).setRight(Boolean.TRUE);
+                this.parent.updateCurrentPlaylistTable(this.nowPlayingSongList);
                 return;
             }
         }
@@ -115,6 +116,7 @@ public class BackgroundPlayer extends Thread {
             this.timestampMax = 240;
             this.timestampNow = 0;
             nowPlayingSongList.get(0).setRight(Boolean.TRUE);
+            this.parent.updateCurrentPlaylistTable(this.nowPlayingSongList);
         }
     }
 
@@ -142,6 +144,7 @@ public class BackgroundPlayer extends Thread {
         this.timestampMax = song.getDuration();
         this.timestampNow = 0;
         loadLyric();
+        this.parent.updateCurrentPlaylistTable(this.nowPlayingSongList);
     }
     
     private void loadLyric() {
