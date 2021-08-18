@@ -36,7 +36,7 @@ public class userLogin extends javax.swing.JFrame {
         passwordUser = new javax.swing.JPasswordField();
         jButton_submit = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        gotoRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,7 +66,12 @@ public class userLogin extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Not a member?");
+        gotoRegister.setText("Not a member?");
+        gotoRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gotoRegisterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,7 +85,7 @@ public class userLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addComponent(gotoRegister))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -112,7 +117,7 @@ public class userLogin extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordUser, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(gotoRegister)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_submit, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -136,6 +141,7 @@ public class userLogin extends javax.swing.JFrame {
         if (name.equals("user" ) && pwd.equals("user123"))
         {
              JOptionPane.showMessageDialog(null, "Welcome " + name , "Successfull Login", JOptionPane.PLAIN_MESSAGE);
+             this.dispose();
              new userInterface().setVisible(true);
         }
         else 
@@ -152,6 +158,11 @@ public class userLogin extends javax.swing.JFrame {
         this.setVisible(false);
             this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void gotoRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gotoRegisterActionPerformed
+        this.dispose();
+        new userRegister().setVisible(true);
+    }//GEN-LAST:event_gotoRegisterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,8 +200,8 @@ public class userLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton gotoRegister;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton_submit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

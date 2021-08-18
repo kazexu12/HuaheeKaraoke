@@ -140,6 +140,7 @@ public class adminLogin extends javax.swing.JFrame {
         if (name.equals("admin" ) && pwd.equals("admin123"))
         {
             JOptionPane.showMessageDialog(null, "Welcome " + name , "Successfull Login", JOptionPane.PLAIN_MESSAGE);
+            this.dispose();
             new adminInterface().setVisible(true);
         }
         else 
