@@ -95,6 +95,11 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.add(enterSessKeyBtn, gridBagConstraints);
 
         adminLoginBtn.setText("Admin Login");
+        adminLoginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminLoginBtnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -103,6 +108,11 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.add(adminLoginBtn, gridBagConstraints);
 
         memberLoginBtn.setText("Member Login");
+        memberLoginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                memberLoginBtnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -182,6 +192,16 @@ public class MainFrame extends javax.swing.JFrame {
         this.dispose();
         new Playground().setVisible(true);
     }//GEN-LAST:event_playgroundBtnActionPerformed
+
+    private void adminLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginBtnActionPerformed
+        // TODO add your handling code here:
+        new UserInterface.adminLogin().setVisible(true);
+    }//GEN-LAST:event_adminLoginBtnActionPerformed
+
+    private void memberLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberLoginBtnActionPerformed
+        // TODO add your handling code here:
+        new UserInterface.userLogin().setVisible(true);
+    }//GEN-LAST:event_memberLoginBtnActionPerformed
 
     /**
      * Self-made class to capture uncaught exceptions
