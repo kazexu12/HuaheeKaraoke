@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,6 +39,8 @@ public class BackgroundPlayer extends Thread {
     private EventListener onPlayingListener;
     private EventListener onStoppedListener;
 
+    private final Object playerStateLock = new Object();
+
     /**
      * Boolean on the right indicate is the song is being played at the moment
      */
@@ -55,7 +56,7 @@ public class BackgroundPlayer extends Thread {
     @Override
     public void run() {
         while (true) {
-            if (this.playerState != PlayerState.PLAYING) {
+            if (this.getPlayerState() != PlayerState.PLAYING) {
                 continue;
             }
 
@@ -74,12 +75,14 @@ public class BackgroundPlayer extends Thread {
             }
 
             Pair<Integer, String> lyric = this.lyricReader.lyricsQueue.peekFront();
-            if (lyric.getLeft() <= timestampNow) {
-                if (this.lyricMiddle != null) {
-                    this.lyricTop = new Pair<>(this.lyricMiddle.getLeft(), this.lyricMiddle.getRight());
+            if (lyric != null) {
+                if (lyric.getLeft() <= timestampNow) {
+                    if (this.lyricMiddle != null) {
+                        this.lyricTop = new Pair<>(this.lyricMiddle.getLeft(), this.lyricMiddle.getRight());
+                    }
+                    this.lyricMiddle = this.lyricReader.lyricsQueue.removeFront();
+                    this.lyricBottom = this.lyricReader.lyricsQueue.peekFront();
                 }
-                this.lyricMiddle = this.lyricReader.lyricsQueue.removeFront();
-                this.lyricBottom = this.lyricReader.lyricsQueue.peekFront();
             }
 
             // onPlaying callback
@@ -89,7 +92,7 @@ public class BackgroundPlayer extends Thread {
         }
     }
 
-    private void nextSong() {
+    public void nextSong() {
         loadLyric();
         for (int i = 0; i < this.nowPlayingSongList.size(); i++) {
             Song song = nowPlayingSongList.get(i).getLeft();
@@ -111,7 +114,7 @@ public class BackgroundPlayer extends Thread {
         for (int i = 0; i < nowPlayingSongList.size(); i++) {
             nowPlayingSongList.get(i).setRight(false);
         }
-        this.playerState = PlayerState.STOPPED;
+        this.setPlayerState(PlayerState.STOPPED);
         this.timestampNow = 0;
         this.timestampMax = 0;
         this.lyricTop = null;
@@ -178,7 +181,9 @@ public class BackgroundPlayer extends Thread {
     }
 
     public PlayerState getPlayerState() {
-        return playerState;
+        synchronized (playerStateLock) {
+            return playerState;
+        }
     }
 
     public ArrayList<Pair<Song, Boolean>> getNowPlayingSongList() {
@@ -186,7 +191,9 @@ public class BackgroundPlayer extends Thread {
     }
 
     public void setPlayerState(PlayerState playerState) {
-        this.playerState = playerState;
+        synchronized (playerStateLock) {
+            this.playerState = playerState;
+        }
     }
 
     public void addSong(Song newSong) {
@@ -222,14 +229,14 @@ public class BackgroundPlayer extends Thread {
             }
             newSongList.add(new Pair<>(nowPlayingSongList.get(i).getLeft(), false));
         }
-        
+
         this.nowPlayingSongList = newSongList;
-        
-        if(newSongList.size() == 0) {
+
+        if (newSongList.size() == 0) {
             stopPlayer();
             return;
         }
-        
+
         if (needToChangeSongToClosest) {
             if (closestIdx == -1) {
                 closestIdx = this.nowPlayingSongList.size() - 1;

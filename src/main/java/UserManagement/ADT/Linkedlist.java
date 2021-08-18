@@ -35,15 +35,55 @@ public class Linkedlist<T> implements ListInterface<T>{
 
    
     @Override
-    public boolean add(int newPosition, T newEntry) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean add(int nextPosition, T newEntry) {
+        boolean addSuccess = true;
+        
+        if((nextPosition >= 1) && (nextPosition <= numOfList + 1)){
+            Node newNode = new Node (newEntry);
+            
+            if(isEmpty() || (nextPosition == 1)){ //add at beginning place 
+                newNode.next = firstNode;
+                firstNode = newNode;
+            }else{
+                Node nodeBefore = firstNode;  
+                for(int i =0 ; i < nextPosition - 1; ++i){
+                    nodeBefore = nodeBefore.next;
+                }
+                
+                newNode.next = nodeBefore.next;
+                nodeBefore.next = newNode;
+            }
+            
+            numOfList++;
+            
+        }else{
+            addSuccess = false;
+        }
+        
+        return addSuccess;
     }
   
     
 
     @Override
     public T remove(int givenPosition) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        T result = null;
+        
+        if ((givenPosition >= 1) && (givenPosition <= numOfList)){
+            if(givenPosition == 1){
+                result = firstNode.data;
+                firstNode = firstNode.next;
+            }else{
+                Node nodeSelect = firstNode;
+                for(int i = 1; i < givenPosition - 1; ++i){
+                    nodeSelect = nodeSelect.next;
+                }
+                result = nodeSelect.next.data;
+                nodeSelect.next = nodeSelect.next.next;
+            }
+            numOfList--;
+        }
+        return result;
     }
 
     @Override
@@ -54,22 +94,56 @@ public class Linkedlist<T> implements ListInterface<T>{
 
     @Override
     public boolean replace(int givenPosition, T newEntry) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean replaceSuccess = true;
+        
+        if ((givenPosition >= 1) && (givenPosition <= numOfList)){
+            Node currentNode = firstNode;
+            for(int i = 0; i < givenPosition - 1; ++i){
+                currentNode = currentNode.next;
+            }
+            currentNode.data = newEntry;
+        }else{
+            replaceSuccess = false;
+        }
+        return replaceSuccess;
     }
 
     @Override
-    public T getEntry(int givenPosition) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public T getEntry(int givenPosition) { //get data result of givenPosition
+        T result = null;
+        
+        if ((givenPosition >= 1) && (givenPosition <= numOfList)){
+            Node currentNode = firstNode;
+            for (int i = 0; i < givenPosition - 1; ++i){
+                currentNode = currentNode.next;
+            }
+            result = currentNode.data;
+        }
+        return result;
     }
 
     @Override
-    public boolean contains(T anEntry) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean contains(T anEntry) { // if found is false, then means there are no have data in linkedlist list which same with data entry 
+        boolean found = false;
+        Node currentNode = firstNode;
+        
+        while(!found && (currentNode != null)){
+            if (anEntry.equals(currentNode != null)){
+                found = true;
+            }else{
+                currentNode = currentNode.next;
+            }
+    }
+        return found;
     }
 
     @Override
-    public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean isEmpty() {  //check the linkedlist is empty of not
+        boolean result;
+        
+        result = numOfList == 0;
+        
+        return result;
     }
 
     @Override

@@ -19,6 +19,7 @@ public class Users implements DAOInterface<User> {
 
     private DBManager db;
     private final Logger logger = LogManager.getLogger(Users.class.getName());
+    private ArrayList<DTO.User> userArray;
 
     public Users() {
         db = new DBManager();
@@ -57,6 +58,7 @@ public class Users implements DAOInterface<User> {
 
     @Override
     public void save(User t) throws SQLException {
+        db = new DBManager();
         String sql = String.format(
                 "INSERT INTO users VALUES('%s', %d, '%s', '%s', '%s', '%s', %d, '%s', %d, %d)",
                 new Object[]{
@@ -107,12 +109,56 @@ public class Users implements DAOInterface<User> {
 
     @Override
     public void update(User t, HashMap params) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        db = new DBManager();
+        String setClause = "SET";
+        String whereClause = String.format(" WHERE user_id= '%s'", t.getUser_id());
+        
+        boolean useSetClause = false;
+        if (params.containsKey("privillage")){
+            setClause += String.format("privillage = '%s',",params.get("privillage"));
+        }
+        if (params.containsKey("name")){
+            setClause += String.format("name = '%s',",params.get("name"));
+        }
+        if (params.containsKey("pw_hash")){
+            setClause += String.format("pw_hash = '%s',",params.get("pw_hash"));
+        }
+        if (params.containsKey("first_name")){
+            setClause += String.format("first_name = '%s',",params.get("first_name"));
+        }
+        if (params.containsKey("last_name")){
+            setClause += String.format("last_name = '%s',",params.get("last_name"));
+        }
+        if (params.containsKey("member_point")){
+            setClause += String.format("member_point = '%s',",params.get("member_point"));
+        }
+        if (params.containsKey("member_level")){
+            setClause += String.format("member_level = '%s',",params.get("member_level"));
+        }
+        if (params.containsKey("date_created")){
+            setClause += String.format("date_created = '%s',",params.get("date_created"));
+        }
+        if (params.containsKey("date_modified")){
+            setClause += String.format("date_modified = '%s',",params.get("date_modified"));
+        }
+        
+        // Remove last character from setClause to remove additional ',' from string
+        setClause = setClause.substring(0, setClause.length() - 1);
+
+        String query = "UPDATE Users " + (useSetClause ? setClause : "") + whereClause;
+        logger.info("Executing query: " + query);
+        db.execQuery(query);
+        logger.info("Successfully updated record in DB (user_id: " + t.getUser_id() + ")");
     }
 
     @Override
     public void delete(User t) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        db = new DBManager();
+        DBManager db = new DBManager();
+        this.userArray.remove(t);
+        String query = String.format("DELETE FROM Users WHERE user_id='%s'", new Object[]{t.getUser_id()});
+        db.execQuery(query);
+        logger.info("Successfully deleted record in DB (user_id: " + t.getUser_id() + ")");
     }
 
     public String getNewUserID() {

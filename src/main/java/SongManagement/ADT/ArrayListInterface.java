@@ -12,17 +12,19 @@ package SongManagement.ADT;
  */
 public interface ArrayListInterface<T> {
     
-	public abstract void add(int x,T element);
-        
-	public abstract T remove(int x);
-        
-	public abstract T get(int x);
-
-	public abstract T set(int x, T element);
-
-	public abstract int size();
-
-	public abstract boolean isEmpty();
-
-	public abstract int find(T element);
+    public abstract void add(T element);
+    
+    public abstract void add(int x,T element);
+    
+    public abstract T remove(int x);
+    
+    public abstract T get(int x);
+    
+    public abstract T set(int x, T element);
+    
+    public abstract int size();
+    
+    public abstract boolean isEmpty();
+    
+    public abstract int find(T element);
 }

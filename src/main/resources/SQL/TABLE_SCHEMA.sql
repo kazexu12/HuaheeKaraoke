@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS Transactions (
 	member_id TEXT,
 	member_level_atm TEXT,
 	staff_id TEXT,
+        status INTEGER,
         date_created NUMERIC,
         date_modified NUMERIC,
 	PRIMARY KEY(transaction_id),

@@ -5,10 +5,11 @@
  */
 package MainDriver;
 
+import DAO.Songs;
 import DTO.Song;
-import SessionManagement.ADT.ArrayList;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -24,7 +25,7 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
      *
      * @param parent parent window calling this dialog
      */
-    public KaraokeSessionAddSongDialog(javax.swing.JFrame parent) {
+    public KaraokeSessionAddSongDialog(javax.swing.JFrame parent, ArrayList<Song> songList) {
         // Call JDialog constructor
         super(parent, true);
         this.parent = (KaraokeSessionFrame) parent;
@@ -41,7 +42,7 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         this.addSongListingTable.setRowSorter(sorter);
         
         // Custom Init
-        init();
+        init(songList);
 
         // Make sure the window is properly disposed
         this.addWindowListener(new WindowAdapter() {
@@ -54,17 +55,15 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
     
     /**
      * Get all songs list from db and add it into table
+     * @param songs
      */
-    private void init() {
+    private void init(ArrayList<Song> songs) {
         DefaultTableModel tabModel = (DefaultTableModel) this.addSongListingTable.getModel();
         
-        Song a = new Song("1", "立ち入り禁止", "まふまふ", "", "", 33, 0, 0);
-        Song b = new Song("2", "嘘つきの世界", "鹿乃", "", "Utaite", 14, 0, 0);
-        Song c = new Song("3", "夕凪、某、花惑い", "ヨルシカ", "", "", 10, 0, 0);
-        
-        tabModel.addRow(new Object[]{null, a.getName(), a.getArtist(), a.getGenre(), a.getDurationString(), a});
-        tabModel.addRow(new Object[]{null, b.getName(), b.getArtist(), b.getGenre(), b.getDurationString(), b});
-        tabModel.addRow(new Object[]{null, c.getName(), c.getArtist(), c.getGenre(), c.getDurationString(), c});
+        for(int i =0 ; i < songs.size();i++){
+            Song sg = songs.get(i);
+            tabModel.addRow(new Object[]{null, sg.getName(), sg.getArtist(), sg.getGenre(), sg.getDurationString(), sg});
+        }
     }
     
 

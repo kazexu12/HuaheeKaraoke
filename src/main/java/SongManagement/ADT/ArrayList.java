@@ -24,6 +24,7 @@ public class ArrayList<T> implements ArrayListInterface<T>{
         array = temp;
     }
     
+    @Override
     public void add(T element){
 	if(this.size == array.length){
             extandArray();
@@ -34,20 +35,23 @@ public class ArrayList<T> implements ArrayListInterface<T>{
     
     @Override
     public void add(int x, T element){
-        if(x >= 0 || x < array.length){
-            if(x < this.size){
-                if(this.size == array.length)extandArray();
-                for(int i = this.size-1; i >= x; i--){
-                    array[i+1] = array[i];
-                }
-                array[x] = element;
-                size++;
-            }	
+        if (x < 0) {
+            throw new RuntimeException("Cannot insert data at the negative position: " + x);
         }
-        else if(x == array.length){
-            add(element);
+
+        if (x > size()) {
+            throw new RuntimeException("Position that exceed the list size: " + x);
         }
-        else throw new RuntimeException();
+
+        if (size == array.length) {
+            extandArray();
+        }
+
+        for (int i = size; i > x; i--) {
+            array[i] = array[i - 1];
+        }
+        array[x] = element;
+        size++;
     }
 
     @Override
