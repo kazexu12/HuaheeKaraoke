@@ -19,12 +19,15 @@ import org.apache.logging.log4j.Logger;
 public class RegisteredSessions implements DAOInterface<RegisteredSession> {
 
     private final Logger logger = LogManager.getLogger(RegisteredSessions.class.getName());
-    private ArrayList<DTO.RegisteredSession> sessions;
+    private final DBManager db;
 
     public RegisteredSessions() {
-        sessions = new ArrayList<>();
+        db = new DBManager();
+    }
 
-        DBManager db = new DBManager();
+    @Override
+    public ArrayList<RegisteredSession> getAll() {
+        ArrayList<RegisteredSession> sessions = new ArrayList<>();
         String query = "SELECT * FROM RegisteredSessions;";
         Pair<Connection, ResultSet> queryResult;
         Connection dbconn;
@@ -33,39 +36,20 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
             queryResult = db.resultQuery(query);
             dbconn = queryResult.getLeft();
             sessionResult = queryResult.getRight();
-        } catch (SQLException e) {
-            logger.error("Unable to query registered sessions from DB", e);
-            return;
-        }
 
-        try {
             while (sessionResult.next()) {
-                RegisteredSession sess = new RegisteredSession(
-                        sessionResult.getString("session_id"),
-                        sessionResult.getString("session_key"),
-                        sessionResult.getString("room_size").charAt(0),
-                        sessionResult.getInt("head_count"),
-                        sessionResult.getString("session_date"),
-                        sessionResult.getString("session_start_time"),
-                        sessionResult.getString("session_end_time"),
-                        sessionResult.getInt("date_created"),
-                        sessionResult.getInt("date_modified")
-                );
+                RegisteredSession sess = readRegisteredSessionFromResultSet(sessionResult);
                 sessions.add(sess);
             }
-        } catch (SQLException e) {
-            logger.error("Unable to read ResultSet of registered session query", e);
-        }
-    }
 
-    @Override
-    public ArrayList<RegisteredSession> getAll() {
+        } catch (SQLException e) {
+            logger.error("Unable to query registered sessions from DB", e);
+        }
         return sessions;
     }
 
     @Override
     public void save(RegisteredSession t) throws SQLException {
-        DBManager db = new DBManager();
         Object[] args = new Object[]{
             t.getSessionId(),
             t.getSessionKey(),
@@ -88,13 +72,10 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
                 + ");", args);
         db.execQuery(query);
         logger.info("Successfully added record in DB (session_id: " + t.getSessionId() + ")");
-
-        this.sessions.add(t);
     }
 
     @Override
     public void update(RegisteredSession t, HashMap<String, Object> params) throws SQLException {
-        DBManager db = new DBManager();
         String setClause = "SET ";
         String whereClause = String.format(" WHERE session_id='%s'", t.getSessionId());
 
@@ -135,19 +116,37 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
 
     @Override
     public void delete(RegisteredSession t) throws SQLException {
-        DBManager db = new DBManager();
-        this.sessions.remove(t);
         String query = String.format("DELETE FROM RegisteredSessions WHERE session_id='%s'", new Object[]{t.getSessionId()});
         db.execQuery(query);
         logger.info("Successfully deleted record in DB (session_id: " + t.getSessionId() + ")");
     }
-    
+
     public RegisteredSession findBySessionId(String session_id) {
-        for (int i = 0; i < this.sessions.size(); i++) {
-            if (this.sessions.get(i).getSessionId().equals(session_id)) {
-                return this.sessions.get(i);
+        String sql = String.format("SELECT * FROM RegisteredSessions WHERE session_id = '%s'", new Object[]{session_id});
+        try {
+            Pair<Connection, ResultSet> queryResult = db.resultQuery(sql);
+            Connection dbconn = queryResult.getLeft();
+            ResultSet rs = queryResult.getRight();
+            while (rs.next()) {
+                return readRegisteredSessionFromResultSet(rs);
             }
+        } catch (SQLException e) {
+            logger.error("Failed to find session by ID", e);
         }
         return null;
+    }
+
+    private RegisteredSession readRegisteredSessionFromResultSet(ResultSet rs) throws SQLException {
+        return new RegisteredSession(
+                rs.getString("session_id"),
+                rs.getString("session_key"),
+                rs.getString("room_size").charAt(0),
+                rs.getInt("head_count"),
+                rs.getString("session_date"),
+                rs.getString("session_start_time"),
+                rs.getString("session_end_time"),
+                rs.getInt("date_created"),
+                rs.getInt("date_modified")
+        );
     }
 }
