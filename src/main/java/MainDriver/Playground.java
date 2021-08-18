@@ -117,19 +117,7 @@ public class Playground extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here
-        RegisteredSessions rs = new RegisteredSessions();
-        ArrayList<RegisteredSession> al = rs.getAll();
-        RegisteredSession updateMe = al.get(1);
-        try {
-            rs.update(updateMe, new HashMap<String, Object>() {
-                {
-                    put("session_key", "This is a new set of keys");
-                }
-            });
-        } catch (SQLException e) {
-            logger.error("Failed", e);
-        }
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void updateLabel() {
