@@ -38,7 +38,7 @@ public class BackgroundPlayer extends Thread {
     private EventListener onNextSongListener;
     private EventListener onPlayingListener;
     private EventListener onStoppedListener;
-    
+
     private final Object playerStateLock = new Object();
 
     /**
@@ -75,12 +75,14 @@ public class BackgroundPlayer extends Thread {
             }
 
             Pair<Integer, String> lyric = this.lyricReader.lyricsQueue.peekFront();
-            if (lyric.getLeft() <= timestampNow) {
-                if (this.lyricMiddle != null) {
-                    this.lyricTop = new Pair<>(this.lyricMiddle.getLeft(), this.lyricMiddle.getRight());
+            if (lyric != null) {
+                if (lyric.getLeft() <= timestampNow) {
+                    if (this.lyricMiddle != null) {
+                        this.lyricTop = new Pair<>(this.lyricMiddle.getLeft(), this.lyricMiddle.getRight());
+                    }
+                    this.lyricMiddle = this.lyricReader.lyricsQueue.removeFront();
+                    this.lyricBottom = this.lyricReader.lyricsQueue.peekFront();
                 }
-                this.lyricMiddle = this.lyricReader.lyricsQueue.removeFront();
-                this.lyricBottom = this.lyricReader.lyricsQueue.peekFront();
             }
 
             // onPlaying callback
