@@ -33,18 +33,21 @@ public class Linkedlist<T> implements ListInterface<T>{
         return true;
     }
 
+    /*
     @Override
     public boolean add(int newPosition, T newEntry) {
         boolean addSuccess = true;
         
         if ((newPosition >= 1) && (newPosition <= numOfList + 1)){
-            
+            Node newNode
         }
         
         if(isEmpty() || (newPosition == 1)){
             newNode.next = firstNode;
         }
     }
+    */
+    
 
     @Override
     public T remove(int givenPosition) {
