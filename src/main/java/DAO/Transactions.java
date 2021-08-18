@@ -5,7 +5,6 @@
  */
 package DAO;
 
-import DTO.RegisteredSession;
 import DTO.Transaction;
 import Generic.DBManager;
 import Generic.Pair;
@@ -42,7 +41,7 @@ public class Transactions implements DAOInterface<Transaction> {
             dbconn = queryResult.getLeft();
             sessionResult = queryResult.getRight();
         } catch (SQLException e) {
-            logger.error("Unable to query registered sessions from DB", e);
+            logger.error("Unable to query transactions from DB", e);
             return transactions;
         }
 
@@ -97,7 +96,7 @@ public class Transactions implements DAOInterface<Transaction> {
                 + "strftime('%%s', 'now')"
                 + ");", args);
         db.execQuery(query);
-        logger.info("Successfully added record in DB (session_id: " + t.getSessionId() + ")");
+        logger.info("Successfully added record in DB (transaction_id: " + t.getTransactionId() + ")");
 
         this.transactions.add(t);
     }
@@ -106,7 +105,7 @@ public class Transactions implements DAOInterface<Transaction> {
     public void update(Transaction t, HashMap<String, Object> params) throws SQLException {
         DBManager db = new DBManager();
         String setClause = "SET ";
-        String whereClause = String.format(" WHERE transaction_id='%s'", t.getSessionId());
+        String whereClause = String.format(" WHERE transaction_id='%s'", t.getTransactionId());
 
         boolean useSetClause = false;
         if (params.containsKey("session_id")) {
@@ -137,7 +136,7 @@ public class Transactions implements DAOInterface<Transaction> {
         // Remove last character from setClause to remove additional ',' from string
         setClause = setClause.substring(0, setClause.length() - 1);
 
-        String query = "UPDATE RegisteredSessions " + (useSetClause ? setClause : "") + whereClause;
+        String query = "UPDATE Transactions " + (useSetClause ? setClause : "") + whereClause;
         logger.info("Executing query: " + query);
         db.execQuery(query);
         logger.info("Successfully updated record in DB (transaction_id: " + t.getTransactionId() + ")");
@@ -159,5 +158,33 @@ public class Transactions implements DAOInterface<Transaction> {
             }
         }
         return null;
+    }
+    
+    public String getNewTransactionID() {
+        DBManager db = new DBManager();
+        String sql = "SELECT max(transaction_id) as transaction_id FROM Transactions";
+        String maxTransId = "T0001";
+        boolean dataExists = false;
+        try {
+            Pair<Connection, ResultSet> result = db.resultQuery(sql);
+            Connection conn = result.getLeft();
+            ResultSet rs = result.getRight();
+
+            while (rs.next()) {
+                dataExists = true;
+                maxTransId = rs.getString("transaction_id");
+                break;
+            }
+
+        } catch (SQLException e) {
+            logger.error("Fail to get max transaction id", e);
+        }
+        if (!dataExists) {
+            return maxTransId;
+        }
+        
+        int num = Integer.parseInt(maxTransId.substring(1, maxTransId.length())) + 1;
+        maxTransId = String.format("T%04d", new Object[]{num});
+        return maxTransId;
     }
 }
