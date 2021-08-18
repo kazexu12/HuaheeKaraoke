@@ -17,10 +17,10 @@ public class Linkedlist<T> implements ListInterface<T>{
     private int numOfList;
 
     @Override
-    public boolean add(T newEntry) {
+    public boolean addData(T newEntry) {
         Node newNode = new Node(newEntry);
         
-        if (isEmpty()){
+        if (checkEmpty()){
             firstNode = newNode;
         }else{
             Node currentNode = firstNode;
@@ -35,13 +35,13 @@ public class Linkedlist<T> implements ListInterface<T>{
 
    
     @Override
-    public boolean add(int nextPosition, T newEntry) {
+    public boolean addData(int nextPosition, T newEntry) {
         boolean addSuccess = true;
         
         if((nextPosition >= 1) && (nextPosition <= numOfList + 1)){
             Node newNode = new Node (newEntry);
             
-            if(isEmpty() || (nextPosition == 1)){ //add at beginning place 
+            if(checkEmpty() || (nextPosition == 1)){ //add at beginning place 
                 newNode.next = firstNode;
                 firstNode = newNode;
             }else{
@@ -66,7 +66,7 @@ public class Linkedlist<T> implements ListInterface<T>{
     
 
     @Override
-    public T remove(int givenPosition) {
+    public T deleteSelectList(int givenPosition) {
         T result = null;
         
         if ((givenPosition >= 1) && (givenPosition <= numOfList)){
@@ -109,7 +109,7 @@ public class Linkedlist<T> implements ListInterface<T>{
     }
 
     @Override
-    public T getEntry(int givenPosition) { //get data result of givenPosition
+    public T getData(int givenPosition) { //get data result of givenPosition
         T result = null;
         
         if ((givenPosition >= 1) && (givenPosition <= numOfList)){
@@ -123,27 +123,31 @@ public class Linkedlist<T> implements ListInterface<T>{
     }
 
     @Override
-    public boolean contains(T anEntry) { // if found is false, then means there are no have data in linkedlist list which same with data entry 
-        boolean found = false;
+    public boolean checkEquals(T anEntry) { // if found is false, then means there are no have data in linkedlist list which same with data entry 
+        boolean found = true;
         Node currentNode = firstNode;
         
-        while(!found && (currentNode != null)){
+        while(found && (currentNode != null)){
             if (anEntry.equals(currentNode != null)){
                 found = true;
             }else{
                 currentNode = currentNode.next;
             }
     }
-        return found;
+        return found = false;
     }
 
     @Override
-    public boolean isEmpty() {  //check the linkedlist is empty of not
-        boolean result;
+    public boolean checkEmpty() {  //check the linkedlist is empty of not
         
-        result = numOfList == 0;
-        
-        return result;
+        if (numOfList == 0)
+        {
+             return true;
+        } else
+        {
+            return false;
+        }
+       
     }
 
     @Override

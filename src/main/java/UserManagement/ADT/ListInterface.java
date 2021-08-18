@@ -11,21 +11,21 @@ package UserManagement.ADT;
  */
 public interface ListInterface <T> {
     
-     public boolean add(T newEntry);
+     public boolean addData(T newEntry);
      
-     public boolean add(int newPosition, T newEntry);
+     public boolean addData(int newPosition, T newEntry);
     
-     public T remove(int givenPosition);
+     public T deleteSelectList(int givenPosition);
      
      public void clear();
      
      public boolean replace(int givenPosition, T newEntry);
      
-     public T getEntry(int givenPosition);
+     public T getData(int givenPosition);
      
-     public boolean contains(T anEntry);
+     public boolean checkEquals(T anEntry);
      
-     public boolean isEmpty();
+     public boolean checkEmpty();
      
      public boolean isFull();
      
