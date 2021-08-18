@@ -135,26 +135,26 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
         }
         return null;
     }
-    
-     public String getNewSessionID() {
+
+    public String getNewSessionID() {
         String sql = "SELECT max(session_id) as session_id FROM RegisteredSessions";
         String maxSessionID = "S001";
-        boolean dataExists = false;
         try {
             Pair<Connection, ResultSet> result = db.resultQuery(sql);
             Connection conn = result.getLeft();
             ResultSet rs = result.getRight();
 
             rs.next();
-            dataExists = true;
-            maxSessionID = rs.getString("session_id");
+            String res = rs.getString("session_id");
             conn.close();
+            if (res == null) {
+                return maxSessionID;
+            }
+
+            maxSessionID = res;
 
         } catch (SQLException e) {
             logger.error("Fail to get max session id", e);
-        }
-        if (!dataExists) {
-            return maxSessionID;
         }
 
         // U014
