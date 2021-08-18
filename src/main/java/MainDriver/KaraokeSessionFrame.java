@@ -9,6 +9,8 @@ import DTO.Song;
 import Generic.Pair;
 import SessionManagement.ADT.ArrayList;
 import java.awt.Point;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.html.HTMLEditorKit;
@@ -30,9 +32,9 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
      */
     public KaraokeSessionFrame() {
         player = new BackgroundPlayer();
-        
+
         songList = new DAO.Songs().getAll();
-        
+
         player.onNextSong(new EventListener() {
             @Override
             public void callback(Object[] args) {
@@ -70,6 +72,18 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                         lyricBottom == null ? "" : lyricBottom.getRight(),
                         2
                 );
+            }
+        });
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                if (player.isAlive()) {
+                    player.interrupt();
+                    logger.info("Stopped BackgroundPlayer Thread");
+                }
+                new MainFrame().setVisible(true);
             }
         });
 
@@ -111,7 +125,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         skipSongBtn = new javax.swing.JButton();
         stopSessionBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Huahee Karaoke >> Karaoke Session (SESSION_ID)");
         setPreferredSize(new java.awt.Dimension(800, 600));
 
@@ -311,7 +325,10 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     // =============================================================================
 
     private void stopSessionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopSessionBtnActionPerformed
-        // TODO add your handling code here:
+        if (player.isAlive()) {
+            player.interrupt();
+            logger.info("Stopped BackgroundPlayer Thread");
+        }
         this.setVisible(false);
         this.dispose();
         new MainFrame().setVisible(true);
