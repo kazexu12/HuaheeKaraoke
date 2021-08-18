@@ -169,8 +169,6 @@ public class Songs implements DAOInterface<Song> {
             return maxSongId;
         }
 
-        // U014
-        // "014"
         int num = Integer.parseInt(maxSongId.substring(1, maxSongId.length())) + 1;
         maxSongId = String.format("S%03d", new Object[]{num});
         return maxSongId;
