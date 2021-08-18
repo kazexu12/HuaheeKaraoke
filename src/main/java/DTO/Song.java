@@ -18,12 +18,13 @@ public class Song {
     private String genre;
     private int duration;
     private int date_created;
+    private int date_modified;
 
     public Song() {
 
     }
 
-    public Song(String song_id, String name, String artist, String album, String genre, int duration, int date_created) {
+    public Song(String song_id, String name, String artist, String album, String genre, int duration, int date_created, int date_modified) {
         this.song_id = song_id;
         this.name = name;
         this.artist = artist;
@@ -31,6 +32,7 @@ public class Song {
         this.genre = genre;
         this.duration = duration;
         this.date_created = date_created;
+        this.date_modified = date_modified;
     }
 
     public String getSongId() {
@@ -92,5 +94,12 @@ public class Song {
     public void setDateCreated(int date_created) {
         this.date_created = date_created;
     }
+    
+    public int getDateModified() {
+        return date_modified;
+    }
 
+    public void setDateModified(int date_modified) {
+        this.date_modified = date_modified;
+    }
 }
