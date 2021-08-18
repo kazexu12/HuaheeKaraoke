@@ -160,7 +160,7 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
         // U014
         // "014"
         int num = Integer.parseInt(maxSessionID.substring(1, maxSessionID.length())) + 1;
-        maxSessionID = String.format("U%03d", new Object[]{num});
+        maxSessionID = String.format("S%03d", new Object[]{num});
         return maxSessionID;
     }
 
