@@ -94,7 +94,7 @@ public class BackgroundPlayer extends Thread {
             Song song = nowPlayingSongList.get(i).getLeft();
             boolean isPlaying = nowPlayingSongList.get(i).getRight();
             if (isPlaying && i != nowPlayingSongList.size() - 1) {
-                this.changeSong(nowPlayingSongList.get(i + 1).getLeft());
+                this.changeSong(i + 1);
                 if (onNextSongListener != null) {
                     onNextSongListener.callback(null);
                 }
@@ -145,27 +145,21 @@ public class BackgroundPlayer extends Thread {
     }
 
     /**
-     * Change song. Song provided must exists in current list or else nothing
-     * will happen
+     * Change song.
      *
-     * @param song
+     * @param idx
      */
-    public void changeSong(Song song) {
-        boolean found = false;
+    public void changeSong(int idx) {
         for (int i = 0; i < nowPlayingSongList.size(); i++) {
             Pair<Song, Boolean> item = nowPlayingSongList.get(i);
-            if (!item.getLeft().equals(song)) {
+            if (i != idx) {
                 item.setRight(false);
                 continue;
             }
-            found = true;
             item.setRight(true);
         }
-        if (!found) {
-            logger.warn("changeSong() was called but Song object provided does not exists in list");
-            return;
-        }
-        this.timestampMax = song.getDuration();
+
+        this.timestampMax = this.nowPlayingSongList.get(idx).getLeft().getDuration();
         this.timestampNow = 0;
         loadLyric();
     }

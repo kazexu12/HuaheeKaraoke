@@ -314,7 +314,8 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addSongBtnActionPerformed
 
     private void removeSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSongBtnActionPerformed
-
+        DefaultTableModel tabModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
+        int[] selectedRows = nowPlayingListTable.getSelectedRows();
     }//GEN-LAST:event_removeSongBtnActionPerformed
 
     private void nowPlayingListTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nowPlayingListTableMousePressed
@@ -378,12 +379,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             this.player.start();
         }
         DefaultTableModel tableModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
-        Song s = (Song) tableModel.getValueAt(row, 5);
-        this.player.changeSong(s);
+        this.player.changeSong(row);
         this.updateCurrentPlaylistTable(this.player.getNowPlayingSongList());
 
         this.player.setPlayerState(PlayerState.PLAYING);
-        setNowPlayingText(s);
+        setNowPlayingText(this.player.getNowPlayingSongList().get(row).getLeft());
     }
 
     private void setNowPlayingText(Song s) {
