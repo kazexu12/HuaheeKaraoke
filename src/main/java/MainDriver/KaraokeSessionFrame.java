@@ -23,12 +23,16 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     private static final Logger logger = LogManager.getLogger(KaraokeSessionFrame.class.getName());
     private BackgroundPlayer player;
+    private java.util.ArrayList<Song> songList;
 
     /**
      * Creates new form Temp
      */
     public KaraokeSessionFrame() {
         player = new BackgroundPlayer();
+        
+        songList = new DAO.Songs().getAll();
+        
         player.onNextSong(new EventListener() {
             @Override
             public void callback(Object[] args) {
@@ -309,7 +313,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     private void addSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongBtnActionPerformed
         // TODO add your handling code here:
-        Object[] response = new KaraokeSessionAddSongDialog(this).run();
+        Object[] response = new KaraokeSessionAddSongDialog(this, songList).run();
         System.out.println(response[0]);
     }//GEN-LAST:event_addSongBtnActionPerformed
 
