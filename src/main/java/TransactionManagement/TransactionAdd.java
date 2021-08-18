@@ -51,8 +51,6 @@ public class TransactionAdd extends javax.swing.JFrame {
         jInternalFrame6 = new javax.swing.JInternalFrame();
         roomSizeLabel = new javax.swing.JLabel();
         roomSizeField = new javax.swing.JComboBox<>();
-        headCountLabel = new javax.swing.JLabel();
-        headCountField = new javax.swing.JTextField();
         jInternalFrame5 = new javax.swing.JInternalFrame();
         roomPriceLabel = new javax.swing.JLabel();
         discountLabel = new javax.swing.JLabel();
@@ -245,24 +243,15 @@ public class TransactionAdd extends javax.swing.JFrame {
             }
         });
 
-        headCountLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        headCountLabel.setText("Head Count:");
-
         javax.swing.GroupLayout jInternalFrame6Layout = new javax.swing.GroupLayout(jInternalFrame6.getContentPane());
         jInternalFrame6.getContentPane().setLayout(jInternalFrame6Layout);
         jInternalFrame6Layout.setHorizontalGroup(
             jInternalFrame6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jInternalFrame6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jInternalFrame6Layout.createSequentialGroup()
-                        .addComponent(roomSizeLabel)
-                        .addGap(29, 29, 29)
-                        .addComponent(roomSizeField, 0, 154, Short.MAX_VALUE))
-                    .addGroup(jInternalFrame6Layout.createSequentialGroup()
-                        .addComponent(headCountLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(headCountField)))
+                .addComponent(roomSizeLabel)
+                .addGap(29, 29, 29)
+                .addComponent(roomSizeField, 0, 154, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jInternalFrame6Layout.setVerticalGroup(
@@ -272,10 +261,6 @@ public class TransactionAdd extends javax.swing.JFrame {
                 .addGroup(jInternalFrame6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(roomSizeLabel)
                     .addComponent(roomSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jInternalFrame6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(headCountLabel)
-                    .addComponent(headCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -486,8 +471,6 @@ public class TransactionAdd extends javax.swing.JFrame {
     private javax.swing.JLabel finalPriceLabel;
     private javax.swing.JTextField giftsField;
     private javax.swing.JLabel giftsLabel;
-    private javax.swing.JTextField headCountField;
-    private javax.swing.JLabel headCountLabel;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JInternalFrame jInternalFrame2;
     private javax.swing.JInternalFrame jInternalFrame5;

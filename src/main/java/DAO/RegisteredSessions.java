@@ -3,7 +3,7 @@ package DAO;
 import DTO.RegisteredSession;
 import Generic.DBManager;
 import Generic.Pair;
-import SessionManagement.ADT.ArrayList;
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -140,5 +140,14 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
         String query = String.format("DELETE FROM RegisteredSessions WHERE session_id='%s'", new Object[]{t.getSessionId()});
         db.execQuery(query);
         logger.info("Successfully deleted record in DB (session_id: " + t.getSessionId() + ")");
+    }
+    
+    public RegisteredSession findBySessionId(String session_id) {
+        for (int i = 0; i < this.sessions.size(); i++) {
+            if (this.sessions.get(i).getSessionId().equals(session_id)) {
+                return this.sessions.get(i);
+            }
+        }
+        return null;
     }
 }
