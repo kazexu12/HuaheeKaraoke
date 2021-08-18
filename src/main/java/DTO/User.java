@@ -20,6 +20,33 @@ public class User {
     private int member_point;
     private char member_level;
     private int date_created;
+    private int date_modified;
+
+    public User() {
+
+    }
+
+    public User(String user_id,
+            int privillage,
+            String name,
+            String pw_hash,
+            String first_name,
+            String last_name,
+            int member_point,
+            char member_level,
+            int date_created,
+            int date_modified) {
+        this.user_id = user_id;
+        this.privillage = privillage;
+        this.name = name;
+        this.pw_hash = pw_hash;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.member_point = member_point;
+        this.member_level = member_level;
+        this.date_created = date_created;
+        this.date_modified = date_modified;
+    }
 
     public String getUser_id() {
         return user_id;
@@ -91,6 +118,14 @@ public class User {
 
     public void setDate_created(int date_created) {
         this.date_created = date_created;
+    }
+
+    public int getDate_modified() {
+        return date_modified;
+    }
+
+    public void setDate_modified(int date_modified) {
+        this.date_modified = date_modified;
     }
 
 }
