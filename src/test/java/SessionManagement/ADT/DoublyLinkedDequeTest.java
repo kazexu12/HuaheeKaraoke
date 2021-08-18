@@ -12,119 +12,153 @@ import org.junit.jupiter.api.Test;
 @DisplayName("SessionManagement ADT - DoublyLinkedDequeTest")
 public class DoublyLinkedDequeTest {
 
-    private DoublyLinkedDeque<String> queue;
+    private DoublyLinkedDeque<String> deque;
 
     @BeforeEach
     void initEach() {
-        queue = new DoublyLinkedDeque<>();
+        deque = new DoublyLinkedDeque<>();
     }
 
     @Test
-    @DisplayName("Able to add item to back of the queue")
+    @DisplayName("Able to add item to back of the deque")
     void addItemFront() {
-        queue.pushBack("Item 1");
-        queue.pushBack("Item 2");
-        queue.pushBack("Item 3");
-        assertEquals(queue.peekBack(), "Item 3");
-        assertEquals(queue.size(), 3);
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        assertEquals(deque.peekBack(), "Item 3");
+        assertEquals(deque.size(), 3);
     }
 
     @Test
-    @DisplayName("Able to add item to the in front of the queue")
+    @DisplayName("Able to add item to the in front of the deque")
     void addItemBack() {
-        queue.pushBack("Item 1");
-        queue.pushBack("Item 2");
-        queue.pushBack("Item 3");
-        queue.pushFront("Item Added");
-        assertEquals(queue.peekFront(), "Item Added");
-        assertEquals(queue.size(), 4);
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        deque.pushFront("Item Added");
+        assertEquals(deque.peekFront(), "Item Added");
+        assertEquals(deque.size(), 4);
     }
 
     @Test
-    @DisplayName("Able to remove item from the in front of the queue")
+    @DisplayName("Able to remove item from the in front of the deque")
     void removeItemFront() {
-        queue.pushBack("Item 1");
-        queue.pushBack("Item 2");
-        queue.pushBack("Item 3");
-        String item = queue.removeFront();
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        String item = deque.removeFront();
         assertEquals(item, "Item 1");
-        assertEquals(queue.size(), 2);
-        assertEquals(queue.peekFront(), "Item 2");
-        assertEquals(queue.peekBack(), "Item 3");
+        assertEquals(deque.size(), 2);
+        assertEquals(deque.peekFront(), "Item 2");
+        assertEquals(deque.peekBack(), "Item 3");
     }
 
     @Test
-    @DisplayName("Able to remove item from front of the queue until empty")
+    @DisplayName("Able to remove item from front of the deque until empty")
     void removeItemFrontUntilEmpty() {
-        queue.pushBack("Item 1");
-        queue.pushBack("Item 2");
-        queue.pushBack("Item 3");
-        queue.removeFront();
-        queue.removeFront();
-        queue.removeFront();
-        assertEquals(queue.size(), 0);
-        assertNull(queue.peekFront());
-        assertNull(queue.peekBack());
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        deque.removeFront();
+        deque.removeFront();
+        deque.removeFront();
+        assertEquals(deque.size(), 0);
+        assertNull(deque.peekFront());
+        assertNull(deque.peekBack());
     }
 
     @Test
-    @DisplayName("Able to remove item from back of the queue")
+    @DisplayName("Able to remove item from back of the deque")
     void removeItemBack() {
-        queue.pushBack("Item 1");
-        queue.pushBack("Item 2");
-        queue.pushBack("Item 3");
-        String item = queue.removeBack();
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        String item = deque.removeBack();
         assertEquals(item, "Item 3");
-        assertEquals(queue.size(), 2);
-        assertEquals(queue.peekFront(), "Item 1");
-        assertEquals(queue.peekBack(), "Item 2");
+        assertEquals(deque.size(), 2);
+        assertEquals(deque.peekFront(), "Item 1");
+        assertEquals(deque.peekBack(), "Item 2");
     }
 
     @Test
-    @DisplayName("Able to remove item from back of the queue until empty")
+    @DisplayName("Able to remove item from back of the deque until empty")
     void removeItemBackUntilEmpty() {
-        queue.pushBack("Item 1");
-        queue.pushBack("Item 2");
-        queue.pushBack("Item 3");
-        queue.removeBack();
-        queue.removeBack();
-        queue.removeBack();
-        assertEquals(queue.size(), 0);
-        assertNull(queue.peekFront());
-        assertNull(queue.peekBack());
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        deque.removeBack();
+        deque.removeBack();
+        deque.removeBack();
+        assertEquals(deque.size(), 0);
+        assertNull(deque.peekFront());
+        assertNull(deque.peekBack());
     }
-    
+
     @Test
-    @DisplayName("Able to clear queue")
-    void ableToClearQueue() {
-        queue.pushBack("Item 1");
-        queue.pushBack("Item 2");
-        queue.pushBack("Item 3");
-        queue.clear();
-        assertEquals(queue.size(), 0);
-        assertNull(queue.peekFront());
-        assertNull(queue.peekBack());
+    @DisplayName("Able to clear deque")
+    void ableToClearDeque() {
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        deque.clear();
+        assertEquals(deque.size(), 0);
+        assertNull(deque.peekFront());
+        assertNull(deque.peekBack());
     }
-    
+
     @Test
-    @DisplayName("Able to check if queue is empty")
-    void queueIsEmptyTest() {
-        assertTrue(queue.isEmpty());
-        queue.pushBack("Item 1");
-        assertFalse(queue.isEmpty());
-        queue.removeFront();
-        assertTrue(queue.isEmpty());
+    @DisplayName("Able to check if deque is empty")
+    void dequeIsEmptyTest() {
+        assertTrue(deque.isEmpty());
+        deque.pushBack("Item 1");
+        assertFalse(deque.isEmpty());
+        deque.removeFront();
+        assertTrue(deque.isEmpty());
     }
-    
+
     @Test
     @DisplayName("Able to make a copy of the deque")
     void copyTest() {
-        queue.pushBack("Item 1");
-        queue.pushBack("Item 2");
-        queue.pushBack("Item 3");
-        DoublyLinkedDeque<String> cloned = (DoublyLinkedDeque) queue.copy();
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        DoublyLinkedDeque<String> cloned = (DoublyLinkedDeque) deque.copy();
         cloned.clear();
         assertEquals(cloned.size(), 0);
-        assertEquals(queue.size(), 3);
+        assertEquals(deque.size(), 3);
+    }
+
+    @Test
+    @DisplayName("Able to iterate through Deque from front")
+    void iterateFrontTest() {
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        java.util.Iterator<String> i = deque.getForwardIterator();
+        assertTrue(i.hasNext());
+        assertEquals(i.next(), "Item 1");
+        assertTrue(i.hasNext());
+        assertEquals(i.next(), "Item 2");
+        assertTrue(i.hasNext());
+        assertEquals(i.next(), "Item 3");
+        assertFalse(i.hasNext());
+        assertNull(i.next());
+    }
+
+    @Test
+    @DisplayName("Able to iterate through Deque from back")
+    void iterateRearTest() {
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        java.util.Iterator<String> i = deque.getReverseIterator();
+        assertTrue(i.hasNext());
+        assertEquals(i.next(), "Item 3");
+        assertTrue(i.hasNext());
+        assertEquals(i.next(), "Item 2");
+        assertTrue(i.hasNext());
+        assertEquals(i.next(), "Item 1");
+        assertFalse(i.hasNext());
+        assertNull(i.next());
     }
 }
