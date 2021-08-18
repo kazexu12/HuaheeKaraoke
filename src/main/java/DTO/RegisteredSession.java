@@ -5,6 +5,8 @@
  */
 package DTO;
 
+import java.util.Objects;
+
 /**
  *
  * @author Loo Zi Kang
@@ -107,6 +109,21 @@ public class RegisteredSession {
 
     public void setDateModified(int date_modified) {
         this.date_modified = date_modified;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RegisteredSession other = (RegisteredSession) obj;
+        return Objects.equals(this.session_id, other.session_id);
     }
 
 }
