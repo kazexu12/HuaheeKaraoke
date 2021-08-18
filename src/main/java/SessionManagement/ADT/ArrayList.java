@@ -107,6 +107,11 @@ public class ArrayList<T> implements ListInterface<T> {
         if (pos > size()) {
             throw new RuntimeException("Cannot delete in position that do not exists: " + pos);
         }
+        
+        if(pos == 0 && size == 1) {
+            size--;
+            return arr[0];
+        }
 
         if (pos == size - 1) {
             size--;
@@ -140,6 +145,14 @@ public class ArrayList<T> implements ListInterface<T> {
             throw new RuntimeException("Object is not in the list");
         }
         return remove(i);
+    }
+    @Override
+    public ListInterface copy() {
+        ArrayList<T> cloned = new ArrayList<>();
+        for(int i = 0; i < this.size; i++) {
+            cloned.add(this.arr[i]);
+        }
+        return cloned;
     }
 
     private void expandArray() {

@@ -87,6 +87,21 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
         return data;
     }
 
+    @Override
+    public DequeInterface copy() {
+        DoublyLinkedDeque<T> deque = new DoublyLinkedDeque<>();
+        if (this.front == null) {
+            return deque;
+        }
+
+        Node<T> ptr = this.front;
+        while (ptr.next != null) {
+            deque.pushBack(ptr.data);
+            ptr = ptr.next;
+        }
+        return deque;
+    }
+
 //    @Override
 //    public T remove(T item) {
 //        if (size == 0) {
@@ -108,7 +123,6 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
 //        }
 //        return item;
 //    }
-
     @Override
     public T removeFront() {
         if (size == 0) {
