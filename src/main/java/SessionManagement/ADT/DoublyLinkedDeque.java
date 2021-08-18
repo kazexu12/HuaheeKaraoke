@@ -7,7 +7,12 @@ package SessionManagement.ADT;
  */
 public class DoublyLinkedDeque<T> implements DequeInterface<T> {
 
-    class Node<T> {
+    /**
+     * Private Node class for linking data
+     *
+     * @param <T> Type of data to store
+     */
+    private class Node<T> {
 
         public T data;
         public Node<T> next;
@@ -24,6 +29,12 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
         public Node(T data, Node<T> prev) {
             this.data = data;
             this.prev = prev;
+        }
+
+        public Node(T data, Node<T> prev, Node<T> next) {
+            this.data = data;
+            this.prev = prev;
+            this.next = next;
         }
     }
 
@@ -102,27 +113,6 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
         return deque;
     }
 
-//    @Override
-//    public T remove(T item) {
-//        if (size == 0) {
-//            throw new IllegalStateException("There are no items to remove");
-//        }
-//        Node<T> ptr = this.front;
-//        while (ptr != null) {
-//            if (ptr.data.equals(item)) {
-//                ptr.prev.next = ptr.next;
-//                ptr.next.prev = ptr.prev;
-//                break;
-//            }
-//            ptr = ptr.next;
-//        }
-//        size--;
-//        if (size == 0) {
-//            this.front = null;
-//            this.rear = null;
-//        }
-//        return item;
-//    }
     @Override
     public T removeFront() {
         if (size == 0) {
@@ -172,6 +162,88 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
         this.front = null;
         this.rear = null;
         size = 0;
+    }
+
+    public java.util.Iterator<T> getForwardIterator() {
+        return new ForwardIterator<>(this.front);
+    }
+
+    public java.util.Iterator<T> getReverseIterator() {
+        return new ReverseIterator<>(this.rear);
+    }
+
+    /**
+     * Iterator that starts from the front of the Deque
+     *
+     * @param <T>
+     */
+    private class ForwardIterator<T> implements java.util.Iterator<T> {
+
+        private Node<T> pointer;
+
+        public ForwardIterator(Node<T> root) {
+            this.pointer = root;
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (this.pointer == null) {
+                return false;
+            }
+
+            if (this.pointer.data == null) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                return null;
+            }
+            T data = this.pointer.data;
+            this.pointer = this.pointer.next;
+            return data;
+        }
+    }
+
+    /**
+     * Iterator that starts from the rear of the Deque
+     *
+     * @param <T>
+     */
+    private class ReverseIterator<T> implements java.util.Iterator<T> {
+
+        private Node<T> pointer;
+
+        public ReverseIterator(Node<T> root) {
+            this.pointer = root;
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (this.pointer == null) {
+                return false;
+            }
+
+            if (this.pointer.data == null) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                return null;
+            }
+            T data = this.pointer.data;
+            this.pointer = this.pointer.prev;
+            return data;
+        }
     }
 
 }
