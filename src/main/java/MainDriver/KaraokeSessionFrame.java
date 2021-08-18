@@ -6,10 +6,11 @@
 package MainDriver;
 
 import DTO.Song;
+import Generic.Pair;
+import SessionManagement.ADT.ArrayList;
 import java.awt.Point;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 import javax.swing.text.html.HTMLEditorKit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,19 +28,52 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
      * Creates new form Temp
      */
     public KaraokeSessionFrame() {
-        player = new BackgroundPlayer(this);
+        player = new BackgroundPlayer();
+        player.onNextSong(new EventListener() {
+            @Override
+            public void callback(Object[] args) {
+                updateCurrentPlaylistTable(player.getNowPlayingSongList());
+            }
+        });
+
+        player.onPlaying(new EventListener() {
+            @Override
+            public void callback(Object[] args) {
+                updateTimestamp(player.getTimestampNow(), player.getTimestampMax());
+                var lyricTop = player.getLyricTop();
+                var lyricMiddle = player.getLyricMiddle();
+                var lyricBottom = player.getLyricBottom();
+                displayLyrics(
+                        lyricTop == null ? "" : lyricTop.getRight(),
+                        lyricMiddle == null ? "" : lyricMiddle.getRight(),
+                        lyricBottom == null ? "" : lyricBottom.getRight(),
+                        2
+                );
+            }
+        });
+
+        player.onStopped(new EventListener() {
+            @Override
+            public void callback(Object[] args) {
+                updateCurrentPlaylistTable(player.getNowPlayingSongList());
+                updateTimestamp(player.getTimestampNow(), player.getTimestampMax());
+                var lyricTop = player.getLyricTop();
+                var lyricMiddle = player.getLyricMiddle();
+                var lyricBottom = player.getLyricBottom();
+                displayLyrics(
+                        lyricTop == null ? "" : lyricTop.getRight(),
+                        lyricMiddle == null ? "" : lyricMiddle.getRight(),
+                        lyricBottom == null ? "" : lyricBottom.getRight(),
+                        2
+                );
+            }
+        });
+
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         // Hide last column
         this.nowPlayingListTable.removeColumn(nowPlayingListTable.getColumnModel().getColumn(5));
-        // Add sorter to table
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) this.nowPlayingListTable.getModel());
-        this.nowPlayingListTable.setRowSorter(sorter);
-
-        player.addSong(new DTO.Song());
-        player.addSong(new DTO.Song());
-        player.addSong(new DTO.Song());
     }
 
     /**
@@ -262,6 +296,10 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // =============================================================================
+    // Event Callbacks
+    // =============================================================================
+
     private void stopSessionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopSessionBtnActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
@@ -292,6 +330,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_nowPlayingListTableMousePressed
 
+    // =============================================================================
+    // =============================================================================
+    // =============================================================================
+    // Utility Functions
+    // =============================================================================
     /**
      * Bold the values on table by add <b> tags to the values
      *
@@ -320,6 +363,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         }
     }
 
+    // =============================================================================
+    // =============================================================================
+    // =============================================================================
+    // Private function to modify the view
+    // =============================================================================
     /**
      * Change the tableView of now playing song and switch songs
      *
@@ -329,28 +377,59 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         if (!this.player.isAlive()) {
             this.player.start();
         }
-        this.player.setPlayerState(PlayerState.PLAYING);
-        removeHtmlTagsFromTable(nowPlayingListTable);
-        boldTableRow(nowPlayingListTable, row);
-        
         DefaultTableModel tableModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
         Song s = (Song) tableModel.getValueAt(row, 5);
+        this.player.changeSong(s);
+        this.updateCurrentPlaylistTable(this.player.getNowPlayingSongList());
+
+        this.player.setPlayerState(PlayerState.PLAYING);
+        setNowPlayingText(s);
+    }
+
+    private void setNowPlayingText(Song s) {
+        if (s == null) {
+            this.nowPlayingLabel.setText("Now Playing: ");
+            return;
+        }
         this.nowPlayingLabel.setText(String.format("Now Playing: %s by %s [%s]", new Object[]{s.getName(), s.getArtist(), s.getAlbum()}));
     }
+    // =============================================================================
+    // =============================================================================
 
-    public void addSong(Song item) {
+    // =============================================================================
+    // Public Functions for Background Player
+    // =============================================================================
+    /**
+     * Update the playlist view
+     *
+     * @param currentPlaylist
+     */
+    public void updateCurrentPlaylistTable(ArrayList<Pair<Song, Boolean>> currentPlaylist) {
         DefaultTableModel tabModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
-        int maxIndex = 0;
-        for (int count = 0; count < tabModel.getRowCount(); count++) {
-            int idx = Integer.parseInt((String) tabModel.getValueAt(count, 0));
-            if (idx > maxIndex) {
-                maxIndex = idx;
+        tabModel.setRowCount(0);
+        boolean songPlaying = false;
+        for (int i = 0; i < currentPlaylist.size(); i++) {
+            Song s = currentPlaylist.get(i).getLeft();
+            tabModel.addRow(new Object[]{Integer.toString(i + 1), s.getName(), s.getArtist(), s.getGenre(), s.getDurationString(), s});
+            if (currentPlaylist.get(i).getRight()) {
+                boldTableRow(this.nowPlayingListTable, i);
+                setNowPlayingText(s);
+                songPlaying = true;
             }
         }
-        tabModel.addRow(new Object[]{Integer.toString(maxIndex + 1), item.getName(), item.getArtist(), item.getGenre(), item.getDurationString(), item});
+        if (!songPlaying) {
+            setNowPlayingText(null);
+        }
     }
 
-    private void removeSongAt(int idx) {
+    /**
+     * Add song into the current playlist view
+     *
+     * @param item
+     */
+    public void addSong(Song item) {
+        this.player.addSong(item);
+        this.updateCurrentPlaylistTable(player.getNowPlayingSongList());
     }
 
     /**

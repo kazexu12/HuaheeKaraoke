@@ -26,7 +26,6 @@ import org.apache.logging.log4j.Logger;
 public class BackgroundPlayer extends Thread {
 
     private static final Logger logger = LogManager.getLogger(BackgroundPlayer.class.getName());
-    private KaraokeSessionFrame parent;
     private PlayerState playerState;
     private int timestampNow;
     private int timestampMax;
@@ -35,13 +34,17 @@ public class BackgroundPlayer extends Thread {
     private Pair<Integer, String> lyricTop;
     private Pair<Integer, String> lyricMiddle;
     private Pair<Integer, String> lyricBottom;
+
+    private EventListener onNextSongListener;
+    private EventListener onPlayingListener;
+    private EventListener onStoppedListener;
+
     /**
      * Boolean on the right indicate is the song is being played at the moment
      */
     private final ArrayList<Pair<Song, Boolean>> nowPlayingSongList;
 
-    public BackgroundPlayer(KaraokeSessionFrame parent) {
-        this.parent = parent;
+    public BackgroundPlayer() {
         this.nowPlayingSongList = new ArrayList<>();
         this.currentLyricsQueue = new DoublyLinkedDeque<>();
         this.playerState = PlayerState.STOPPED;
@@ -78,47 +81,109 @@ public class BackgroundPlayer extends Thread {
                 this.lyricBottom = this.lyricReader.lyricsQueue.peekFront();
             }
 
-            // Update parent view
-            updateParentView();
+            // onPlaying callback
+            if (onPlayingListener != null) {
+                onPlayingListener.callback(null);
+            }
         }
     }
 
-    public void updateParentView() {
-        this.parent.updateTimestamp(timestampNow, timestampMax);
-        this.parent.displayLyrics(
-                lyricTop == null ? "" : lyricTop.getRight(), 
-                lyricMiddle == null ? "" : lyricMiddle.getRight(), 
-                lyricBottom == null ? "" : lyricBottom.getRight(), 
-                2
-        );
-    }
-
     private void nextSong() {
+        loadLyric();
         for (int i = 0; i < this.nowPlayingSongList.size(); i++) {
             Song song = nowPlayingSongList.get(i).getLeft();
             boolean isPlaying = nowPlayingSongList.get(i).getRight();
-            if (isPlaying) {
-                Song playSong = nowPlayingSongList.get(i + 1).getLeft();
-                // Suppose to be playSong.getDuration
-                this.timestampMax = 240;
-                this.timestampNow = 0;
-                nowPlayingSongList.get(0).setRight(Boolean.TRUE);
+            if (isPlaying && i != nowPlayingSongList.size() - 1) {
+                this.changeSong(nowPlayingSongList.get(i + 1).getLeft());
+                if (onNextSongListener != null) {
+                    onNextSongListener.callback(null);
+                }
                 return;
             }
         }
 
-        if (this.nowPlayingSongList.size() != 0) {
-            Song playSong = nowPlayingSongList.get(0).getLeft();
-
-            // Suppose to be playSong.getDuration
-            this.timestampMax = 240;
-            this.timestampNow = 0;
-            nowPlayingSongList.get(0).setRight(Boolean.TRUE);
+        // Reset Player
+        for (int i = 0; i < nowPlayingSongList.size(); i++) {
+            nowPlayingSongList.get(i).setRight(false);
         }
+        this.playerState = PlayerState.STOPPED;
+        this.timestampNow = 0;
+        this.timestampMax = 0;
+        this.lyricTop = null;
+        this.lyricMiddle = null;
+        this.lyricBottom = null;
+        if (onStoppedListener != null) {
+            onStoppedListener.callback(null);
+        }
+    }
+
+    /**
+     * What to do after next song have been chosen
+     *
+     * @param e
+     */
+    public void onNextSong(EventListener e) {
+        onNextSongListener = e;
+    }
+
+    /**
+     * What to do after each seconds of songs played
+     *
+     * @param e
+     */
+    public void onPlaying(EventListener e) {
+        onPlayingListener = e;
+    }
+
+    /**
+     * When the player is stopped because the songs finished playing
+     *
+     * @param e
+     */
+    public void onStopped(EventListener e) {
+        onStoppedListener = e;
+    }
+
+    /**
+     * Change song. Song provided must exists in current list or else nothing
+     * will happen
+     *
+     * @param song
+     */
+    public void changeSong(Song song) {
+        boolean found = false;
+        for (int i = 0; i < nowPlayingSongList.size(); i++) {
+            Pair<Song, Boolean> item = nowPlayingSongList.get(i);
+            if (!item.getLeft().equals(song)) {
+                item.setRight(false);
+                continue;
+            }
+            found = true;
+            item.setRight(true);
+        }
+        if (!found) {
+            logger.warn("changeSong() was called but Song object provided does not exists in list");
+            return;
+        }
+        this.timestampMax = song.getDuration();
+        this.timestampNow = 0;
+        loadLyric();
+    }
+
+    private void loadLyric() {
+        // Preload lyrics
+        this.lyricReader = new LRCReader("LRC/lyrics.lrc", true);
+        this.lyricTop = null;
+        this.lyricMiddle = null;
+        this.lyricBottom = this.lyricReader.lyricsQueue.peekFront();
     }
 
     public PlayerState getPlayerState() {
         return playerState;
+    }
+
+    public ArrayList<Pair<Song, Boolean>> getNowPlayingSongList() {
+        return this.nowPlayingSongList;
     }
 
     public void setPlayerState(PlayerState playerState) {
@@ -127,6 +192,26 @@ public class BackgroundPlayer extends Thread {
 
     public void addSong(Song newSong) {
         nowPlayingSongList.add(new Pair<>(newSong, false));
+    }
+
+    public int getTimestampNow() {
+        return timestampNow;
+    }
+
+    public int getTimestampMax() {
+        return timestampMax;
+    }
+
+    public Pair<Integer, String> getLyricTop() {
+        return lyricTop;
+    }
+
+    public Pair<Integer, String> getLyricMiddle() {
+        return lyricMiddle;
+    }
+
+    public Pair<Integer, String> getLyricBottom() {
+        return lyricBottom;
     }
 
     private class LRCReader {

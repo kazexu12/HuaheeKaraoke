@@ -58,9 +58,9 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
     private void init() {
         DefaultTableModel tabModel = (DefaultTableModel) this.addSongListingTable.getModel();
         
-        Song a = new Song("1", "立ち入り禁止", "まふまふ", "", "", 217, 0);
-        Song b = new Song("2", "嘘つきの世界", "鹿乃", "", "Utaite", 208, 0);
-        Song c = new Song("3", "夕凪、某、花惑い", "ヨルシカ", "", "", 198, 0);
+        Song a = new Song("1", "立ち入り禁止", "まふまふ", "", "", 33, 0);
+        Song b = new Song("2", "嘘つきの世界", "鹿乃", "", "Utaite", 14, 0);
+        Song c = new Song("3", "夕凪、某、花惑い", "ヨルシカ", "", "", 10, 0);
         
         tabModel.addRow(new Object[]{null, a.getName(), a.getArtist(), a.getGenre(), a.getDurationString(), a});
         tabModel.addRow(new Object[]{null, b.getName(), b.getArtist(), b.getGenre(), b.getDurationString(), b});
