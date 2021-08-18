@@ -115,4 +115,16 @@ public class DoublyLinkedDequeTest {
         queue.removeFront();
         assertTrue(queue.isEmpty());
     }
+    
+    @Test
+    @DisplayName("Able to make a copy of the deque")
+    void copyTest() {
+        queue.pushBack("Item 1");
+        queue.pushBack("Item 2");
+        queue.pushBack("Item 3");
+        DoublyLinkedDeque<String> cloned = (DoublyLinkedDeque) queue.copy();
+        cloned.clear();
+        assertEquals(cloned.size(), 0);
+        assertEquals(queue.size(), 3);
+    }
 }

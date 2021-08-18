@@ -48,6 +48,8 @@ public interface DequeInterface<T> {
      */
     int size();
     
+    DequeInterface copy();
+    
     /**
      * Check if queue is empty
      * @return 

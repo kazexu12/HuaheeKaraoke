@@ -152,7 +152,7 @@ public class ArrayListTest {
         assertEquals(arr.get(1), "Item 3");
         assertEquals(arr.size(), 2);
     }
-    
+
     @Test
     @DisplayName("Able to compare between 2 arraylist which contains the same value")
     void cmpArlist() {
@@ -160,13 +160,33 @@ public class ArrayListTest {
         other.add("Item 1");
         other.add("Item 2");
         other.add("Item 3");
-        
+
         ArrayList<String> fakeOther = new ArrayList<>();
-        
+
         assertTrue(arr.equals(other));
         assertTrue(arr.equals(arr));
         assertFalse(arr.equals(""));
         assertFalse(arr.equals(fakeOther));
         assertFalse(arr.equals(null));
+    }
+
+    @Test
+    @DisplayName("Able to remove item until its empty")
+    void removeTilEmptyTest() {
+        while (arr.size() != 0) {
+            arr.remove(0);
+        }
+        assertEquals(arr.size(), 0);
+    }
+
+    @Test
+    @DisplayName("Able to make a copy of the arraylist")
+    void copyTest() {
+        ArrayList<String> cloned = (ArrayList) arr.copy();
+        cloned.remove(0);
+        cloned.remove(0);
+        cloned.remove(0);
+        assertEquals(cloned.size(), 0);
+        assertEquals(arr.size(), 3);
     }
 }

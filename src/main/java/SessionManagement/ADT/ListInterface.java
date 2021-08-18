@@ -19,4 +19,5 @@ public interface ListInterface<T> {
     public abstract T get(int pos);
     public abstract T remove(int pos);
     public abstract T remove(Object o);
+    public abstract ListInterface copy();
 }
