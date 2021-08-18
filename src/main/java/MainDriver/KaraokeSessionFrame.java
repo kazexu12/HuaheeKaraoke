@@ -177,6 +177,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
 
         addSongBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/plus.png"))); // NOI18N
+        addSongBtn.setToolTipText("Add Song(s)");
         addSongBtn.setMaximumSize(new java.awt.Dimension(32, 32));
         addSongBtn.setMinimumSize(new java.awt.Dimension(36, 36));
         addSongBtn.setPreferredSize(new java.awt.Dimension(36, 36));
@@ -193,6 +194,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel5.add(addSongBtn, gridBagConstraints);
 
         removeSongBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minus.png"))); // NOI18N
+        removeSongBtn.setToolTipText("Remove Song(s)");
         removeSongBtn.setMaximumSize(new java.awt.Dimension(36, 36));
         removeSongBtn.setMinimumSize(new java.awt.Dimension(36, 36));
         removeSongBtn.setPreferredSize(new java.awt.Dimension(36, 36));
