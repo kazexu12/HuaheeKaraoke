@@ -27,21 +27,130 @@ public class TransactionMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        transactionTitle = new javax.swing.JLabel();
+        addTransButton = new javax.swing.JButton();
+        searchTransButton = new javax.swing.JButton();
+        refundTransButton = new javax.swing.JButton();
+        deleteTransButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        companyName = new javax.swing.JLabel();
+        backButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        transactionTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        transactionTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        transactionTitle.setText("Transaction Management");
+
+        addTransButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        addTransButton.setText("Add a Transaction");
+        addTransButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTransButtonActionPerformed(evt);
+            }
+        });
+
+        searchTransButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        searchTransButton.setText("Search a Transaction");
+        searchTransButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTransButtonActionPerformed(evt);
+            }
+        });
+
+        refundTransButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        refundTransButton.setText("Refund a Transaction");
+        refundTransButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refundTransButtonActionPerformed(evt);
+            }
+        });
+
+        deleteTransButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        deleteTransButton.setText("Delete a Transaction");
+        deleteTransButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteTransButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("00/00/0000 00:00");
+
+        companyName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        companyName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        companyName.setText("HuaheeKaraoke");
+
+        backButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backButton.setText("Back to Main Menu");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(deleteTransButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(transactionTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                    .addComponent(searchTransButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(refundTransButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addTransButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(companyName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(companyName)
+                .addGap(18, 18, 18)
+                .addComponent(transactionTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(addTransButton)
+                .addGap(18, 18, 18)
+                .addComponent(searchTransButton)
+                .addGap(18, 18, 18)
+                .addComponent(refundTransButton)
+                .addGap(18, 18, 18)
+                .addComponent(deleteTransButton)
+                .addGap(18, 18, 18)
+                .addComponent(backButton)
+                .addContainerGap(171, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTransButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addTransButtonActionPerformed
+
+    private void searchTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTransButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchTransButtonActionPerformed
+
+    private void refundTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refundTransButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_refundTransButtonActionPerformed
+
+    private void deleteTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTransButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteTransButtonActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +188,13 @@ public class TransactionMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addTransButton;
+    private javax.swing.JButton backButton;
+    private javax.swing.JLabel companyName;
+    private javax.swing.JButton deleteTransButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton refundTransButton;
+    private javax.swing.JButton searchTransButton;
+    private javax.swing.JLabel transactionTitle;
     // End of variables declaration//GEN-END:variables
 }
