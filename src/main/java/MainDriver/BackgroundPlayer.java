@@ -103,7 +103,11 @@ public class BackgroundPlayer extends Thread {
             }
         }
 
-        // Reset Player
+        // Stop Player
+        stopPlayer();
+    }
+
+    private void stopPlayer() {
         for (int i = 0; i < nowPlayingSongList.size(); i++) {
             nowPlayingSongList.get(i).setRight(false);
         }
@@ -218,8 +222,14 @@ public class BackgroundPlayer extends Thread {
             }
             newSongList.add(new Pair<>(nowPlayingSongList.get(i).getLeft(), false));
         }
-
+        
         this.nowPlayingSongList = newSongList;
+        
+        if(newSongList.size() == 0) {
+            stopPlayer();
+            return;
+        }
+        
         if (needToChangeSongToClosest) {
             if (closestIdx == -1) {
                 closestIdx = this.nowPlayingSongList.size() - 1;
