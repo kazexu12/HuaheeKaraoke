@@ -151,21 +151,21 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel1.setMinimumSize(new java.awt.Dimension(100, 22));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel3.setMinimumSize(new java.awt.Dimension(100, 22));
-        jPanel3.setPreferredSize(new java.awt.Dimension(100, 32));
+        jPanel3.setMinimumSize(new java.awt.Dimension(100, 42));
+        jPanel3.setPreferredSize(new java.awt.Dimension(100, 42));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jPanel5.setMinimumSize(new java.awt.Dimension(160, 42));
-        jPanel5.setPreferredSize(new java.awt.Dimension(305, 22));
+        jPanel5.setMinimumSize(new java.awt.Dimension(82, 42));
+        jPanel5.setPreferredSize(new java.awt.Dimension(82, 22));
         java.awt.GridBagLayout jPanel5Layout = new java.awt.GridBagLayout();
         jPanel5Layout.columnWeights = new double[] {1.0, 1.0};
         jPanel5Layout.rowWeights = new double[] {1.0};
         jPanel5.setLayout(jPanel5Layout);
 
-        addSongBtn.setText("Add Song");
-        addSongBtn.setMaximumSize(new java.awt.Dimension(150, 22));
-        addSongBtn.setMinimumSize(new java.awt.Dimension(150, 22));
-        addSongBtn.setPreferredSize(new java.awt.Dimension(150, 22));
+        addSongBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/plus.png"))); // NOI18N
+        addSongBtn.setMaximumSize(new java.awt.Dimension(32, 32));
+        addSongBtn.setMinimumSize(new java.awt.Dimension(36, 36));
+        addSongBtn.setPreferredSize(new java.awt.Dimension(36, 36));
         addSongBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addSongBtnActionPerformed(evt);
@@ -178,9 +178,10 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
         jPanel5.add(addSongBtn, gridBagConstraints);
 
-        removeSongBtn.setText("Remove Song");
-        removeSongBtn.setMinimumSize(new java.awt.Dimension(150, 22));
-        removeSongBtn.setPreferredSize(new java.awt.Dimension(150, 22));
+        removeSongBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minus.png"))); // NOI18N
+        removeSongBtn.setMaximumSize(new java.awt.Dimension(36, 36));
+        removeSongBtn.setMinimumSize(new java.awt.Dimension(36, 36));
+        removeSongBtn.setPreferredSize(new java.awt.Dimension(36, 36));
         removeSongBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeSongBtnActionPerformed(evt);
@@ -274,6 +275,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         bottomPanel.add(jPanel2, gridBagConstraints);
 
         skipSongBtn.setText("Skip Song");
+        skipSongBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skipSongBtnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -335,6 +341,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             playSong(row);
         }
     }//GEN-LAST:event_nowPlayingListTableMousePressed
+
+    private void skipSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipSongBtnActionPerformed
+        this.player.nextSong();
+        this.updateCurrentPlaylistTable(this.player.getNowPlayingSongList());
+    }//GEN-LAST:event_skipSongBtnActionPerformed
 
     // =============================================================================
     // =============================================================================

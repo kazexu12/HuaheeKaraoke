@@ -89,7 +89,7 @@ public class BackgroundPlayer extends Thread {
         }
     }
 
-    private void nextSong() {
+    public void nextSong() {
         loadLyric();
         for (int i = 0; i < this.nowPlayingSongList.size(); i++) {
             Song song = nowPlayingSongList.get(i).getLeft();
