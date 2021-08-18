@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,7 +43,7 @@ public class BackgroundPlayer extends Thread {
     /**
      * Boolean on the right indicate is the song is being played at the moment
      */
-    private final ArrayList<Pair<Song, Boolean>> nowPlayingSongList;
+    private ArrayList<Pair<Song, Boolean>> nowPlayingSongList;
 
     public BackgroundPlayer() {
         this.nowPlayingSongList = new ArrayList<>();
@@ -188,6 +189,45 @@ public class BackgroundPlayer extends Thread {
         nowPlayingSongList.add(new Pair<>(newSong, false));
     }
 
+    public void removeSongs(int[] idxs) {
+        ArrayList<Pair<Song, Boolean>> newSongList = new ArrayList<>();
+        boolean found = false;
+        boolean needToChangeSongToClosest = false;
+        int closestIdx = -1;
+        for (int i = 0; i < this.nowPlayingSongList.size(); i++) {
+            boolean isPlaying = nowPlayingSongList.get(i).getRight();
+
+            // Find index in index array
+            found = false;
+            for (int idx : idxs) {
+                if (idx == i) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                if (isPlaying) {
+                    needToChangeSongToClosest = true;
+                }
+                continue;
+            }
+
+            if (needToChangeSongToClosest && closestIdx == -1) {
+                closestIdx = newSongList.size();
+            }
+            newSongList.add(new Pair<>(nowPlayingSongList.get(i).getLeft(), false));
+        }
+
+        this.nowPlayingSongList = newSongList;
+        if (needToChangeSongToClosest) {
+            if (closestIdx == -1) {
+                closestIdx = this.nowPlayingSongList.size() - 1;
+            }
+            this.changeSong(closestIdx);
+        }
+    }
+
     public int getTimestampNow() {
         return timestampNow;
     }
@@ -206,6 +246,7 @@ public class BackgroundPlayer extends Thread {
 
     public Pair<Integer, String> getLyricBottom() {
         return lyricBottom;
+
     }
 
     private class LRCReader {

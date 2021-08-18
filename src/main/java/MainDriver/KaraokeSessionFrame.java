@@ -316,6 +316,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     private void removeSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSongBtnActionPerformed
         DefaultTableModel tabModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
         int[] selectedRows = nowPlayingListTable.getSelectedRows();
+        this.removeSongs(selectedRows);
     }//GEN-LAST:event_removeSongBtnActionPerformed
 
     private void nowPlayingListTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nowPlayingListTableMousePressed
@@ -429,6 +430,16 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
      */
     public void addSong(Song item) {
         this.player.addSong(item);
+        this.updateCurrentPlaylistTable(player.getNowPlayingSongList());
+    }
+
+    /**
+     * Remove songs from current playlistView
+     *
+     * @param idx
+     */
+    public void removeSongs(int[] idx) {
+        this.player.removeSongs(idx);
         this.updateCurrentPlaylistTable(player.getNowPlayingSongList());
     }
 
