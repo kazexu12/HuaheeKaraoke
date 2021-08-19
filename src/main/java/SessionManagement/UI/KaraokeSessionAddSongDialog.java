@@ -256,10 +256,10 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
     private void addSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongBtnActionPerformed
         // TODO add your handling code here:
-        ArrayList<Song> s = this.getAllSelectedSongs();
-        for (int i = 0; i < s.size(); i++) {
-            parent.addSong(s.get(i));
-        }
+//        ArrayList<Song> s = this.getAllSelectedSongs();
+//        for (int i = 0; i < s.size(); i++) {
+//            parent.addSong(s.get(i));
+//        }
         this.dispose();
     }//GEN-LAST:event_addSongBtnActionPerformed
 
@@ -310,9 +310,9 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         return arr;
     }
 
-    public Object[] run() {
+    public Object run() {
         this.setVisible(true);
-        return new Object[]{"Test"};
+        return this.getAllSelectedSongs();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

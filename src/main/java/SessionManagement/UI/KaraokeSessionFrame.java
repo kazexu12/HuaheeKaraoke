@@ -342,8 +342,10 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     private void addSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongBtnActionPerformed
         // TODO add your handling code here:
-        Object[] response = new KaraokeSessionAddSongDialog(this, songList).run();
-        System.out.println(response[0]);
+        java.util.ArrayList<Song> songsToAdd = (java.util.ArrayList) new KaraokeSessionAddSongDialog(this, songList).run();
+        for (int i = 0; i < songsToAdd.size(); i++) {
+            addSong(songsToAdd.get(i));
+        }
     }//GEN-LAST:event_addSongBtnActionPerformed
 
     private void removeSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSongBtnActionPerformed
