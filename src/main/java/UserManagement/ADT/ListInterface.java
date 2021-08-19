@@ -13,18 +13,22 @@ public interface ListInterface <T> {
     
      public boolean addData(T newEntry);
      
-     public boolean addData(int newPosition, T newEntry);
+     public boolean addDataFromFirst(int newPosition, T newEntry);
+     
+     public boolean addDataFromLast(int newPosition, T newEntry);
     
      public T deleteSelectList(int givenPosition);
      
      public void clear();
      
-     public boolean changeDate(int givenPosition, T newEntry);
+     public boolean changeData(int givenPosition, T newEntry);
      
      public T getData(int givenPosition);
      
-     public boolean checkEquals(T anEntry);
+     public boolean contain(T anEntry);
      
      public boolean checkEmpty();
+     
+     public int size();
      
 }

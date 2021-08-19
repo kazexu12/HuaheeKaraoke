@@ -5,6 +5,10 @@
  */
 package UserInterface;
 
+import DAO.Users;
+import DTO.User;
+import UserManagement.ADT.Linkedlist;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,7 +16,9 @@ import javax.swing.JOptionPane;
  * @author ASUS
  */
 public class adminLogin extends javax.swing.JFrame {
-
+    
+    ArrayList<User> db;
+    Linkedlist<User> llist;
     /**
      * Creates new form adminLogin
      */
@@ -135,26 +141,42 @@ public class adminLogin extends javax.swing.JFrame {
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:
+        
+        Users ur = new Users();
+        db = ur.getAll();
+        
+        llist = new Linkedlist();
+        for(int i =0; i< db.size();i++){
+            llist.addDataFromFirst(i, db.get(i));
+        }
+        
         String name =  adminId.getText();
         String pwd = new String (passwordAdmin.getPassword());
-        if (name.equals("admin" ) && pwd.equals("admin123"))
-        {
-            JOptionPane.showMessageDialog(null, "Welcome " + name , "Successfull Login", JOptionPane.PLAIN_MESSAGE);
-            this.dispose();
-            new adminInterface().setVisible(true);
+        
+        for(int i = 0; i< llist.size(); i++){
+            if(1 == llist.getData(i).getPrivillage()){
+                if(name == llist.getData(i).getName()){
+                    if(pwd == llist.getData(i).getPw_hash()){
+                        JOptionPane.showMessageDialog(null, "Welcome " + name , "Successfull Login", JOptionPane.PLAIN_MESSAGE);
+                        this.dispose();
+                        new adminInterface().setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Your Password is invalid\n Please try again." + name , "Error!!", JOptionPane.PLAIN_MESSAGE);
+                    }
+                    JOptionPane.showMessageDialog(null, "Your User Name is invalid\n Please try again." , "Error!!", JOptionPane.PLAIN_MESSAGE);
+                }
+                JOptionPane.showMessageDialog(null, "You are insufficient power\n Please try again." , "Error!!", JOptionPane.PLAIN_MESSAGE);
+            }
         }
-        else 
-        {
-           JOptionPane.showMessageDialog(null, "Your UserID/Password is invalid\n Please try again." + name , "Error!!", JOptionPane.PLAIN_MESSAGE);
-           adminId.setText("");
-           passwordAdmin.setText("");
-        }
+        
     }//GEN-LAST:event_submitActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
             this.dispose();
+            new MainDriver.MainFrame().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

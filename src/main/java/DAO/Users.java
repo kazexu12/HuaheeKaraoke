@@ -164,30 +164,30 @@ public class Users implements DAOInterface<User> {
 
     public String getNewUserID() {
         String sql = "SELECT max(user_id) as user_id FROM Users";
-        String maxUserId = "U001";
-        boolean dataExists = false;
+        String maxUserID = "U001";
         try {
             Pair<Connection, ResultSet> result = db.resultQuery(sql);
             Connection conn = result.getLeft();
             ResultSet rs = result.getRight();
 
             rs.next();
-            dataExists = true;
-            maxUserId = rs.getString("user_id");
+            String res = rs.getString("user_id");
             conn.close();
+            if (res == null) {
+                return maxUserID;
+            }
+
+            maxUserID = res;
 
         } catch (SQLException e) {
-            logger.error("Fail to get max user id", e);
-        }
-        if (!dataExists) {
-            return maxUserId;
+            logger.error("Fail to get max users id", e);
         }
 
         // U014
         // "014"
-        int num = Integer.parseInt(maxUserId.substring(1, maxUserId.length())) + 1;
-        maxUserId = String.format("U%03d", new Object[]{num});
-        return maxUserId;
+        int num = Integer.parseInt(maxUserID.substring(1, maxUserID.length())) + 1;
+        maxUserID = String.format("U%03d", new Object[]{num});
+        return maxUserID;
     }
 
 }

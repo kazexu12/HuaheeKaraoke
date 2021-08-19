@@ -14,6 +14,7 @@ import org.w3c.dom.Node;
 public class Linkedlist<T> implements ListInterface<T>{
     
     private Node firstNode;
+    private Node lastNode;
     private int numOfList;
 
     @Override
@@ -35,7 +36,36 @@ public class Linkedlist<T> implements ListInterface<T>{
 
    
     @Override
-    public boolean addData(int nextPosition, T newEntry) {  //for add the data with choosing position
+    public boolean addDataFromFirst(int nextPosition, T newEntry) {  //for add the data with choosing position
+        boolean addSuccess = true;
+        
+        if((nextPosition >= 1) && (nextPosition <= numOfList + 1)){
+            Node newNode = new Node (newEntry);
+            
+            if(checkEmpty() || (nextPosition == 1)){ //add at beginning place 
+                newNode.next = firstNode;
+                firstNode = newNode;
+            }else{
+                Node nodeBefore = firstNode;  
+                for(int i =0 ; i < nextPosition - 1; i++){
+                    nodeBefore = nodeBefore.next;
+                }
+                
+                newNode.next = nodeBefore.next;
+                nodeBefore.next = newNode;
+            }
+            
+            numOfList++;
+            
+        }else{
+            addSuccess = false;
+        }
+        
+        return addSuccess;
+    }
+    
+    @Override
+    public boolean addDataFromLast(int nextPosition, T newEntry) {  //for add the data with choosing position
         boolean addSuccess = true;
         
         if((nextPosition >= 1) && (nextPosition <= numOfList + 1)){
@@ -93,7 +123,7 @@ public class Linkedlist<T> implements ListInterface<T>{
     }
 
     @Override
-    public boolean changeDate(int givenPosition, T newEntry) {
+    public boolean changeData(int givenPosition, T newEntry) {
         boolean replaceSuccess = true;
         
         if ((givenPosition >= 1) && (givenPosition <= numOfList)){
@@ -123,18 +153,19 @@ public class Linkedlist<T> implements ListInterface<T>{
     }
 
     @Override
-    public boolean checkEquals(T anEntry) { // if found is false, then means there are no have data in linkedlist list which same with data entry 
+    public boolean contain(T anEntry) { // if found is false, then means there are no have data in linkedlist list which same with data entry 
         boolean found = true;
         Node currentNode = firstNode;
         
         while(found && (currentNode != null)){
             if (anEntry.equals(currentNode.data)){
-                return found = true;
+                return found;
             }else{
                 currentNode = currentNode.next;
             }
     }
-        return found = false;
+        found = false;
+        return found;
     }
 
     @Override
@@ -148,6 +179,11 @@ public class Linkedlist<T> implements ListInterface<T>{
             return false;
         }
        
+    }
+    
+    @Override
+    public int size(){
+         return numOfList;
     }
 
     
