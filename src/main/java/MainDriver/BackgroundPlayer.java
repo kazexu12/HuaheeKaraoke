@@ -30,7 +30,6 @@ public class BackgroundPlayer extends Thread {
     private int timestampNow;
     private int timestampMax;
     private LRCReader lyricReader;
-    private DoublyLinkedDeque<Pair<Integer, String>> currentLyricsQueue;
     private Pair<Integer, String> lyricTop;
     private Pair<Integer, String> lyricMiddle;
     private Pair<Integer, String> lyricBottom;
@@ -48,7 +47,6 @@ public class BackgroundPlayer extends Thread {
 
     public BackgroundPlayer() {
         this.nowPlayingSongList = new ArrayList<>();
-        this.currentLyricsQueue = new DoublyLinkedDeque<>();
         this.playerState = PlayerState.STOPPED;
         this.lyricReader = new LRCReader("LRC/lyrics.lrc", true);
     }
