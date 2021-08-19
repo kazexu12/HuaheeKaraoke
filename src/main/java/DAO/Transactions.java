@@ -164,25 +164,26 @@ public class Transactions implements DAOInterface<Transaction> {
         DBManager db = new DBManager();
         String sql = "SELECT max(transaction_id) as transaction_id FROM Transactions";
         String maxTransId = "T0001";
-        boolean dataExists = false;
         try {
             Pair<Connection, ResultSet> result = db.resultQuery(sql);
             Connection conn = result.getLeft();
             ResultSet rs = result.getRight();
 
-            while (rs.next()) {
-                dataExists = true;
-                maxTransId = rs.getString("transaction_id");
-                break;
+            rs.next();
+            String res = rs.getString("transaction_id");
+            conn.close();
+            if (res == null) {
+                return maxTransId;
             }
+
+            maxTransId = res;
 
         } catch (SQLException e) {
             logger.error("Fail to get max transaction id", e);
         }
-        if (!dataExists) {
-            return maxTransId;
-        }
-        
+
+        // U014
+        // "014"
         int num = Integer.parseInt(maxTransId.substring(1, maxTransId.length())) + 1;
         maxTransId = String.format("T%04d", new Object[]{num});
         return maxTransId;

@@ -97,6 +97,7 @@ public class Users implements DAOInterface<User> {
                         rs.getInt("date_created"),
                         rs.getInt("date_modified")
                 );
+                conn.close();
                 return userData;
             }
             conn.close();

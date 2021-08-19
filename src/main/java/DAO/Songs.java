@@ -91,6 +91,7 @@ public class Songs implements DAOInterface<Song> {
                         rs.getInt("date_created"),
                         rs.getInt("date_modified")
                 );
+                conn.close();
                 return songData;
             }
             conn.close();
