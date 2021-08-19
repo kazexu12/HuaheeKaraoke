@@ -1,10 +1,3 @@
-CREATE TABLE IF NOT EXISTS Gifts (
-	gift_id TEXT,
-	gift_name TEXT,
-	member_level_min INTEGER,
-	PRIMARY KEY(gift_id)
-);
-
 CREATE TABLE IF NOT EXISTS Songs (
 	song_id TEXT,
 	name TEXT,
@@ -59,13 +52,4 @@ CREATE TABLE IF NOT EXISTS Transactions (
 	FOREIGN KEY(member_id) REFERENCES Users(user_id),
         FOREIGN KEY(session_id) REFERENCES RegisteredSessions(session_id),
 	FOREIGN KEY(staff_id) REFERENCES Users(user_id)
-);
-
-CREATE TABLE IF NOT EXISTS GiftRecords (
-	transaction_id TEXT,
-	gift_id TEXT,
-	amount INTEGER,
-	PRIMARY KEY(transaction_id, gift_id),
-	FOREIGN KEY(transaction_id) REFERENCES Transactions(transaction_id),
-	FOREIGN KEY(gift_id) REFERENCES Gifts(gift_id)
 );
