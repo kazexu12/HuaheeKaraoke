@@ -163,11 +163,11 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
         return null;
     }
 
-    public String getNewSessionKey() {
+    private String getNewSessionKey() {
         return "key";
     }
 
-    public String getNewSessionID() {
+    private String getNewSessionID() {
         String sql = "SELECT max(session_id) as session_id FROM RegisteredSessions";
         String maxSessionID = "S001";
         try {
