@@ -92,6 +92,11 @@ public class SongAdd extends javax.swing.JDialog{
         jLabel6.setText(":");
 
         jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Confirm");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -191,8 +196,12 @@ public class SongAdd extends javax.swing.JDialog{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(add_name.getText().isEmpty() || add_artist.getText().isEmpty() || add_album.getText().isEmpty() || add_genre.getText().isEmpty() || add_duration.getText().isEmpty()){
-            error_massage.setText("Can't insert empty data !");
+        
+        if(add_name.getText().isEmpty() || add_artist.getText().isEmpty() || add_album.getText().isEmpty() || add_genre.getText().isEmpty()){
+                error_massage.setText("Can't insert empty data !");
+        }
+        else if(add_duration.getText().matches("^[0-9]*$") != true){
+                error_massage.setText("Duration only accept number !");
         }
         else if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -220,6 +229,10 @@ public class SongAdd extends javax.swing.JDialog{
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
