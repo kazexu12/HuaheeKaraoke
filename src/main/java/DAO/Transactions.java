@@ -160,7 +160,7 @@ public class Transactions implements DAOInterface<Transaction> {
         return null;
     }
     
-    public String getNewTransactionID() {
+    public String getNewTransactionId() {
         DBManager db = new DBManager();
         String sql = "SELECT max(transaction_id) as transaction_id FROM Transactions";
         String maxTransId = "T0001";
