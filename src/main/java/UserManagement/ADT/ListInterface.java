@@ -19,14 +19,12 @@ public interface ListInterface <T> {
      
      public void clear();
      
-     public boolean replace(int givenPosition, T newEntry);
+     public boolean changeDate(int givenPosition, T newEntry);
      
      public T getData(int givenPosition);
      
      public boolean checkEquals(T anEntry);
      
      public boolean checkEmpty();
-     
-     public boolean isFull();
      
 }

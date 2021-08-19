@@ -46,6 +46,12 @@ public class userLogin extends javax.swing.JFrame {
 
         jLabel3.setText("Password:");
 
+        userId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userIdActionPerformed(evt);
+            }
+        });
+
         passwordUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordUserActionPerformed(evt);
@@ -163,6 +169,10 @@ public class userLogin extends javax.swing.JFrame {
         this.dispose();
         new userRegister().setVisible(true);
     }//GEN-LAST:event_gotoRegisterActionPerformed
+
+    private void userIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userIdActionPerformed
 
     /**
      * @param args the command line arguments

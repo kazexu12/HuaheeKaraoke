@@ -24,7 +24,7 @@ public class Linkedlist<T> implements ListInterface<T>{
             firstNode = newNode;
         }else{
             Node currentNode = firstNode;
-            while (currentNode.next != null){ // if no last node, then continue move to next node, and next node were become current node
+            while (currentNode.next != null){ // if current Node no last node, then continue move to next node, and next node were become current node
                 currentNode = currentNode.next;
             }
             currentNode.next = newNode; //if this is last node, then last node is cvurrent node
@@ -35,7 +35,7 @@ public class Linkedlist<T> implements ListInterface<T>{
 
    
     @Override
-    public boolean addData(int nextPosition, T newEntry) {
+    public boolean addData(int nextPosition, T newEntry) {  //for add the data with choosing position
         boolean addSuccess = true;
         
         if((nextPosition >= 1) && (nextPosition <= numOfList + 1)){
@@ -46,7 +46,7 @@ public class Linkedlist<T> implements ListInterface<T>{
                 firstNode = newNode;
             }else{
                 Node nodeBefore = firstNode;  
-                for(int i =0 ; i < nextPosition - 1; ++i){
+                for(int i =0 ; i < nextPosition - 1; i++){
                     nodeBefore = nodeBefore.next;
                 }
                 
@@ -66,7 +66,7 @@ public class Linkedlist<T> implements ListInterface<T>{
     
 
     @Override
-    public T deleteSelectList(int givenPosition) {
+    public T deleteSelectList(int givenPosition) { //Delete the data that have been choose
         T result = null;
         
         if ((givenPosition >= 1) && (givenPosition <= numOfList)){
@@ -75,11 +75,11 @@ public class Linkedlist<T> implements ListInterface<T>{
                 firstNode = firstNode.next;
             }else{
                 Node nodeSelect = firstNode;
-                for(int i = 1; i < givenPosition - 1; ++i){
+                for(int i = 1; i < givenPosition - 1; i++){
                     nodeSelect = nodeSelect.next;
                 }
                 result = nodeSelect.next.data;
-                nodeSelect.next = nodeSelect.next.next;
+                nodeSelect.next = nodeSelect.next.next; //skip the node which want to delete
             }
             numOfList--;
         }
@@ -87,18 +87,18 @@ public class Linkedlist<T> implements ListInterface<T>{
     }
 
     @Override
-    public void clear() {
+    public void clear() { //clear all data
         firstNode = null;
         numOfList = 0;
     }
 
     @Override
-    public boolean replace(int givenPosition, T newEntry) {
+    public boolean changeDate(int givenPosition, T newEntry) {
         boolean replaceSuccess = true;
         
         if ((givenPosition >= 1) && (givenPosition <= numOfList)){
             Node currentNode = firstNode;
-            for(int i = 0; i < givenPosition - 1; ++i){
+            for(int i = 0; i < givenPosition - 1; i++){
                 currentNode = currentNode.next;
             }
             currentNode.data = newEntry;
@@ -114,7 +114,7 @@ public class Linkedlist<T> implements ListInterface<T>{
         
         if ((givenPosition >= 1) && (givenPosition <= numOfList)){
             Node currentNode = firstNode;
-            for (int i = 0; i < givenPosition - 1; ++i){
+            for (int i = 0; i < givenPosition - 1; i++){
                 currentNode = currentNode.next;
             }
             result = currentNode.data;
@@ -128,8 +128,8 @@ public class Linkedlist<T> implements ListInterface<T>{
         Node currentNode = firstNode;
         
         while(found && (currentNode != null)){
-            if (anEntry.equals(currentNode != null)){
-                found = true;
+            if (anEntry.equals(currentNode.data)){
+                return found = true;
             }else{
                 currentNode = currentNode.next;
             }
@@ -150,10 +150,6 @@ public class Linkedlist<T> implements ListInterface<T>{
        
     }
 
-    @Override
-    public boolean isFull() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     private class Node{
         private T data;
