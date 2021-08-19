@@ -32,70 +32,70 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField1" max="32767" attributes="0"/>
+                      <Component id="old_name" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel5" min="-2" pref="84" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField2" pref="444" max="32767" attributes="0"/>
+                      <Component id="old_artist" pref="444" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel7" min="-2" pref="84" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField3" pref="444" max="32767" attributes="0"/>
+                      <Component id="old_album" pref="444" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel9" min="-2" pref="84" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField4" pref="444" max="32767" attributes="0"/>
+                      <Component id="old_genre" pref="444" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel11" min="-2" pref="84" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField5" pref="444" max="32767" attributes="0"/>
+                      <Component id="old_duration" pref="444" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel16" min="-2" pref="84" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField9" max="32767" attributes="0"/>
+                      <Component id="edit_name" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel13" min="-2" pref="84" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField8" pref="444" max="32767" attributes="0"/>
+                      <Component id="edit_artist" pref="444" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel19" min="-2" pref="84" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField10" pref="444" max="32767" attributes="0"/>
+                      <Component id="edit_album" pref="444" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel22" min="-2" pref="84" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField6" pref="444" max="32767" attributes="0"/>
+                      <Component id="edit_genre" pref="444" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel17" min="-2" pref="84" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField7" pref="444" max="32767" attributes="0"/>
+                      <Component id="edit_duration" pref="444" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -125,31 +125,31 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel4" max="32767" attributes="0"/>
                   <Component id="jLabel3" max="32767" attributes="0"/>
-                  <Component id="jTextField1" pref="28" max="32767" attributes="0"/>
+                  <Component id="old_name" pref="28" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jTextField2" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="old_artist" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jTextField3" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="old_album" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel10" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jTextField4" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="old_genre" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel12" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel11" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jTextField5" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="old_duration" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel14" min="-2" pref="29" max="-2" attributes="0"/>
@@ -157,31 +157,31 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel18" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel16" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jTextField9" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="edit_name" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel15" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel13" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jTextField8" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="edit_artist" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel21" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel19" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jTextField10" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="edit_album" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel23" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel22" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jTextField6" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="edit_genre" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel20" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel17" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jTextField7" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="edit_duration" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -218,7 +218,7 @@
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="old_name">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
@@ -233,7 +233,7 @@
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField2">
+    <Component class="javax.swing.JTextField" name="old_artist">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
@@ -248,7 +248,7 @@
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField3">
+    <Component class="javax.swing.JTextField" name="old_album">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
@@ -263,12 +263,12 @@
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField4">
+    <Component class="javax.swing.JTextField" name="old_genre">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField5">
+    <Component class="javax.swing.JTextField" name="old_duration">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
@@ -283,7 +283,7 @@
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField6">
+    <Component class="javax.swing.JTextField" name="edit_genre">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel13">
       <Properties>
@@ -300,14 +300,14 @@
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField7">
+    <Component class="javax.swing.JTextField" name="edit_duration">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel16">
       <Properties>
         <Property name="text" type="java.lang.String" value="Name"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField8">
+    <Component class="javax.swing.JTextField" name="edit_artist">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel17">
       <Properties>
@@ -329,14 +329,14 @@
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField9">
+    <Component class="javax.swing.JTextField" name="edit_name">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel21">
       <Properties>
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField10">
+    <Component class="javax.swing.JTextField" name="edit_album">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel22">
       <Properties>

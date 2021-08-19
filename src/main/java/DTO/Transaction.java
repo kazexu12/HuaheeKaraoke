@@ -15,18 +15,17 @@ public class Transaction {
 
     private String transaction_id;
     private String member_level_atm;
-    private RegisteredSession session_id;
+    private RegisteredSession session;
     private double discount;
     private double final_price;
     private User member;
     private User staff;
     private int date_created;
     private int date_modified;
-    private List<Gift> gifts;
     
-    public Transaction(String transaction_id, RegisteredSession session_id, double discount, double final_price, User member, String member_level_atm, User staff, int date_created, int date_modified) {
+    public Transaction(String transaction_id, RegisteredSession session, double discount, double final_price, User member, String member_level_atm, User staff, int date_created, int date_modified) {
         this.transaction_id = transaction_id;
-        this.session_id = session_id;
+        this.session = session;
         this.discount = discount;
         this.final_price = final_price;
         this.member = member;
@@ -44,14 +43,6 @@ public class Transaction {
         this.member_level_atm = member_level_atm;
     }
 
-    public List<Gift> getGifts() {
-        return gifts;
-    }
-
-    public void setGifts(List<Gift> gifts) {
-        this.gifts = gifts;
-    }
-
     public String getTransactionId() {
         return transaction_id;
     }
@@ -59,13 +50,17 @@ public class Transaction {
     public void setTransactionId(String transaction_id) {
         this.transaction_id = transaction_id;
     }
-
-    public RegisteredSession getSessionId() {
-        return session_id;
+    
+    public String getSessionId() {
+        return session.getSessionId();
     }
 
-    public void setSessionId(RegisteredSession session_id) {
-        this.session_id = session_id;
+    public RegisteredSession getSession() {
+        return session;
+    }
+
+    public void setSessionId(RegisteredSession session) {
+        this.session = session;
     }
 
     public double getDiscount() {
