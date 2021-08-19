@@ -5,16 +5,7 @@ import DTO.Song;
 import Generic.Pair;
 import SessionManagement.ADT.ArrayList;
 import SessionManagement.ADT.DoublyLinkedDeque;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -72,15 +63,16 @@ public class BackgroundPlayer extends Thread {
             } catch (InterruptedException e) {
                 logger.error("Timer was interrupted", e);
             }
-
-            Pair<Integer, String> lyric = this.lyricReader.lyricsQueue.peekFront();
+            
+            DoublyLinkedDeque<Pair<Integer, String>> lyricsDeque = this.lyricReader.getLyricsDeque();
+            Pair<Integer, String> lyric = lyricsDeque.peekFront();
             if (lyric != null) {
                 if (lyric.getLeft() <= timestampNow) {
                     if (this.lyricMiddle != null) {
                         this.lyricTop = new Pair<>(this.lyricMiddle.getLeft(), this.lyricMiddle.getRight());
                     }
-                    this.lyricMiddle = this.lyricReader.lyricsQueue.removeFront();
-                    this.lyricBottom = this.lyricReader.lyricsQueue.peekFront();
+                    this.lyricMiddle = lyricsDeque.removeFront();
+                    this.lyricBottom = lyricsDeque.peekFront();
                 }
             }
 
@@ -176,7 +168,7 @@ public class BackgroundPlayer extends Thread {
         this.lyricReader = new LRCReader("LRC/lyrics.lrc", true);
         this.lyricTop = null;
         this.lyricMiddle = null;
-        this.lyricBottom = this.lyricReader.lyricsQueue.peekFront();
+        this.lyricBottom = this.lyricReader.getLyricsDeque().peekFront();
     }
 
     public PlayerState getPlayerState() {
@@ -264,73 +256,4 @@ public class BackgroundPlayer extends Thread {
         return lyricBottom;
 
     }
-
-    private class LRCReader {
-
-        /**
-         * Stores the lyrics queue
-         */
-        DoublyLinkedDeque<Pair<Integer, String>> lyricsQueue;
-
-        public LRCReader() {
-            lyricsQueue = new DoublyLinkedDeque();
-        }
-
-        public LRCReader(String filename) {
-            lyricsQueue = new DoublyLinkedDeque();
-            try {
-                Path path = Paths.get(filename);
-                BufferedReader buf = Files.newBufferedReader(path);
-                parse(buf);
-            } catch (IOException e) {
-                logger.error("Failed to read file from path: " + filename, e);
-            }
-        }
-
-        public LRCReader(String filename, boolean readFromResource) {
-            lyricsQueue = new DoublyLinkedDeque();
-            try {
-                if (!readFromResource) {
-                    Path path = Paths.get(filename);
-                    BufferedReader buf = Files.newBufferedReader(path);
-                    parse(buf);
-                } else {
-                    InputStream is = getClass().getClassLoader().getResourceAsStream(filename);
-                    BufferedReader buf = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                    parse(buf);
-                }
-            } catch (IOException e) {
-                logger.error("Failed to read file from resources folder", e);
-            }
-        }
-
-        private void parse(BufferedReader buf) {
-            String pattern = "\\[(\\d{1,2})(?:\\:|.)(\\d{1,2})(?:\\:|.)(\\d{1,2})\\](.*)";
-            // Create a Pattern object
-            Pattern r = Pattern.compile(pattern);
-
-            try {
-                String line;
-                while ((line = buf.readLine()) != null) {
-                    Matcher m = r.matcher(line);
-                    try {
-                        if (m.find()) {
-                            int min = Integer.parseInt(m.group(1));
-                            int sec = Integer.parseInt(m.group(2));
-                            int ms = Integer.parseInt(m.group(3));
-                            int timestamp = min * 60 + sec;
-                            String lyric = m.group(4);
-                            Pair<Integer, String> lyricPair = new Pair<>(timestamp, lyric);
-                            lyricsQueue.pushBack(lyricPair);
-                        }
-                    } catch (NumberFormatException e) {
-
-                    }
-                }
-            } catch (IOException e) {
-                logger.error("BufferedReader failed to readline()", e);
-            }
-        }
-    }
-
 }
