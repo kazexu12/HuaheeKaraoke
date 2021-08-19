@@ -58,7 +58,7 @@ public class Songs implements DAOInterface<Song> {
     public void save(Song t) throws SQLException {
         db = new DBManager();
         String sql = String.format(
-                "INSERT INTO songs VALUES('%s', '%s', '%s', '%s', '%s', %d, %d, %d)",
+                "INSERT INTO songs VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d')",
                 new Object[]{
                     t.getSongId(),
                     t.getName(),
@@ -73,6 +73,7 @@ public class Songs implements DAOInterface<Song> {
     }
 
     public Song findSongById(String song_id) {
+        db = new DBManager();
         String sql = String.format("SELECT * FROM songs WHERE song_id = '%s'", new Object[]{song_id});
         try {
             Pair<Connection, ResultSet> result = db.resultQuery(sql);
@@ -150,7 +151,8 @@ public class Songs implements DAOInterface<Song> {
     }
 
     public String getNewSongID() {
-        String sql = "SELECT max(song_id) as song_id FROM songs";
+        db = new DBManager();
+        String sql = "SELECT max(song_id) as song_id FROM Songs";
         String maxSongId = "S001";
         boolean dataExists = false;
         try {
@@ -159,10 +161,14 @@ public class Songs implements DAOInterface<Song> {
             ResultSet rs = result.getRight();
 
             rs.next();
-            dataExists = true;
-            maxSongId = rs.getString("song_id");
+            String res = rs.getString("song_id");
             conn.close();
+            if (res == null) {
+                return maxSongId;
+            }
 
+            maxSongId = res;
+            dataExists = true;
         } catch (SQLException e) {
             logger.error("Fail to get max song id", e);
         }
