@@ -139,18 +139,18 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="show_table">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="8" rowCount="0">
-                <Column editable="false" title="No" type="java.lang.Object"/>
                 <Column editable="false" title="ID" type="java.lang.Object"/>
                 <Column editable="false" title="Name" type="java.lang.Object"/>
                 <Column editable="false" title="Artist" type="java.lang.Object"/>
                 <Column editable="false" title="Album" type="java.lang.Object"/>
                 <Column editable="false" title="Genre" type="java.lang.Object"/>
+                <Column editable="false" title="Duration" type="java.lang.Object"/>
                 <Column editable="false" title="Date Created" type="java.lang.Object"/>
-                <Column editable="true" title="Data Modified" type="java.lang.Object"/>
+                <Column editable="false" title="Data Modified" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -202,7 +202,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jTable1AncestorAdded"/>
+            <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="show_tableAncestorAdded"/>
           </Events>
         </Component>
       </SubComponents>

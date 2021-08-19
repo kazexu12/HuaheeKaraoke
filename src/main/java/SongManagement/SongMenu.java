@@ -7,6 +7,8 @@ package SongManagement;
 
 import DAO.Songs;
 import DTO.Song;
+import SongManagement.ADT.cArrayList;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author User
@@ -14,7 +16,7 @@ import DTO.Song;
 public class SongMenu extends javax.swing.JFrame {
 
     private java.util.ArrayList<Song> songList;
-    private SongManagement.ADT.cArrayList<Song> sl;
+    private cArrayList<Song> sl;
     
     /**
      * Creates new form testing123
@@ -25,9 +27,25 @@ public class SongMenu extends javax.swing.JFrame {
         Songs s = new Songs();
         songList = s.getAll();
         
-        sl = new SongManagement.ADT.cArrayList();
+        sl = new cArrayList();
         for(int i = 0; i < songList.size(); i++){
             sl.add(songList.get(i));
+        }
+
+        DefaultTableModel model = (DefaultTableModel) show_table.getModel();
+
+        for(int i = 0; i < sl.size(); i++){
+            Object[] row = {
+                sl.get(i).getSongId(),
+                sl.get(i).getName(),
+                sl.get(i).getArtist(),
+                sl.get(i).getAlbum(),
+                sl.get(i).getGenre(),
+                sl.get(i).getDuration(),
+                sl.get(i).getDateCreated(),
+                sl.get(i).getDateModified()
+            };
+            model.addRow(row);
         }
     }
 
@@ -44,7 +62,7 @@ public class SongMenu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        show_table = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -70,41 +88,41 @@ public class SongMenu extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Song Management");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        show_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No", "ID", "Name", "Artist", "Album", "Genre", "Date Created", "Data Modified"
+                "ID", "Name", "Artist", "Album", "Genre", "Duration", "Date Created", "Data Modified"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
+        show_table.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTable1AncestorAdded(evt);
+                show_tableAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
+        jScrollPane1.setViewportView(show_table);
+        if (show_table.getColumnModel().getColumnCount() > 0) {
+            show_table.getColumnModel().getColumn(0).setResizable(false);
+            show_table.getColumnModel().getColumn(1).setResizable(false);
+            show_table.getColumnModel().getColumn(2).setResizable(false);
+            show_table.getColumnModel().getColumn(3).setResizable(false);
+            show_table.getColumnModel().getColumn(4).setResizable(false);
+            show_table.getColumnModel().getColumn(5).setResizable(false);
+            show_table.getColumnModel().getColumn(6).setResizable(false);
+            show_table.getColumnModel().getColumn(7).setResizable(false);
         }
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -240,6 +258,7 @@ public class SongMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
         new MainDriver.MainFrame().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -266,12 +285,27 @@ public class SongMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        
+        
+        String data1 = "kkk";
+        String data2 = "DDD";
+        String data3 = "FFF";
+        String data4 = "EEE";
+        String data5 = "RRR";
+        int data6 = 00;
+        int data7 = 11;
+        int data8 = 22;
+
+        Object[] row = { data1, data2, data3, data4, data5, data6, data7, data8 };
+
+        DefaultTableModel model = (DefaultTableModel) show_table.getModel();
+
+        model.addRow(row);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
+    private void show_tableAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_show_tableAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1AncestorAdded
+    }//GEN-LAST:event_show_tableAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -324,7 +358,7 @@ public class SongMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable show_table;
     // End of variables declaration//GEN-END:variables
 }
