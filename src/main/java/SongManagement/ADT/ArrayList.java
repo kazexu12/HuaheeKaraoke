@@ -8,11 +8,15 @@ public class ArrayList<T> implements ArrayListInterface<T>{
 
     private int size;
     private T[] array;
-    private static int DEFAULT_CAPACITY =10;
+    private static int DEFAULT_CAPACITY =5;
     
     public ArrayList(){
+        this(DEFAULT_CAPACITY);
+    }
+    
+    public ArrayList(int initialCapacity){
         size = 0;
-        array = (T[]) new Object[DEFAULT_CAPACITY];
+        array = (T[]) new Object[initialCapacity];
     }
     
     private void extandArray(){
