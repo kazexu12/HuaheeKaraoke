@@ -1,4 +1,4 @@
-package MainDriver;
+package Generic;
 
 /**
  * Class that contains a callback function

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MainDriver;
+package SessionManagement.UI;
 
 import DAO.Songs;
 import DTO.Song;

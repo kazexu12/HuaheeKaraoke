@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MainDriver;
+package SessionManagement.UI;
 
+import Generic.EventListener;
 import DTO.Song;
 import Generic.Pair;
+import SessionManagement.Utility.BackgroundPlayer;
+import MainDriver.MainFrame;
+import SessionManagement.Utility.PlayerState;
 import SessionManagement.ADT.ArrayList;
 import java.awt.Point;
 import java.awt.event.WindowAdapter;

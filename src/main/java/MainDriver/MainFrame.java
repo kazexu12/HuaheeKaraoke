@@ -5,6 +5,7 @@
  */
 package MainDriver;
 
+import SessionManagement.UI.KaraokeSessionFrame;
 import Generic.DBManager;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
