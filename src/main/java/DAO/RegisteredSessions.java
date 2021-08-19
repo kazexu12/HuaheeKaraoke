@@ -48,16 +48,29 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
         return sessions;
     }
 
+    /**
+     * The passed in session will be updated with db data:<br>
+     * - session_id<br>
+     * - session_key<br>
+     * - date_created<br>
+     * - date_modified<br>
+     *
+     * @param t
+     * @throws SQLException
+     * @inheritDoc
+     */
     @Override
     public void save(RegisteredSession t) throws SQLException {
+        String newSessionID = this.getNewSessionID();
+        String newSessionKey = this.getNewSessionKey();
         Object[] args = new Object[]{
-            t.getSessionId(),
-            t.getSessionKey(),
+            newSessionID,
+            newSessionKey,
             t.getRoomSize(),
             t.getHeadCount(),
             t.getSessionDate(),
-            t.getSessionStartTime(),
-            t.getSessionEndTime()
+            "",
+            ""
         };
         String query = String.format("INSERT INTO RegisteredSessions VALUES("
                 + "'%s',"
@@ -72,6 +85,18 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
                 + ");", args);
         db.execQuery(query);
         logger.info("Successfully added record in DB (session_id: " + t.getSessionId() + ")");
+        query = String.format("SELECT date_created, date_modified FROM RegisteredSessions WHERE session_id = '%s'", new Object[]{newSessionID});
+        Pair<Connection, ResultSet> result = db.resultQuery(query);
+        Connection conn = result.getLeft();
+        ResultSet rs = result.getRight();
+        
+        rs.next();
+        t.setSessionId(newSessionID);
+        t.setSessionKey(newSessionKey);
+        t.setDateCreated(rs.getInt("date_created"));
+        t.setDateModified(rs.getInt("date_modified"));
+        conn.close();
+        logger.info("Updated DTO object correctly");
     }
 
     @Override
@@ -134,6 +159,10 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
             logger.error("Failed to find session by ID", e);
         }
         return null;
+    }
+
+    public String getNewSessionKey() {
+        return "key";
     }
 
     public String getNewSessionID() {

@@ -107,8 +107,18 @@ public class Playground extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        updateLabel();
+        DAO.RegisteredSessions rs = new DAO.RegisteredSessions();
+        DTO.RegisteredSession item = new DTO.RegisteredSession('a', 2, "2020-01-01");
+        try {
+            rs.save(item);
+        } catch (SQLException e) {
+            logger.error("Rip", e);
+        }
+        System.out.println(item.getSessionId());
+        System.out.println(item.getSessionKey());
+        System.out.println(item.getDateCreated());
+        System.out.println(item.getDateModified());
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
