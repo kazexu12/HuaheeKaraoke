@@ -153,7 +153,9 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
             Connection dbconn = queryResult.getLeft();
             ResultSet rs = queryResult.getRight();
             while (rs.next()) {
-                return readRegisteredSessionFromResultSet(rs);
+                RegisteredSession data = readRegisteredSessionFromResultSet(rs);
+                dbconn.close();
+                return data;
             }
         } catch (SQLException e) {
             logger.error("Failed to find session by ID", e);
