@@ -5,8 +5,8 @@
  */
 package SongManagement;
 
+import DAO.Songs;
 import DTO.Song;
-
 /**
  *
  * @author User
@@ -14,12 +14,21 @@ import DTO.Song;
 public class SongMenu extends javax.swing.JFrame {
 
     private java.util.ArrayList<Song> songList;
+    private SongManagement.ADT.cArrayList<Song> sl;
+    
     /**
      * Creates new form testing123
      */
     public SongMenu() {
-        songList = new DAO.Songs().getAll();
         initComponents();
+        
+        Songs s = new Songs();
+        songList = s.getAll();
+        
+        sl = new SongManagement.ADT.cArrayList();
+        for(int i = 0; i < songList.size(); i++){
+            sl.add(songList.get(i));
+        }
     }
 
     /**
@@ -75,6 +84,15 @@ public class SongMenu extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTable1AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -250,6 +268,10 @@ public class SongMenu extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1AncestorAdded
 
     /**
      * @param args the command line arguments
