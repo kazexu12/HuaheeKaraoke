@@ -1,9 +1,9 @@
 package Generic;
 
 /**
- * Class that contains a callback function
+ * Class that contains a callback function for a event
  * @author Loo Zi Kang
  */
-public interface EventListener {
+public interface Event {
     void callback(Object[] args);
 }

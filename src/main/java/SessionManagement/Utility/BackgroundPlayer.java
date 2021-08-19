@@ -1,6 +1,5 @@
 package SessionManagement.Utility;
 
-import Generic.EventListener;
 import DTO.Song;
 import Generic.Pair;
 import SessionManagement.ADT.ArrayList;
@@ -8,6 +7,7 @@ import SessionManagement.ADT.DoublyLinkedDeque;
 import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import Generic.Event;
 
 /**
  * Class that creates a new Thread upon creation and serve as a timer and
@@ -26,9 +26,9 @@ public class BackgroundPlayer extends Thread {
     private Pair<Integer, String> lyricMiddle;
     private Pair<Integer, String> lyricBottom;
 
-    private EventListener onNextSongListener;
-    private EventListener onPlayingListener;
-    private EventListener onStoppedListener;
+    private Event onNextSongEvent;
+    private Event onPlayingEvent;
+    private Event onStoppedEvent;
 
     private final Object playerStateLock = new Object();
 
@@ -77,8 +77,8 @@ public class BackgroundPlayer extends Thread {
             }
 
             // onPlaying callback
-            if (onPlayingListener != null) {
-                onPlayingListener.callback(null);
+            if (onPlayingEvent != null) {
+                onPlayingEvent.callback(null);
             }
         }
     }
@@ -90,8 +90,8 @@ public class BackgroundPlayer extends Thread {
             boolean isPlaying = nowPlayingSongList.get(i).getRight();
             if (isPlaying && i != nowPlayingSongList.size() - 1) {
                 this.changeSong(i + 1);
-                if (onNextSongListener != null) {
-                    onNextSongListener.callback(null);
+                if (onNextSongEvent != null) {
+                    onNextSongEvent.callback(null);
                 }
                 return;
             }
@@ -111,8 +111,8 @@ public class BackgroundPlayer extends Thread {
         this.lyricTop = null;
         this.lyricMiddle = null;
         this.lyricBottom = null;
-        if (onStoppedListener != null) {
-            onStoppedListener.callback(null);
+        if (onStoppedEvent != null) {
+            onStoppedEvent.callback(null);
         }
     }
 
@@ -121,8 +121,8 @@ public class BackgroundPlayer extends Thread {
      *
      * @param e
      */
-    public void onNextSong(EventListener e) {
-        onNextSongListener = e;
+    public void onNextSong(Event e) {
+        onNextSongEvent = e;
     }
 
     /**
@@ -130,8 +130,8 @@ public class BackgroundPlayer extends Thread {
      *
      * @param e
      */
-    public void onPlaying(EventListener e) {
-        onPlayingListener = e;
+    public void onPlaying(Event e) {
+        onPlayingEvent = e;
     }
 
     /**
@@ -139,8 +139,8 @@ public class BackgroundPlayer extends Thread {
      *
      * @param e
      */
-    public void onStopped(EventListener e) {
-        onStoppedListener = e;
+    public void onStopped(Event e) {
+        onStoppedEvent = e;
     }
 
     /**

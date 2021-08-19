@@ -5,7 +5,6 @@
  */
 package SessionManagement.UI;
 
-import Generic.EventListener;
 import DTO.Song;
 import Generic.Pair;
 import SessionManagement.Utility.BackgroundPlayer;
@@ -20,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.html.HTMLEditorKit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import Generic.Event;
 
 /**
  *
@@ -39,14 +39,14 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
         songList = new DAO.Songs().getAll();
 
-        player.onNextSong(new EventListener() {
+        player.onNextSong(new Event() {
             @Override
             public void callback(Object[] args) {
                 updateCurrentPlaylistTable(player.getNowPlayingSongList());
             }
         });
 
-        player.onPlaying(new EventListener() {
+        player.onPlaying(new Event() {
             @Override
             public void callback(Object[] args) {
                 updateTimestamp(player.getTimestampNow(), player.getTimestampMax());
@@ -62,7 +62,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             }
         });
 
-        player.onStopped(new EventListener() {
+        player.onStopped(new Event() {
             @Override
             public void callback(Object[] args) {
                 updateCurrentPlaylistTable(player.getNowPlayingSongList());
