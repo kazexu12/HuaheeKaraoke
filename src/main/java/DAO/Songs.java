@@ -58,7 +58,7 @@ public class Songs implements DAOInterface<Song> {
     public void save(Song t) throws SQLException {
         db = new DBManager();
         String sql = String.format(
-                "INSERT INTO songs VALUES('%s', '%s', '%s', '%s', '%s', %d, %d)",
+                "INSERT INTO songs VALUES('%s', '%s', '%s', '%s', '%s', %d, %d, %d)",
                 new Object[]{
                     t.getSongId(),
                     t.getName(),
