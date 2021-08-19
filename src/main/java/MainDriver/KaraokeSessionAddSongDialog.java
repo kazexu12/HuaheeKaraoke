@@ -10,6 +10,8 @@ import DTO.Song;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import javax.swing.RowFilter;
+import javax.swing.RowFilter.Entry;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -20,7 +22,8 @@ import javax.swing.table.TableRowSorter;
 public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
     private KaraokeSessionFrame parent;
-
+    private String searchVal = "";
+    private TableRowSorter<DefaultTableModel> sorter;
     /**
      *
      * @param parent parent window calling this dialog
@@ -38,9 +41,27 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         // Hide last column in view
         this.addSongListingTable.removeColumn(addSongListingTable.getColumnModel().getColumn(5));
         // Add sorter to table
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel)addSongListingTable.getModel());
+        sorter = new TableRowSorter<>((DefaultTableModel) addSongListingTable.getModel());
+        RowFilter<Object, Object> startsWithAFilter = new RowFilter<Object, Object>() {
+            @Override
+            public boolean include(Entry<? extends Object, ? extends Object> entry) {
+                if(searchVal.equals("")) {
+                    return true;
+                }
+                for (int i = entry.getValueCount() - 1; i >= 0; i--) {
+                    if (entry.getStringValue(i).startsWith(searchVal)) {
+                        // The value starts with "a", include it
+                        return true; 
+                   }
+                }
+                // None of the columns start with "a"; return false so that this
+                // entry is not shown
+                return false;
+            }
+        };
         this.addSongListingTable.setRowSorter(sorter);
-        
+        sorter.setRowFilter(startsWithAFilter);
+
         // Custom Init
         init(songList);
 
@@ -52,20 +73,20 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
             }
         });
     }
-    
+
     /**
      * Get all songs list from db and add it into table
+     *
      * @param songs
      */
     private void init(ArrayList<Song> songs) {
         DefaultTableModel tabModel = (DefaultTableModel) this.addSongListingTable.getModel();
-        
-        for(int i =0 ; i < songs.size();i++){
+
+        for (int i = 0; i < songs.size(); i++) {
             Song sg = songs.get(i);
             tabModel.addRow(new Object[]{null, sg.getName(), sg.getArtist(), sg.getGenre(), sg.getDurationString(), sg});
         }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -133,9 +154,9 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         jPanel4.setLayout(jPanel4Layout);
 
         searchSongQueryTextField.setToolTipText("Search for songs here !");
-        searchSongQueryTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchSongQueryTextFieldActionPerformed(evt);
+        searchSongQueryTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchSongQueryTextFieldKeyReleased(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -236,7 +257,7 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
     private void addSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongBtnActionPerformed
         // TODO add your handling code here:
         ArrayList<Song> s = this.getAllSelectedSongs();
-        for(int i =0 ; i < s.size(); i++) {
+        for (int i = 0; i < s.size(); i++) {
             parent.addSong(s.get(i));
         }
         this.dispose();
@@ -246,10 +267,6 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_cancelBtnActionPerformed
-
-    private void searchSongQueryTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchSongQueryTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchSongQueryTextFieldActionPerformed
 
     private void addSongListingTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addSongListingTableMousePressed
         // TODO add your handling code here:
@@ -274,12 +291,17 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_addSongListingTableMousePressed
 
+    private void searchSongQueryTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchSongQueryTextFieldKeyReleased
+        this.searchVal = this.searchSongQueryTextField.getText().trim();
+        sorter.sort();
+    }//GEN-LAST:event_searchSongQueryTextFieldKeyReleased
+
     private ArrayList<Song> getAllSelectedSongs() {
         ArrayList<Song> arr = new ArrayList<>();
         DefaultTableModel tableModel = (DefaultTableModel) this.addSongListingTable.getModel();
-        for(int i = 0; i < tableModel.getRowCount(); i++) {
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
             Object check = tableModel.getValueAt(i, 0);
-            if(check == null || !((boolean) check)) {
+            if (check == null || !((boolean) check)) {
                 continue;
             }
             Song s = (Song) tableModel.getValueAt(i, 5);
@@ -287,7 +309,7 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         }
         return arr;
     }
-    
+
     public Object[] run() {
         this.setVisible(true);
         return new Object[]{"Test"};
