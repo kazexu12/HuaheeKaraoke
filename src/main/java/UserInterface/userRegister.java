@@ -22,14 +22,14 @@ import org.apache.logging.log4j.LogManager;
  *
  * @author ASUS
  */
-public class UserRegister extends javax.swing.JFrame {
+public class userRegister extends javax.swing.JFrame {
     
-    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(UserRegister.class.getName());
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(userRegister.class.getName());
 
     /**
      * Creates new form userRegister
      */
-    public UserRegister() {
+    public userRegister() {
         initComponents();
     }
 
@@ -246,21 +246,20 @@ public class UserRegister extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserRegister().setVisible(true);
+                new userRegister().setVisible(true);
             }
         });
     }

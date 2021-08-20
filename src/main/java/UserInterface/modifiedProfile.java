@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author ASUS
  */
-public class ModifiedProfile extends javax.swing.JFrame {
+public class modifiedProfile extends javax.swing.JFrame {
     
     ArrayList<UserDTO> db;
     Linkedlist<UserDTO> llist;
@@ -25,7 +25,7 @@ public class ModifiedProfile extends javax.swing.JFrame {
     /**
      * Creates new form modifiedProfile
      */
-    public ModifiedProfile() {
+    public modifiedProfile() {
         initComponents();
     }
 
@@ -128,7 +128,7 @@ public class ModifiedProfile extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         this.dispose();
-        new UserInterface().setVisible(true);
+        new userInterface().setVisible(true);
     }//GEN-LAST:event_backActionPerformed
 
     private void newFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFirstNameActionPerformed
@@ -203,21 +203,20 @@ public class ModifiedProfile extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModifiedProfile().setVisible(true);
+                new modifiedProfile().setVisible(true);
             }
         });
     }

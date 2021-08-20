@@ -9,12 +9,12 @@ package UserInterface;
  *
  * @author ASUS
  */
-public class MemberFavouriteList extends javax.swing.JFrame {
+public class memberFavouriteList extends javax.swing.JFrame {
 
     /**
      * Creates new form memberFavouriteList
      */
-    public MemberFavouriteList() {
+    public memberFavouriteList() {
         initComponents();
     }
 
@@ -127,21 +127,20 @@ public class MemberFavouriteList extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MemberFavouriteList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(memberFavouriteList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MemberFavouriteList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(memberFavouriteList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MemberFavouriteList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(memberFavouriteList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MemberFavouriteList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(memberFavouriteList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MemberFavouriteList().setVisible(true);
+                new memberFavouriteList().setVisible(true);
             }
         });
     }

@@ -9,12 +9,12 @@ package UserInterface;
  *
  * @author ASUS
  */
-public class AdminInterface extends javax.swing.JFrame {
+public class adminInterface extends javax.swing.JFrame {
 
     /**
      * Creates new form adminInterface
      */
-    public AdminInterface() {
+    public adminInterface() {
         initComponents();
     }
 
@@ -125,12 +125,12 @@ public class AdminInterface extends javax.swing.JFrame {
 
     private void modifiedProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifiedProfileActionPerformed
         this.dispose();
-        new ModifiedProfile().setVisible(true);
+        new modifiedProfile().setVisible(true);
     }//GEN-LAST:event_modifiedProfileActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         this.dispose();
-        new ProfileChecking().setVisible(true);
+        new profileChecking().setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -160,21 +160,20 @@ public class AdminInterface extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminInterface().setVisible(true);
+                new adminInterface().setVisible(true);
             }
         });
     }

@@ -15,14 +15,14 @@ import javax.swing.JOptionPane;
  *
  * @author ASUS
  */
-public class AdminLogin extends javax.swing.JFrame {
+public class adminLogin extends javax.swing.JFrame {
     
     ArrayList<UserDTO> db;
     Linkedlist<UserDTO> llist;
     /**
      * Creates new form adminLogin
      */
-    public AdminLogin() {
+    public adminLogin() {
         initComponents();
     }
 
@@ -159,7 +159,7 @@ public class AdminLogin extends javax.swing.JFrame {
                     if(pwd == llist.getDataFromFront(i).getPw_hash()){
                         JOptionPane.showMessageDialog(null, "Welcome " + name , "Successfull Login", JOptionPane.PLAIN_MESSAGE);
                         this.dispose();
-                        new AdminInterface().setVisible(true);
+                        new adminInterface().setVisible(true);
                         int nodeGet = getNode(i);
                         break;
                     }
@@ -201,21 +201,20 @@ public class AdminLogin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminLogin().setVisible(true);
+                new adminLogin().setVisible(true);
             }
         });
     }

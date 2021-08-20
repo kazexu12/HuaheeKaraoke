@@ -198,13 +198,13 @@ public class MainFrame extends javax.swing.JFrame {
     private void adminLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginBtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new UserInterface.AdminLogin().setVisible(true);
+        new UserInterface.adminLogin().setVisible(true);
     }//GEN-LAST:event_adminLoginBtnActionPerformed
 
     private void memberLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberLoginBtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new UserInterface.UserLogin().setVisible(true);
+        new UserInterface.userLogin().setVisible(true);
     }//GEN-LAST:event_memberLoginBtnActionPerformed
 
     /**

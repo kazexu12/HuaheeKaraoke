@@ -15,14 +15,14 @@ import javax.swing.JOptionPane;
  *
  * @author ASUS
  */
-public class ModifiedAdminProfile extends javax.swing.JFrame {
+public class modifiedAdminProfile extends javax.swing.JFrame {
     
     ArrayList<UserDTO> db;
     Linkedlist<UserDTO> llist;
     /**
      * Creates new form modifiedProfile
      */
-    public ModifiedAdminProfile() {
+    public modifiedAdminProfile() {
         initComponents();
     }
 
@@ -119,7 +119,7 @@ public class ModifiedAdminProfile extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         this.dispose();
-        new AdminInterface().setVisible(true);
+        new adminInterface().setVisible(true);
     }//GEN-LAST:event_backActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -149,23 +149,21 @@ public class ModifiedAdminProfile extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModifiedAdminProfile().setVisible(true);
+                new modifiedAdminProfile().setVisible(true);
             }
         });
     }

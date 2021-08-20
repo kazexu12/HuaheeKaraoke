@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author ASUS
  */
-public class UserLogin extends javax.swing.JFrame {
+public class userLogin extends javax.swing.JFrame {
 
     static int getNode(int getNode) {
         return getNode;
@@ -28,7 +28,7 @@ public class UserLogin extends javax.swing.JFrame {
     /**
      * Creates new form userLogin
      */
-    public UserLogin() {
+    public userLogin() {
         initComponents();
     }
     
@@ -174,7 +174,7 @@ public class UserLogin extends javax.swing.JFrame {
                         this.dispose();
                         UserSesstionManager.login(llist.getDataFromFront(i));
                         
-                        new UserInterface().setVisible(true);
+                        new userInterface().setVisible(true);
                         break;
                     } else {
                         JOptionPane.showMessageDialog(null, "Your Password is invalid\n Please try again." + name, "Error!!", JOptionPane.PLAIN_MESSAGE);
@@ -201,7 +201,7 @@ public class UserLogin extends javax.swing.JFrame {
 
     private void gotoRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gotoRegisterActionPerformed
         this.dispose();
-        new UserRegister().setVisible(true);
+        new userRegister().setVisible(true);
     }//GEN-LAST:event_gotoRegisterActionPerformed
 
     private void userIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIdActionPerformed
@@ -225,21 +225,20 @@ public class UserLogin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserLogin().setVisible(true);
+                new userLogin().setVisible(true);
             }
         });
     }
