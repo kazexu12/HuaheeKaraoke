@@ -36,6 +36,13 @@ public class Linkedlist<T> implements ListInterface<T> {
         if ((nextPosition < 1) || (nextPosition > numOfList + 1)) {
             return false;
         }
+        
+        if (numOfList == 0) {
+            firstNode = new Node(newEntry);
+            lastNode = firstNode;
+            numOfList++;
+            return true;
+        }
 
         if (nextPosition == 1) {
             Node newData = new Node(newEntry);
@@ -53,7 +60,7 @@ public class Linkedlist<T> implements ListInterface<T> {
             return true;
         }
 
-        while (nextPosition != 2) {
+        while (nextPosition > 2) {
             ptr = ptr.next;
             nextPosition--;
         }

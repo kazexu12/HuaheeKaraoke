@@ -62,4 +62,17 @@ public class LinkedListTest {
         assertEquals(list.getDataFromFront(6), "Item at end");
         assertEquals(list.size(), 6);
     }
+    @Test
+    @DisplayName("Able to add item in position when list is empty")
+    public void addItemInPosWhenEmptyTest() {
+        list.addData(1, "Hi");
+        assertEquals(list.size(), 1);
+        assertEquals(list.getDataFromFront(1), "Hi");
+        
+        list.addData(1, "Hi2");
+        assertEquals(list.size(), 2);
+        assertEquals(list.getDataFromFront(1), "Hi2");
+        assertEquals(list.getDataFromFront(2), "Hi");
+    }
+    
 }
