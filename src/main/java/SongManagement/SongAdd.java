@@ -106,7 +106,7 @@ public class SongAdd extends javax.swing.JDialog{
         });
 
         error_massage.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        error_massage.setForeground(new java.awt.Color(1, 0, 0));
+        error_massage.setForeground(new java.awt.Color(255, 0, 0));
         error_massage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

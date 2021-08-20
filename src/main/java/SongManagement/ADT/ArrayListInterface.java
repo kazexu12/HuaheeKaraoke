@@ -27,4 +27,6 @@ public interface ArrayListInterface<T> {
     public abstract boolean isEmpty();
     
     public abstract int find(T element);
+    
+    public abstract void clear();
 }
