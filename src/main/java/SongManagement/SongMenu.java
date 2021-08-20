@@ -8,6 +8,9 @@ package SongManagement;
 import DAO.Songs;
 import DTO.Song;
 import SongManagement.ADT.cArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -17,13 +20,14 @@ public class SongMenu extends javax.swing.JFrame {
 
     private java.util.ArrayList<Song> songList;
     private cArrayList<Song> sl;
+    private cArrayList<Song> search_list;
     
     /**
      * Creates new form testing123
      */
     public SongMenu() {
         initComponents();
-        
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
         Songs s = new Songs();
         songList = s.getAll();
         
@@ -35,6 +39,10 @@ public class SongMenu extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
 
         for(int i = 0; i < sl.size(); i++){
+            Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
+            String dateDateCreated = formatter.format(date_created);
+            Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
+            String dateDateModified = formatter.format(date_modified);
             Object[] row = {
                 sl.get(i).getSongId(),
                 sl.get(i).getName(),
@@ -42,11 +50,12 @@ public class SongMenu extends javax.swing.JFrame {
                 sl.get(i).getAlbum(),
                 sl.get(i).getGenre(),
                 sl.get(i).getDuration(),
-                sl.get(i).getDateCreated(),
-                sl.get(i).getDateModified()
+                dateDateCreated,
+                dateDateModified,
             };
             model.addRow(row);
         }
+        show_record.setText("Have search "+ sl.size() +" record(s)");
     }
 
     /**
@@ -68,12 +77,13 @@ public class SongMenu extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        search_text = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        SearchSelected = new javax.swing.JComboBox<>();
+        search_selected = new javax.swing.JComboBox<>();
+        show_record = new javax.swing.JLabel();
 
         jButton5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton5.setText("Search");
@@ -165,9 +175,9 @@ public class SongMenu extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        search_text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                search_textActionPerformed(evt);
             }
         });
 
@@ -179,10 +189,10 @@ public class SongMenu extends javax.swing.JFrame {
 
         jLabel6.setText(":");
 
-        SearchSelected.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Song ID", "Name", "Artist", "Album", "Genre", "Date Created" }));
-        SearchSelected.addActionListener(new java.awt.event.ActionListener() {
+        search_selected.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Song ID", "Name", "Artist", "Album", "Genre" }));
+        search_selected.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchSelectedActionPerformed(evt);
+                search_selectedActionPerformed(evt);
             }
         });
 
@@ -197,7 +207,8 @@ public class SongMenu extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(show_record, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,11 +225,11 @@ public class SongMenu extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(search_text, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(SearchSelected, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(search_selected, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -236,11 +247,11 @@ public class SongMenu extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(SearchSelected, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                            .addComponent(search_selected, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1)
+                            .addComponent(search_text)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -250,7 +261,8 @@ public class SongMenu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(show_record, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -266,6 +278,7 @@ public class SongMenu extends javax.swing.JFrame {
         Object[] response = new SongAdd(this).run();
         System.out.println(response[0]);
         
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
         Songs s = new Songs();
         songList = s.getAll();
         sl.add(songList.get(songList.size()-1));
@@ -275,6 +288,10 @@ public class SongMenu extends javax.swing.JFrame {
         model.setRowCount(0);
         
         for(int i = 0; i < sl.size(); i++){
+            Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
+            String dateDateCreated = formatter.format(date_created);
+            Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
+            String dateDateModified = formatter.format(date_modified);
             Object[] row = {
                 sl.get(i).getSongId(),
                 sl.get(i).getName(),
@@ -282,11 +299,12 @@ public class SongMenu extends javax.swing.JFrame {
                 sl.get(i).getAlbum(),
                 sl.get(i).getGenre(),
                 sl.get(i).getDuration(),
-                sl.get(i).getDateCreated(),
-                sl.get(i).getDateModified()
+                dateDateCreated,
+                dateDateModified,
             };
             model.addRow(row);
         }
+        show_record.setText("Have search "+ sl.size() +" record(s)");
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -297,31 +315,192 @@ public class SongMenu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void SearchSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchSelectedActionPerformed
+    private void search_selectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_selectedActionPerformed
         
-    }//GEN-LAST:event_SearchSelectedActionPerformed
+    }//GEN-LAST:event_search_selectedActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void search_textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_textActionPerformed
         
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_search_textActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
+        int search_show = 0;
+        String search = search_text.getText().toUpperCase();
+        int search_by = search_selected.getSelectedIndex();
+        search_list = new cArrayList();
+        for(int i = 0; i < songList.size(); i++){
+            search_list.add(songList.get(i));
+        }
         
-        String data1 = "kkk";
-        String data2 = "DDD";
-        String data3 = "FFF";
-        String data4 = "EEE";
-        String data5 = "RRR";
-        int data6 = 00;
-        int data7 = 11;
-        int data8 = 22;
-
-        Object[] row = { data1, data2, data3, data4, data5, data6, data7, data8 };
-
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
         
-        model.addRow(row);
+        model.setRowCount(0);
+        
+        if(search.isEmpty()){
+            for(int i = 0; i < search_list.size(); i++ ){
+                Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+                String dateDateCreated = formatter.format(date_created);
+                Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                String dateDateModified = formatter.format(date_modified);
+                Object[] row = {
+                            search_list.get(i).getSongId(),
+                            search_list.get(i).getName(),
+                            search_list.get(i).getArtist(),
+                            search_list.get(i).getAlbum(),
+                            search_list.get(i).getGenre(),
+                            search_list.get(i).getDuration(),
+                            dateDateCreated,
+                            dateDateModified,
+                        };
+                        model.addRow(row);
+            }
+            show_record.setText("Have search "+ search_list.size() +" record(s)");
+        }
+        else{
+            switch(search_by){
+            case 0:
+                for(int i = 0; i < search_list.size(); i++){
+                    if(search_list.get(i).getSongId().toUpperCase().startsWith(search)){
+                        Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+                        String dateDateCreated = formatter.format(date_created);
+                        Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                        String dateDateModified = formatter.format(date_modified);
+                        Object[] row = {
+                            search_list.get(i).getSongId(),
+                            search_list.get(i).getName(),
+                            search_list.get(i).getArtist(),
+                            search_list.get(i).getAlbum(),
+                            search_list.get(i).getGenre(),
+                            search_list.get(i).getDuration(),
+                            dateDateCreated,
+                            dateDateModified,
+                        };
+                        model.addRow(row);
+                        search_show++;
+                    }
+                }
+                if(search_show==0){
+                    show_record.setText("No record");
+                }
+                else{
+                    show_record.setText("Have search "+ search_show +" record(s)");
+                }
+                break;
+            case 1:
+                for(int i = 0; i < search_list.size(); i++){
+                    if(search_list.get(i).getName().toUpperCase().startsWith(search)){
+                        Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+                        String dateDateCreated = formatter.format(date_created);
+                        Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                        String dateDateModified = formatter.format(date_modified);
+                        Object[] row = {
+                            search_list.get(i).getSongId(),
+                            search_list.get(i).getName(),
+                            search_list.get(i).getArtist(),
+                            search_list.get(i).getAlbum(),
+                            search_list.get(i).getGenre(),
+                            search_list.get(i).getDuration(),
+                            dateDateCreated,
+                            dateDateModified,
+                        };
+                        model.addRow(row);
+                        search_show++;
+                    }
+                }
+                if(search_show==0){
+                    show_record.setText("No record");
+                }
+                else{
+                    show_record.setText("Have search "+ search_show +" record(s)");
+                }
+                break;
+            case 2:
+                for(int i = 0; i < search_list.size(); i++){
+                    if(search_list.get(i).getArtist().toUpperCase().startsWith(search)){
+                        Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+                        String dateDateCreated = formatter.format(date_created);
+                        Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                        String dateDateModified = formatter.format(date_modified);
+                        Object[] row = {
+                            search_list.get(i).getSongId(),
+                            search_list.get(i).getName(),
+                            search_list.get(i).getArtist(),
+                            search_list.get(i).getAlbum(),
+                            search_list.get(i).getGenre(),
+                            search_list.get(i).getDuration(),
+                            dateDateCreated,
+                            dateDateModified,
+                        };
+                        model.addRow(row);
+                        search_show++;
+                    }
+                }
+                if(search_show==0){
+                    show_record.setText("No record");
+                }
+                else{
+                    show_record.setText("Have search "+ search_show +" record(s)");
+                }
+                break;
+            case 3:
+                for(int i = 0; i < search_list.size(); i++){
+                    if(search_list.get(i).getAlbum().toUpperCase().startsWith(search)){
+                        Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+                        String dateDateCreated = formatter.format(date_created);
+                        Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                        String dateDateModified = formatter.format(date_modified);
+                        Object[] row = {
+                            search_list.get(i).getSongId(),
+                            search_list.get(i).getName(),
+                            search_list.get(i).getArtist(),
+                            search_list.get(i).getAlbum(),
+                            search_list.get(i).getGenre(),
+                            search_list.get(i).getDuration(),
+                            dateDateCreated,
+                            dateDateModified,
+                        };
+                        model.addRow(row);
+                        search_show++;
+                    }
+                }
+                if(search_show==0){
+                    show_record.setText("No record");
+                }
+                else{
+                    show_record.setText("Have search "+ search_show +" record(s)");
+                }
+                break;
+            default:
+                for(int i = 0; i < search_list.size(); i++){
+                    if(search_list.get(i).getGenre().toUpperCase().startsWith(search)){
+                        Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+                        String dateDateCreated = formatter.format(date_created);
+                        Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                        String dateDateModified = formatter.format(date_modified);
+                        Object[] row = {
+                            search_list.get(i).getSongId(),
+                            search_list.get(i).getName(),
+                            search_list.get(i).getArtist(),
+                            search_list.get(i).getAlbum(),
+                            search_list.get(i).getGenre(),
+                            search_list.get(i).getDuration(),
+                            dateDateCreated,
+                            dateDateModified,
+                        };
+                        model.addRow(row);
+                        search_show++;
+                    }
+                }
+                if(search_show==0){
+                    show_record.setText("No record");
+                }
+                else{
+                    show_record.setText("Have search "+ search_show +" record(s)");
+                }
+        }
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void show_tableAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_show_tableAncestorAdded
@@ -365,7 +544,6 @@ public class SongMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> SearchSelected;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -379,7 +557,9 @@ public class SongMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<String> search_selected;
+    private javax.swing.JTextField search_text;
+    private javax.swing.JLabel show_record;
     private javax.swing.JTable show_table;
     // End of variables declaration//GEN-END:variables
 }

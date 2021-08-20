@@ -40,7 +40,8 @@
                   <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="show_record" min="-2" pref="229" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButton9" min="-2" pref="90" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButton8" min="-2" pref="90" max="-2" attributes="0"/>
@@ -59,12 +60,12 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel4" min="-2" pref="8" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTextField1" min="-2" pref="297" max="-2" attributes="0"/>
+                              <Component id="search_text" min="-2" pref="297" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jLabel6" min="-2" pref="8" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="SearchSelected" max="32767" attributes="0"/>
+                              <Component id="search_selected" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -88,12 +89,12 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" max="32767" attributes="0"/>
                           <Component id="jLabel6" alignment="3" max="32767" attributes="0"/>
-                          <Component id="SearchSelected" pref="27" max="32767" attributes="0"/>
+                          <Component id="search_selected" pref="27" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jButton4" max="32767" attributes="0"/>
-                          <Component id="jTextField1" max="32767" attributes="0"/>
+                          <Component id="search_text" max="32767" attributes="0"/>
                           <Component id="jLabel3" max="32767" attributes="0"/>
                           <Component id="jLabel4" max="32767" attributes="0"/>
                       </Group>
@@ -107,8 +108,9 @@
                   <Component id="jButton7" alignment="3" pref="26" max="32767" attributes="0"/>
                   <Component id="jButton8" alignment="3" pref="26" max="32767" attributes="0"/>
                   <Component id="jButton9" alignment="3" pref="26" max="32767" attributes="0"/>
+                  <Component id="show_record" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -262,9 +264,9 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="search_text">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="search_textActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -287,25 +289,26 @@
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="SearchSelected">
+    <Component class="javax.swing.JComboBox" name="search_selected">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="6">
+          <StringArray count="5">
             <StringItem index="0" value="Song ID"/>
             <StringItem index="1" value="Name"/>
             <StringItem index="2" value="Artist"/>
             <StringItem index="3" value="Album"/>
             <StringItem index="4" value="Genre"/>
-            <StringItem index="5" value="Date Created"/>
           </StringArray>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SearchSelectedActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="search_selectedActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="show_record">
     </Component>
   </SubComponents>
 </Form>

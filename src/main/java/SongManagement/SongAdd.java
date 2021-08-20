@@ -214,9 +214,8 @@ public class SongAdd extends javax.swing.JDialog{
             String genre = add_genre.getText();
             int duration = Integer.parseInt(add_duration.getText());
             int uTime = (int)unixTime;
-            int modifiedtime = 0;
             
-            Song newSong = new DTO.Song(songsDAO.getNewSongID(),name,artist,album,genre,duration,uTime,modifiedtime);
+            Song newSong = new DTO.Song(songsDAO.getNewSongID(),name,artist,album,genre,duration,uTime,uTime);
             try{
             songsDAO.save(newSong);
             
