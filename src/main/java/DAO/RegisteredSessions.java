@@ -157,6 +157,7 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
                 dbconn.close();
                 return data;
             }
+            dbconn.close();
         } catch (SQLException e) {
             logger.error("Failed to find session by ID", e);
         }
