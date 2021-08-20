@@ -200,8 +200,8 @@ public class SongAdd extends javax.swing.JDialog{
         if(add_name.getText().isEmpty() || add_artist.getText().isEmpty() || add_album.getText().isEmpty() || add_genre.getText().isEmpty()){
                 error_massage.setText("Can't insert empty data !");
         }
-        else if(add_duration.getText().matches("^[0-9]*$") != true){
-                error_massage.setText("Duration only accept number !");
+        else if(add_duration.getText().matches("^[1-9]*$") != true){
+                error_massage.setText("Duration only accept number and more then one!");
         }
         else if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {

@@ -265,11 +265,32 @@ public class SongMenu extends javax.swing.JFrame {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         Object[] response = new SongAdd(this).run();
         System.out.println(response[0]);
+        
+        Songs s = new Songs();
+        songList = s.getAll();
+        sl.add(songList.get(songList.size()-1));
+        
+        DefaultTableModel model = (DefaultTableModel) show_table.getModel();
+        
+        model.setRowCount(0);
+        
+        for(int i = 0; i < sl.size(); i++){
+            Object[] row = {
+                sl.get(i).getSongId(),
+                sl.get(i).getName(),
+                sl.get(i).getArtist(),
+                sl.get(i).getAlbum(),
+                sl.get(i).getGenre(),
+                sl.get(i).getDuration(),
+                sl.get(i).getDateCreated(),
+                sl.get(i).getDateModified()
+            };
+            model.addRow(row);
+        }
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        Object[] response = new SongAdd(this).run();
-        System.out.println(response[0]);
+        
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -299,7 +320,7 @@ public class SongMenu extends javax.swing.JFrame {
         Object[] row = { data1, data2, data3, data4, data5, data6, data7, data8 };
 
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
-
+        
         model.addRow(row);
     }//GEN-LAST:event_jButton4ActionPerformed
 
