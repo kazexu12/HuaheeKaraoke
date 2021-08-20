@@ -5,76 +5,78 @@
  */
 package UserManagement.ADT;
 
-import org.w3c.dom.Node;
-
 /**
  *
  * @author ASUS
  */
-public class Linkedlist<T> implements ListInterface<T>{
-    
+public class Linkedlist<T> implements ListInterface<T> {
+
     private Node firstNode;
     private Node lastNode;
     private int numOfList;
 
     @Override
     public boolean addData(T newEntry) {
-        Node newNode = new Node(newEntry);
-        
-        if (checkEmpty()){
-            firstNode = newNode;
-        }else{
-            Node currentNode = firstNode;
-            while (currentNode.next != null){ // if current Node no last node, then continue move to next node, and next node were become current node
-                currentNode = currentNode.next;
-            }
-            currentNode.next = newNode; //if this is last node, then last node is cvurrent node
+        if (numOfList == 0) {
+            firstNode = new Node(newEntry);
+            lastNode = firstNode;
+            numOfList++;
+            return true;
         }
+        Node newLastNode = new Node(newEntry);
+        lastNode.next = newLastNode;
+        lastNode = newLastNode;
         numOfList++;
         return true;
     }
 
-   
     @Override
     public boolean addData(int nextPosition, T newEntry) {  //for add the data with choosing position
-        boolean addSuccess = true;
-        
-        if((nextPosition >= 1) && (nextPosition <= numOfList + 1)){
-            Node newNode = new Node (newEntry);
-            
-            if(checkEmpty() || (nextPosition == 1)){ //add at beginning place 
-                newNode.next = firstNode;
-                firstNode = newNode;
-            }else{
-                Node nodeBefore = firstNode;  
-                for(int i =0 ; i < nextPosition - 1; ++i){
-                    nodeBefore = nodeBefore.next;
-                }
-                
-                newNode.next = nodeBefore.next;
-                nodeBefore.next = newNode;
-            }
-            
-            numOfList++;
-            
-        }else{
-            addSuccess = false;
+        Node ptr = firstNode;
+        if ((nextPosition < 1) || (nextPosition > numOfList + 1)) {
+            return false;
         }
-        
-        return addSuccess;
-    } 
+
+        if (nextPosition == 1) {
+            Node newData = new Node(newEntry);
+            newData.next = firstNode;
+            firstNode = newData;
+            numOfList++;
+            return true;
+        }
+
+        if (nextPosition == numOfList + 1) {
+            Node newData = new Node(newEntry);
+            lastNode.next = newData;
+            lastNode = newData;
+            numOfList++;
+            return true;
+        }
+
+        while (nextPosition != 2) {
+            ptr = ptr.next;
+            nextPosition--;
+        }
+
+        Node newData = new Node(newEntry);
+        newData.next = ptr.next;
+        ptr.next = newData;
+
+        numOfList++;
+        return true;
+    }
 
     @Override
     public T deleteSelectList(int givenPosition) { //Delete the data that have been choose
         T result = null;
-        
-        if ((givenPosition >= 1) && (givenPosition <= numOfList)){
-            if(givenPosition == 1){
+
+        if ((givenPosition >= 1) && (givenPosition <= numOfList)) {
+            if (givenPosition == 1) {
                 result = firstNode.data;
                 firstNode = firstNode.next;
-            }else{
+            } else {
                 Node nodeSelect = firstNode;
-                for(int i = 1; i < givenPosition - 1; ++i){
+                for (int i = 1; i < givenPosition - 1; ++i) {
                     nodeSelect = nodeSelect.next;
                 }
                 result = nodeSelect.next.data;
@@ -94,30 +96,30 @@ public class Linkedlist<T> implements ListInterface<T>{
     @Override
     public boolean changeDataFromFront(int givenPosition, T newEntry) {
         boolean replaceSuccess = true;
-        
-        if ((givenPosition >= 1) && (givenPosition <= numOfList)){
+
+        if ((givenPosition >= 1) && (givenPosition <= numOfList)) {
             Node currentNode = firstNode;
-            for(int i = 0; i < givenPosition - 1; ++i){
+            for (int i = 0; i < givenPosition - 1; ++i) {
                 currentNode = currentNode.next;
             }
             currentNode.data = newEntry;
-        }else{
+        } else {
             replaceSuccess = false;
         }
         return replaceSuccess;
     }
-    
+
     @Override
     public boolean changeDataFromLast(int givenPosition, T newEntry) {
         boolean replaceSuccess = true;
-        
-        if ((givenPosition >= 1) && (givenPosition <= numOfList)){
+
+        if ((givenPosition >= 1) && (givenPosition <= numOfList)) {
             Node currentNode = firstNode;
-            for(int i = numOfList; i < givenPosition - 1; --i){
+            for (int i = numOfList; i < givenPosition - 1; --i) {
                 currentNode = currentNode.next;
             }
             currentNode.data = newEntry;
-        }else{
+        } else {
             replaceSuccess = false;
         }
         return replaceSuccess;
@@ -126,24 +128,24 @@ public class Linkedlist<T> implements ListInterface<T>{
     @Override
     public T getDataFromFront(int givenPosition) { //get data result of givenPosition
         T result = null;
-        
-        if ((givenPosition >= 1) && (givenPosition <= numOfList)){
+
+        if ((givenPosition >= 1) && (givenPosition <= numOfList)) {
             Node currentNode = firstNode;
-            for (int i = 0; i < givenPosition - 1; ++i){
+            for (int i = 0; i < givenPosition - 1; ++i) {
                 currentNode = currentNode.next;
             }
             result = currentNode.data;
         }
         return result;
     }
-    
+
     @Override
     public T getDataFromLast(int givenPosition) { //get data result of givenPosition
         T result = null;
-        
-        if ((givenPosition >= 1) && (givenPosition <= numOfList)){
+
+        if ((givenPosition >= 1) && (givenPosition <= numOfList)) {
             Node currentNode = firstNode;
-            for (int i = 0; i < givenPosition - 1; ++i){
+            for (int i = 0; i < givenPosition - 1; ++i) {
                 currentNode = currentNode.next;
             }
             result = currentNode.data;
@@ -155,50 +157,48 @@ public class Linkedlist<T> implements ListInterface<T>{
     public boolean contain(T anEntry) { // if found is false, then means there are no have data in linkedlist list which same with data entry 
         boolean found = true;
         Node currentNode = firstNode;
-        
-        while(found && (currentNode != null)){
-            if (anEntry.equals(currentNode.data)){
+
+        while (found && (currentNode != null)) {
+            if (anEntry.equals(currentNode.data)) {
                 return found;
-            }else{
+            } else {
                 currentNode = currentNode.next;
             }
-    }
+        }
         found = false;
         return found;
     }
 
     @Override
     public boolean checkEmpty() {  //check the linkedlist is empty of not
-        
-        if (numOfList == 0)
-        {
-             return true;
-        } else
-        {
+
+        if (numOfList == 0) {
+            return true;
+        } else {
             return false;
         }
-       
-    }
-    
-    @Override
-    public int size(){
-         return numOfList;
+
     }
 
-    
-    private class Node{
+    @Override
+    public int size() {
+        return numOfList;
+    }
+
+    private class Node {
+
         private T data;
         private Node next;
-        
-        private Node(T data){
+
+        private Node(T data) {
             this.data = data;
-            this.next= null;
+            this.next = null;
         }
-        
-        private Node (T data, Node next){
+
+        private Node(T data, Node next) {
             this.data = data;
             this.next = next;
         }
     }
-    
+
 }
