@@ -5,7 +5,7 @@
  */
 package TransactionManagement;
 
-import UserInterface.adminInterface;
+import UserInterface.AdminInterface;
 
 /**
  *
@@ -148,7 +148,7 @@ public class TransactionMenu extends javax.swing.JFrame {
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         this.dispose();
-        new adminInterface().setVisible(true);
+        new AdminInterface().setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**
