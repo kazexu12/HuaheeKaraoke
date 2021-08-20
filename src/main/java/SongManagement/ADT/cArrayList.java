@@ -80,7 +80,7 @@ public class cArrayList<T> implements ArrayListInterface<T>{
 
     @Override
     public T set(int x, T element) {
-        if(x < 0 || x >= this.size) throw new RuntimeException();
+        if(x < 0 || x >= array.length) throw new RuntimeException();
 	T returnElement = array[x];
 	array[x] = element;
 	return returnElement;	
@@ -106,5 +106,13 @@ public class cArrayList<T> implements ArrayListInterface<T>{
             }
         }
         return arrayNum;
+    }
+
+    @Override
+    public void clear() {
+        for (int i = 0; i < array.length; i++) {
+            array[i] = null;
+        }
+        size = 0;
     }
 }

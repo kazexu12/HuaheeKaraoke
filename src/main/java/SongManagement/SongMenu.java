@@ -8,9 +8,11 @@ package SongManagement;
 import DAO.Songs;
 import DTO.Song;
 import SongManagement.ADT.cArrayList;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -21,18 +23,16 @@ public class SongMenu extends javax.swing.JFrame {
     private java.util.ArrayList<Song> songList;
     private cArrayList<Song> sl;
     private cArrayList<Song> search_list;
-    private cArrayList<Song> edit_list;
-    private cArrayList<Song> delete_list;
-    
+    private Songs songDAO;
     /**
      * Creates new form testing123
      */
     public SongMenu() {
         initComponents();
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-        Songs s = new Songs();
-        songList = s.getAll();
-        
+        songDAO = new Songs();
+        songList = songDAO.getAll();
+        search_list = new cArrayList();
         sl = new cArrayList();
         for(int i = 0; i < songList.size(); i++){
             sl.add(songList.get(i));
@@ -272,111 +272,137 @@ public class SongMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-        new MainDriver.MainFrame().setVisible(true);
+        this.dispose();
+        new UserInterface.adminInterface().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         Object[] response = new SongAdd(this).run();
         System.out.println(response[0]);
         
+        songDAO = new Songs();
+        songList = songDAO.getAll();
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-        Songs s = new Songs();
-        songList = s.getAll();
-        sl.add(songList.get(songList.size()-1));
+        search_list.clear();
+        
+        for(int i = 0; i < songList.size(); i++){
+            search_list.add(songList.get(i));
+        }
         
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
         
         model.setRowCount(0);
         
-        for(int i = 0; i < sl.size(); i++){
-            Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
+        for(int i = 0; i < search_list.size(); i++){
+            Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
             String dateDateCreated = formatter.format(date_created);
-            Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
+            Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
             String dateDateModified = formatter.format(date_modified);
             Object[] row = {
-                sl.get(i).getSongId(),
-                sl.get(i).getName(),
-                sl.get(i).getArtist(),
-                sl.get(i).getAlbum(),
-                sl.get(i).getGenre(),
-                sl.get(i).getDuration(),
+                search_list.get(i).getSongId(),
+                search_list.get(i).getName(),
+                search_list.get(i).getArtist(),
+                search_list.get(i).getAlbum(),
+                search_list.get(i).getGenre(),
+                search_list.get(i).getDuration(),
                 dateDateCreated,
                 dateDateModified,
             };
             model.addRow(row);
         }
-        show_record.setText("Have search "+ sl.size() +" record(s)");
+        show_record.setText("Have search "+ search_list.size() +" record(s)");
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        Object[] response = new SongEdit(this).run();
-        System.out.println(response[0]);
+        int select = show_table.getSelectedRow();
+        
+        if(search_list.isEmpty()){
+            Object[] response = new SongEdit(this, sl.get(select)).run();
+            System.out.println(response[0]);
+        }else{
+            Object[] response = new SongEdit(this, search_list.get(select)).run();
+            System.out.println(response[0]);
+        }
+        
         
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-        Songs s = new Songs();
-        songList = s.getAll();
-        edit_list = new cArrayList();
+        songDAO = new Songs();
+        songList = songDAO.getAll();
+        search_list.clear();
+        
         for(int i = 0; i < songList.size(); i++){
-            edit_list.add(songList.get(i));
+            search_list.add(songList.get(i));
         }
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
         
         model.setRowCount(0);
         
-        for(int i = 0; i < sl.size(); i++){
-            Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
+        for(int i = 0; i < search_list.size(); i++){
+            Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
             String dateDateCreated = formatter.format(date_created);
-            Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
+            Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
             String dateDateModified = formatter.format(date_modified);
             Object[] row = {
-                edit_list.get(i).getSongId(),
-                edit_list.get(i).getName(),
-                edit_list.get(i).getArtist(),
-                edit_list.get(i).getAlbum(),
-                edit_list.get(i).getGenre(),
-                edit_list.get(i).getDuration(),
+                search_list.get(i).getSongId(),
+                search_list.get(i).getName(),
+                search_list.get(i).getArtist(),
+                search_list.get(i).getAlbum(),
+                search_list.get(i).getGenre(),
+                search_list.get(i).getDuration(),
                 dateDateCreated,
                 dateDateModified,
             };
             model.addRow(row);
         }
-        show_record.setText("Have search "+ sl.size() +" record(s)");
+        show_record.setText("Have search "+ search_list.size() +" record(s)");
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        Object[] response = new SongDelete(this).run();
-        System.out.println(response[0]);
+        int select = show_table.getSelectedRow();
+        
+        if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            try{
+                if(search_list.isEmpty()){
+                    songDAO.delete(sl.get(select));
+                }else{
+                    songDAO.delete(search_list.get(select));
+                }
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
         
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
+        
         Songs s = new Songs();
         songList = s.getAll();
-        edit_list = new cArrayList();
+        search_list.clear();
+        
         for(int i = 0; i < songList.size(); i++){
-            edit_list.add(songList.get(i));
+            search_list.add(songList.get(i));
         }
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
         
         model.setRowCount(0);
         
-        for(int i = 0; i < sl.size(); i++){
-            Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
+        for(int i = 0; i < search_list.size(); i++){
+            Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
             String dateDateCreated = formatter.format(date_created);
-            Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
+            Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
             String dateDateModified = formatter.format(date_modified);
             Object[] row = {
-                edit_list.get(i).getSongId(),
-                edit_list.get(i).getName(),
-                edit_list.get(i).getArtist(),
-                edit_list.get(i).getAlbum(),
-                edit_list.get(i).getGenre(),
-                edit_list.get(i).getDuration(),
+                search_list.get(i).getSongId(),
+                search_list.get(i).getName(),
+                search_list.get(i).getArtist(),
+                search_list.get(i).getAlbum(),
+                search_list.get(i).getGenre(),
+                search_list.get(i).getDuration(),
                 dateDateCreated,
                 dateDateModified,
             };
             model.addRow(row);
         }
-        show_record.setText("Have search "+ sl.size() +" record(s)");
+        show_record.setText("Have search "+ search_list.size() +" record(s)");
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void search_selectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_selectedActionPerformed
@@ -393,9 +419,9 @@ public class SongMenu extends javax.swing.JFrame {
         int search_show = 0;
         String search = search_text.getText().toUpperCase();
         int search_by = search_selected.getSelectedIndex();
-        search_list = new cArrayList();
+        sl.clear();
         for(int i = 0; i < songList.size(); i++){
-            search_list.add(songList.get(i));
+            sl.add(songList.get(i));
         }
         
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
@@ -403,41 +429,45 @@ public class SongMenu extends javax.swing.JFrame {
         model.setRowCount(0);
         
         if(search.isEmpty()){
-            for(int i = 0; i < search_list.size(); i++ ){
-                Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+            search_list.clear();
+            for(int i = 0; i < sl.size(); i++ ){
+                Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
                 String dateDateCreated = formatter.format(date_created);
-                Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
                 String dateDateModified = formatter.format(date_modified);
+                search_list.add(sl.get(i));
                 Object[] row = {
-                            search_list.get(i).getSongId(),
-                            search_list.get(i).getName(),
-                            search_list.get(i).getArtist(),
-                            search_list.get(i).getAlbum(),
-                            search_list.get(i).getGenre(),
-                            search_list.get(i).getDuration(),
+                            sl.get(i).getSongId(),
+                            sl.get(i).getName(),
+                            sl.get(i).getArtist(),
+                            sl.get(i).getAlbum(),
+                            sl.get(i).getGenre(),
+                            sl.get(i).getDuration(),
                             dateDateCreated,
                             dateDateModified,
                         };
                         model.addRow(row);
             }
-            show_record.setText("Have search "+ search_list.size() +" record(s)");
+            show_record.setText("Have search "+ sl.size() +" record(s)");
         }
         else{
             switch(search_by){
             case 0:
-                for(int i = 0; i < search_list.size(); i++){
-                    if(search_list.get(i).getSongId().toUpperCase().startsWith(search)){
-                        Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+                search_list.clear();
+                for(int i = 0; i < sl.size(); i++){
+                    if(sl.get(i).getSongId().toUpperCase().startsWith(search)){
+                        Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
                         String dateDateCreated = formatter.format(date_created);
-                        Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                        Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
                         String dateDateModified = formatter.format(date_modified);
+                        search_list.add(sl.get(i));
                         Object[] row = {
-                            search_list.get(i).getSongId(),
-                            search_list.get(i).getName(),
-                            search_list.get(i).getArtist(),
-                            search_list.get(i).getAlbum(),
-                            search_list.get(i).getGenre(),
-                            search_list.get(i).getDuration(),
+                            sl.get(i).getSongId(),
+                            sl.get(i).getName(),
+                            sl.get(i).getArtist(),
+                            sl.get(i).getAlbum(),
+                            sl.get(i).getGenre(),
+                            sl.get(i).getDuration(),
                             dateDateCreated,
                             dateDateModified,
                         };
@@ -453,19 +483,21 @@ public class SongMenu extends javax.swing.JFrame {
                 }
                 break;
             case 1:
-                for(int i = 0; i < search_list.size(); i++){
-                    if(search_list.get(i).getName().toUpperCase().startsWith(search)){
-                        Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+                search_list.clear();
+                for(int i = 0; i < sl.size(); i++){
+                    if(sl.get(i).getName().toUpperCase().startsWith(search)){
+                        Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
                         String dateDateCreated = formatter.format(date_created);
-                        Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                        Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
                         String dateDateModified = formatter.format(date_modified);
+                        search_list.add(sl.get(i));
                         Object[] row = {
-                            search_list.get(i).getSongId(),
-                            search_list.get(i).getName(),
-                            search_list.get(i).getArtist(),
-                            search_list.get(i).getAlbum(),
-                            search_list.get(i).getGenre(),
-                            search_list.get(i).getDuration(),
+                            sl.get(i).getSongId(),
+                            sl.get(i).getName(),
+                            sl.get(i).getArtist(),
+                            sl.get(i).getAlbum(),
+                            sl.get(i).getGenre(),
+                            sl.get(i).getDuration(),
                             dateDateCreated,
                             dateDateModified,
                         };
@@ -481,19 +513,21 @@ public class SongMenu extends javax.swing.JFrame {
                 }
                 break;
             case 2:
-                for(int i = 0; i < search_list.size(); i++){
-                    if(search_list.get(i).getArtist().toUpperCase().startsWith(search)){
-                        Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+                search_list.clear();
+                for(int i = 0; i < sl.size(); i++){
+                    if(sl.get(i).getArtist().toUpperCase().startsWith(search)){
+                        Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
                         String dateDateCreated = formatter.format(date_created);
-                        Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                        Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
                         String dateDateModified = formatter.format(date_modified);
+                        search_list.add(sl.get(i));
                         Object[] row = {
-                            search_list.get(i).getSongId(),
-                            search_list.get(i).getName(),
-                            search_list.get(i).getArtist(),
-                            search_list.get(i).getAlbum(),
-                            search_list.get(i).getGenre(),
-                            search_list.get(i).getDuration(),
+                            sl.get(i).getSongId(),
+                            sl.get(i).getName(),
+                            sl.get(i).getArtist(),
+                            sl.get(i).getAlbum(),
+                            sl.get(i).getGenre(),
+                            sl.get(i).getDuration(),
                             dateDateCreated,
                             dateDateModified,
                         };
@@ -509,19 +543,21 @@ public class SongMenu extends javax.swing.JFrame {
                 }
                 break;
             case 3:
-                for(int i = 0; i < search_list.size(); i++){
-                    if(search_list.get(i).getAlbum().toUpperCase().startsWith(search)){
-                        Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+                search_list.clear();
+                for(int i = 0; i < sl.size(); i++){
+                    if(sl.get(i).getAlbum().toUpperCase().startsWith(search)){
+                        Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
                         String dateDateCreated = formatter.format(date_created);
-                        Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                        Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
                         String dateDateModified = formatter.format(date_modified);
+                        search_list.add(sl.get(i));
                         Object[] row = {
-                            search_list.get(i).getSongId(),
-                            search_list.get(i).getName(),
-                            search_list.get(i).getArtist(),
-                            search_list.get(i).getAlbum(),
-                            search_list.get(i).getGenre(),
-                            search_list.get(i).getDuration(),
+                            sl.get(i).getSongId(),
+                            sl.get(i).getName(),
+                            sl.get(i).getArtist(),
+                            sl.get(i).getAlbum(),
+                            sl.get(i).getGenre(),
+                            sl.get(i).getDuration(),
                             dateDateCreated,
                             dateDateModified,
                         };
@@ -537,19 +573,21 @@ public class SongMenu extends javax.swing.JFrame {
                 }
                 break;
             default:
-                for(int i = 0; i < search_list.size(); i++){
-                    if(search_list.get(i).getGenre().toUpperCase().startsWith(search)){
-                        Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);
+                search_list.clear();
+                for(int i = 0; i < sl.size(); i++){
+                    if(sl.get(i).getGenre().toUpperCase().startsWith(search)){
+                        Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
                         String dateDateCreated = formatter.format(date_created);
-                        Date date_modified = new Date(search_list.get(i).getDateModified() * 1000L);
+                        Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
                         String dateDateModified = formatter.format(date_modified);
+                        search_list.add(sl.get(i));
                         Object[] row = {
-                            search_list.get(i).getSongId(),
-                            search_list.get(i).getName(),
-                            search_list.get(i).getArtist(),
-                            search_list.get(i).getAlbum(),
-                            search_list.get(i).getGenre(),
-                            search_list.get(i).getDuration(),
+                            sl.get(i).getSongId(),
+                            sl.get(i).getName(),
+                            sl.get(i).getArtist(),
+                            sl.get(i).getAlbum(),
+                            sl.get(i).getGenre(),
+                            sl.get(i).getDuration(),
                             dateDateCreated,
                             dateDateModified,
                         };

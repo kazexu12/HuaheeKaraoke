@@ -106,7 +106,7 @@ public class SongAdd extends javax.swing.JDialog{
         });
 
         error_massage.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        error_massage.setForeground(new java.awt.Color(1, 0, 0));
+        error_massage.setForeground(new java.awt.Color(255, 0, 0));
         error_massage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -197,7 +197,7 @@ public class SongAdd extends javax.swing.JDialog{
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        if(add_name.getText().isEmpty() || add_artist.getText().isEmpty() || add_album.getText().isEmpty() || add_genre.getText().isEmpty()){
+        if(add_name.getText().isEmpty() || add_artist.getText().isEmpty() || add_album.getText().isEmpty() || add_genre.getText().isEmpty() || add_duration.getText().isEmpty()){
                 error_massage.setText("Can't insert empty data !");
         }
         else if(add_duration.getText().matches("^[1-9]*$") != true){
