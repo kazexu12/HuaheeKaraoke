@@ -147,16 +147,16 @@ public class adminLogin extends javax.swing.JFrame {
         
         llist = new Linkedlist();
         for(int i =0; i< db.size();i++){
-            llist.addDataFromFirst(i, db.get(i));
+            llist.addData(i, db.get(i));
         }
         
         String name =  adminId.getText();
         String pwd = new String (passwordAdmin.getPassword());
         
         for(int i = 0; i< llist.size(); i++){
-            if(1 == llist.getData(i).getPrivillage()){
-                if(name == llist.getData(i).getName()){
-                    if(pwd == llist.getData(i).getPw_hash()){
+            if(1 == llist.getDataFromFront(i).getPrivillage()){
+                if(name == llist.getDataFromFront(i).getName()){
+                    if(pwd == llist.getDataFromFront(i).getPw_hash()){
                         JOptionPane.showMessageDialog(null, "Welcome " + name , "Successfull Login", JOptionPane.PLAIN_MESSAGE);
                         this.dispose();
                         new adminInterface().setVisible(true);

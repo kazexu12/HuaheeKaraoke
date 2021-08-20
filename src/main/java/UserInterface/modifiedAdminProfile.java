@@ -128,7 +128,7 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
         
         llist = new Linkedlist();
         for(int i =0; i < db.size() ; i++){
-            llist.addDataFromFirst(i, db.get(i));
+            llist.addData(i, db.get(i));
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
