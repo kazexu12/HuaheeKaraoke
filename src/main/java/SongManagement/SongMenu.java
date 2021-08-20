@@ -21,6 +21,8 @@ public class SongMenu extends javax.swing.JFrame {
     private java.util.ArrayList<Song> songList;
     private cArrayList<Song> sl;
     private cArrayList<Song> search_list;
+    private cArrayList<Song> edit_list;
+    private cArrayList<Song> delete_list;
     
     /**
      * Creates new form testing123
@@ -308,11 +310,73 @@ public class SongMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        Object[] response = new SongEdit(this).run();
+        System.out.println(response[0]);
         
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
+        Songs s = new Songs();
+        songList = s.getAll();
+        edit_list = new cArrayList();
+        for(int i = 0; i < songList.size(); i++){
+            edit_list.add(songList.get(i));
+        }
+        DefaultTableModel model = (DefaultTableModel) show_table.getModel();
+        
+        model.setRowCount(0);
+        
+        for(int i = 0; i < sl.size(); i++){
+            Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
+            String dateDateCreated = formatter.format(date_created);
+            Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
+            String dateDateModified = formatter.format(date_modified);
+            Object[] row = {
+                edit_list.get(i).getSongId(),
+                edit_list.get(i).getName(),
+                edit_list.get(i).getArtist(),
+                edit_list.get(i).getAlbum(),
+                edit_list.get(i).getGenre(),
+                edit_list.get(i).getDuration(),
+                dateDateCreated,
+                dateDateModified,
+            };
+            model.addRow(row);
+        }
+        show_record.setText("Have search "+ sl.size() +" record(s)");
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        Object[] response = new SongDelete(this).run();
+        System.out.println(response[0]);
         
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
+        Songs s = new Songs();
+        songList = s.getAll();
+        edit_list = new cArrayList();
+        for(int i = 0; i < songList.size(); i++){
+            edit_list.add(songList.get(i));
+        }
+        DefaultTableModel model = (DefaultTableModel) show_table.getModel();
+        
+        model.setRowCount(0);
+        
+        for(int i = 0; i < sl.size(); i++){
+            Date date_created = new Date(sl.get(i).getDateCreated() * 1000L);
+            String dateDateCreated = formatter.format(date_created);
+            Date date_modified = new Date(sl.get(i).getDateModified() * 1000L);
+            String dateDateModified = formatter.format(date_modified);
+            Object[] row = {
+                edit_list.get(i).getSongId(),
+                edit_list.get(i).getName(),
+                edit_list.get(i).getArtist(),
+                edit_list.get(i).getAlbum(),
+                edit_list.get(i).getGenre(),
+                edit_list.get(i).getDuration(),
+                dateDateCreated,
+                dateDateModified,
+            };
+            model.addRow(row);
+        }
+        show_record.setText("Have search "+ sl.size() +" record(s)");
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void search_selectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_selectedActionPerformed

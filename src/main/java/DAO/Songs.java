@@ -134,6 +134,10 @@ public class Songs implements DAOInterface<Song> {
         // Remove last character from setClause to remove additional ',' from string
         setClause = setClause.substring(0, setClause.length() - 1);
 
+        if(useSetClause == false){
+            logger.info("no data update for song "+ t.getSongId());
+            return;
+        }
         String query = "UPDATE Songs " + (useSetClause ? setClause : "") + whereClause;
         logger.info("Executing query: " + query);
         db.execQuery(query);
