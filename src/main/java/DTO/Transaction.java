@@ -18,8 +18,8 @@ public class Transaction {
     private RegisteredSession session;
     private double discount;
     private double final_price;
-    private User member;
-    private User staff;
+    private UserDTO member;
+    private UserDTO staff;
     private int date_created;
     private int date_modified;
     private int status;
@@ -28,7 +28,7 @@ public class Transaction {
         
     }
     
-    public Transaction(String transaction_id, RegisteredSession session, double discount, double final_price, User member, String member_level_atm, User staff, int status, int date_created, int date_modified) {
+    public Transaction(String transaction_id, RegisteredSession session, double discount, double final_price, UserDTO member, String member_level_atm, UserDTO staff, int status, int date_created, int date_modified) {
         this.transaction_id = transaction_id;
         this.session = session;
         this.discount = discount;

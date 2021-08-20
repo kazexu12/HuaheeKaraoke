@@ -5,6 +5,8 @@
  */
 package TransactionManagement;
 
+import UserInterface.adminInterface;
+
 /**
  *
  * @author cafer
@@ -78,7 +80,7 @@ public class TransactionMenu extends javax.swing.JFrame {
         companyName.setText("HuaheeKaraoke");
 
         backButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        backButton.setText("Back to Main Menu");
+        backButton.setText("Back to Menu");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -145,7 +147,8 @@ public class TransactionMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteTransButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        
+        this.dispose();
+        new adminInterface().setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**
