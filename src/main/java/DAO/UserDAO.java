@@ -1,6 +1,6 @@
 package DAO;
 
-import DTO.User;
+import DTO.UserDTO;
 import Generic.DBManager;
 import Generic.Pair;
 import java.sql.Connection;
@@ -15,19 +15,19 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Loo Zi Kang
  */
-public class Users implements DAOInterface<User> {
+public class UserDAO implements DAOInterface<UserDTO> {
 
     private DBManager db;
-    private final Logger logger = LogManager.getLogger(Users.class.getName());
-    private ArrayList<DTO.User> userArray;
+    private final Logger logger = LogManager.getLogger(UserDAO.class.getName());
+    private ArrayList<DTO.UserDTO> userArray;
 
-    public Users() {
+    public UserDAO() {
         db = new DBManager();
     }
 
     @Override
-    public ArrayList<User> getAll() {
-        ArrayList<User> retArr = new ArrayList<>();
+    public ArrayList<UserDTO> getAll() {
+        ArrayList<UserDTO> retArr = new ArrayList<>();
         String sql = "SELECT * FROM users";
         try {
             Pair<Connection, ResultSet> result = db.resultQuery(sql);
@@ -35,7 +35,7 @@ public class Users implements DAOInterface<User> {
             ResultSet resultSet = result.getRight();
 
             while (resultSet.next()) {
-                User userData = new User(
+                UserDTO userData = new UserDTO(
                         resultSet.getString("user_id"),
                         resultSet.getInt("privillage"),
                         resultSet.getString("name"),
@@ -57,7 +57,7 @@ public class Users implements DAOInterface<User> {
     }
 
     @Override
-    public void save(User t) throws SQLException {
+    public void save(UserDTO t) throws SQLException {
         db = new DBManager();
         String sql = String.format(
                 "INSERT INTO users VALUES('%s', %d, '%s', '%s', '%s', '%s', %d, '%s', %d, %d)",
@@ -76,7 +76,7 @@ public class Users implements DAOInterface<User> {
         db.execQuery(sql);
     }
 
-    public User findUserById(String user_id) {
+    public UserDTO findUserById(String user_id) {
         String sql = String.format("SELECT * FROM users WHERE user_id = '%s'", new Object[]{user_id});
         try {
             Pair<Connection, ResultSet> result = db.resultQuery(sql);
@@ -85,7 +85,7 @@ public class Users implements DAOInterface<User> {
             boolean found = false;
             while (rs.next()) {
                 found = true;
-                User userData = new User(
+                UserDTO userData = new UserDTO(
                         rs.getString("user_id"),
                         rs.getInt("privillage"),
                         rs.getString("name"),
@@ -109,7 +109,7 @@ public class Users implements DAOInterface<User> {
     }
 
     @Override
-    public void update(User t, HashMap params) throws SQLException {
+    public void update(UserDTO t, HashMap params) throws SQLException {
         db = new DBManager();
         String setClause = "SET";
         String whereClause = String.format(" WHERE user_id= '%s'", t.getUser_id());
@@ -153,7 +153,7 @@ public class Users implements DAOInterface<User> {
     }
 
     @Override
-    public void delete(User t) throws SQLException {
+    public void delete(UserDTO t) throws SQLException {
         db = new DBManager();
         DBManager db = new DBManager();
         this.userArray.remove(t);

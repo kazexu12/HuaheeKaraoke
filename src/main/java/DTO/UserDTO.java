@@ -9,7 +9,7 @@ package DTO;
  *
  * @author Loo Zi Kang
  */
-public class User {
+public class UserDTO {
 
     private String user_id;
     private int privillage;
@@ -22,11 +22,11 @@ public class User {
     private int date_created;
     private int date_modified;
 
-    public User() {
+    public UserDTO() {
 
     }
 
-    public User(String user_id,
+    public UserDTO(String user_id,
             int privillage,
             String name,
             String pw_hash,

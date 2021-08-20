@@ -5,8 +5,9 @@
  */
 package UserInterface;
 
-import DAO.Users;
-import DTO.User;
+import DAO.UserDAO;
+import DTO.UserDTO;
+import MainDriver.UserSesstionManager;
 import UserManagement.ADT.Linkedlist;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -17,8 +18,12 @@ import javax.swing.JOptionPane;
  */
 public class userLogin extends javax.swing.JFrame {
 
-    ArrayList<User> db;
-    Linkedlist<User> llist;
+    static int getNode(int getNode) {
+        return getNode;
+    }
+
+    ArrayList<UserDTO> db;
+    Linkedlist<UserDTO> llist;
 
     /**
      * Creates new form userLogin
@@ -26,7 +31,8 @@ public class userLogin extends javax.swing.JFrame {
     public userLogin() {
         initComponents();
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -150,7 +156,7 @@ public class userLogin extends javax.swing.JFrame {
     private void jButton_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_submitActionPerformed
         // TODO add your handling code here:
 
-        Users ur = new Users();
+        UserDAO ur = new UserDAO();
         db = ur.getAll();
 
         llist = new Linkedlist();
@@ -160,19 +166,24 @@ public class userLogin extends javax.swing.JFrame {
         String name = userId.getText();
         String pwd = new String(passwordUser.getPassword());
 
-        for (int i = 0; i < llist.size(); i++) {
+        for (int i = 1; i < llist.size(); i++) {
             if (0 == llist.getDataFromFront(i).getPrivillage()) {
                 if (name.equals(llist.getDataFromFront(i).getName())) {
                     if (pwd.equals(llist.getDataFromFront(i).getPw_hash())) {
                         JOptionPane.showMessageDialog(null, "Welcome " + name, "Successfull Login", JOptionPane.PLAIN_MESSAGE);
                         this.dispose();
+                        UserSesstionManager.login(llist.getDataFromFront(i));
+                        
                         new userInterface().setVisible(true);
+                        break;
                     } else {
                         JOptionPane.showMessageDialog(null, "Your Password is invalid\n Please try again." + name, "Error!!", JOptionPane.PLAIN_MESSAGE);
+                   
                     }
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Your User Name is invalid\n Please try again.", "Error!!", JOptionPane.PLAIN_MESSAGE);
+                    
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "You are insufficient power\n Please try again.", "Error!!", JOptionPane.PLAIN_MESSAGE);
@@ -184,6 +195,7 @@ public class userLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         this.dispose();
+        new MainDriver.MainFrame().setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -222,7 +234,7 @@ public class userLogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(userLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

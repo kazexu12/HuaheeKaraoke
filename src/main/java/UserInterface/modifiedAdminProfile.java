@@ -5,8 +5,8 @@
  */
 package UserInterface;
 
-import DAO.Users;
-import DTO.User;
+import DAO.UserDAO;
+import DTO.UserDTO;
 import UserManagement.ADT.Linkedlist;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
  */
 public class modifiedAdminProfile extends javax.swing.JFrame {
     
-    ArrayList<User> db;
-    Linkedlist<User> llist;
+    ArrayList<UserDTO> db;
+    Linkedlist<UserDTO> llist;
     /**
      * Creates new form modifiedProfile
      */
@@ -123,7 +123,7 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Users ur = new Users();
+        UserDAO ur = new UserDAO();
         db = ur.getAll();
         
         llist = new Linkedlist();

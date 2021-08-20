@@ -5,8 +5,8 @@
  */
 package UserInterface;
 
-import DAO.Users;
-import DTO.User;
+import DAO.UserDAO;
+import DTO.UserDTO;
 import MainDriver.MainFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -191,7 +191,7 @@ public class userRegister extends javax.swing.JFrame {
 
     private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
 
-              Users usersDAO = new Users();
+              UserDAO usersDAO = new UserDAO();
               String newUserID = usersDAO.getNewUserID();
               String nameFirst = memberLastName.getText();
               String nameLast = memberLastName.getText();
@@ -203,7 +203,7 @@ public class userRegister extends javax.swing.JFrame {
               long unixTime = System.currentTimeMillis()/1000L;
               int uTime = (int)unixTime;
               int modifiedtime = 0;
-              User newUser = new DTO.User(newUserID,0,name,password1,nameFirst,nameLast,0,'N',uTime,modifiedtime);
+              UserDTO newUser = new DTO.UserDTO(newUserID,0,name,password1,nameFirst,nameLast,0,'N',uTime,modifiedtime);
               
         try {
             usersDAO.save(newUser);

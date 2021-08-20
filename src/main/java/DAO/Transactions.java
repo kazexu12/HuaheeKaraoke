@@ -48,7 +48,7 @@ public class Transactions implements DAOInterface<Transaction> {
         try {
             while (sessionResult.next()) {
                 RegisteredSessions rs = new RegisteredSessions();
-                Users us = new Users();
+                UserDAO us = new UserDAO();
 
                 Transaction sess = new Transaction(
                         sessionResult.getString("transaction_id"),
