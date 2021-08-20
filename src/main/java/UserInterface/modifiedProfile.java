@@ -5,11 +5,22 @@
  */
 package UserInterface;
 
+import DAO.UserDAO;
+import DTO.UserDTO;
+import UserManagement.ADT.Linkedlist;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ASUS
  */
 public class modifiedProfile extends javax.swing.JFrame {
+    
+    ArrayList<UserDTO> db;
+    Linkedlist<UserDTO> llist;
 
     /**
      * Creates new form modifiedProfile
@@ -33,7 +44,7 @@ public class modifiedProfile extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         newpassword = new javax.swing.JPasswordField();
         back = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        confirm = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,10 +67,10 @@ public class modifiedProfile extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Confirm");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        confirm.setText("Confirm");
+        confirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                confirmActionPerformed(evt);
             }
         });
 
@@ -75,13 +86,13 @@ public class modifiedProfile extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(105, 105, 105)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(newFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
@@ -93,22 +104,22 @@ public class modifiedProfile extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(newFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(newpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(174, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(134, 134, 134)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34))))
         );
 
@@ -124,9 +135,56 @@ public class modifiedProfile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_newFirstNameActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
+               UserDAO ur = new UserDAO();
+               db = ur.getAll();
+               
+               long unixTime = System.currentTimeMillis()/1000L;
+              int uTime = (int)unixTime;
+               
+               java.util.HashMap<String, Object> editDataHashMap = new java.util.HashMap<>();
+               
+               llist = new Linkedlist();
+               for(int i = 0; i < db.size();i++){
+                   llist.addData(i,db.get(i));
+               }
+               
+               UserDTO urs = MainDriver.UserSesstionManager.getLogonUser();
+               String name = newFirstName.getText();
+               char[] password =  newpassword.getPassword();
+              String pwd = String.valueOf(password);
+               
+               String replaceName = urs.getName();
+               
+               for(int i =1; i < llist.size(); i++){
+                   if(llist.getDataFromFront(i).getName() == replaceName){
+                       urs.setName(name);
+                       urs.setPw_hash(pwd);
+                       boolean successModified = llist.changeDataFromFront(i,urs);
+                       editDataHashMap.put("name", newFirstName.getText());
+                       UserDTO newurs = new DTO.UserDTO(urs.getUser_id(), 0, "", "", "", "", 0, 'S', 0, 0);
+//                       UserDTO newusr = urs.UserDTO(llist.getDataFromFront(i).getName(i),"",privillage,"","","",memberpoint,'',llist.getDataFromFront(i).getDateCreated(),uTime);
+                       try{
+                             ur.update(urs, editDataHashMap);
+                                }catch(SQLException e){
+                                       e.printStackTrace();
+                                }
+                       
+                       if (successModified = true){
+                           JOptionPane.showMessageDialog(null, "Modified Success" + name, "Congratulation!!", JOptionPane.PLAIN_MESSAGE);
+                       }
+                       else
+                       {
+                           JOptionPane.showMessageDialog(null, "Modified Unsuccess" + name, "Error!!", JOptionPane.PLAIN_MESSAGE);
+                       }
+                   }
+               }
+               
+               
+               
+               
+               
+    }//GEN-LAST:event_confirmActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,7 +223,7 @@ public class modifiedProfile extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton confirm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

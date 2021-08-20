@@ -21,7 +21,8 @@ import org.apache.logging.log4j.Logger;
 public class MainFrame extends javax.swing.JFrame {
 
     private static final Logger logger = LogManager.getLogger(MainFrame.class.getName());
-
+    
+    
     /**
      * Creates new form MainFrame
      */

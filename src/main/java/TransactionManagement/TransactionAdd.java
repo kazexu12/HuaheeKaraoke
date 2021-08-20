@@ -7,10 +7,10 @@ package TransactionManagement;
 
 import DAO.RegisteredSessions;
 import DAO.Transactions;
-import DAO.Users;
+import DAO.UserDAO;
 import DTO.RegisteredSession;
 import DTO.Transaction;
-import DTO.User;
+import DTO.UserDTO;
 import TransactionManagement.ADT.HashMap;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,10 +28,10 @@ import javax.swing.JOptionPane;
 public class TransactionAdd extends javax.swing.JFrame {
 
     Transactions transDAO = new Transactions();
-    Users usersDAO = new Users();
+    UserDAO usersDAO = new UserDAO();
 
-    User member;
-    User staff = usersDAO.findUserById("U002");
+    UserDTO member;
+    UserDTO staff = usersDAO.findUserById("U002");
 
     int roomSizeResult;
     double[] roomSizePrice = {8.00, 12.00, 15.00};
@@ -421,7 +421,7 @@ public class TransactionAdd extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Users usersDAO = new Users();
+                UserDAO usersDAO = new UserDAO();
 
                 member = usersDAO.findUserById(memberIdField.getText());
                 if (member != null) {
