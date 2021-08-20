@@ -22,8 +22,13 @@ public class Transaction {
     private User staff;
     private int date_created;
     private int date_modified;
+    private int status;
     
-    public Transaction(String transaction_id, RegisteredSession session, double discount, double final_price, User member, String member_level_atm, User staff, int date_created, int date_modified) {
+    public Transaction() {
+        
+    }
+    
+    public Transaction(String transaction_id, RegisteredSession session, double discount, double final_price, User member, String member_level_atm, User staff, int status, int date_created, int date_modified) {
         this.transaction_id = transaction_id;
         this.session = session;
         this.discount = discount;
@@ -31,6 +36,7 @@ public class Transaction {
         this.member = member;
         this.member_level_atm = member_level_atm;
         this.staff = staff;
+        this.status = status;
         this.date_created = date_created;
         this.date_modified = date_modified;
     }
@@ -101,5 +107,13 @@ public class Transaction {
 
     public void setDateModified(int date_modified) {
         this.date_modified = date_modified;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

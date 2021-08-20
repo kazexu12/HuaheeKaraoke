@@ -12,8 +12,6 @@ import DTO.RegisteredSession;
 import DTO.Transaction;
 import DTO.User;
 import TransactionManagement.ADT.HashMap;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -188,7 +186,7 @@ public class TransactionAdd extends javax.swing.JFrame {
             }
         });
 
-        cancelButton.setText("Cancel");
+        cancelButton.setText("Back To Menu");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
@@ -357,7 +355,6 @@ public class TransactionAdd extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addTransactionTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(cancelButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(confirmButton)
@@ -417,24 +414,18 @@ public class TransactionAdd extends javax.swing.JFrame {
 
     private void memberIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberIdFieldActionPerformed
 
-        memberIdField.addActionListener(new ActionListener() {
+        Users usersDAO = new Users();
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Users usersDAO = new Users();
+        member = usersDAO.findUserById(memberIdField.getText());
+        if (member != null) {
+            memberNameField.setText(member.getFirst_name() + ' ' + member.getLast_name());
+            memberTypeField.setText(memberTypeName.get(member.getMember_level()));
+        } else {
+            memberNameField.setText("");
+            memberTypeField.setText("");
+        }
 
-                member = usersDAO.findUserById(memberIdField.getText());
-                if (member != null) {
-                    memberNameField.setText(member.getFirst_name() + ' ' + member.getLast_name());
-                    memberTypeField.setText(memberTypeName.get(member.getMember_level()));
-                } else {
-                    memberNameField.setText("");
-                    memberTypeField.setText("");
-                }
-
-                handleFinalPrice();
-            }
-        });
+        handleFinalPrice();
 
     }//GEN-LAST:event_memberIdFieldActionPerformed
 
@@ -447,7 +438,8 @@ public class TransactionAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_memberTypeFieldActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new TransactionMenu().setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void transIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transIdFieldActionPerformed
@@ -465,17 +457,11 @@ public class TransactionAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_staffIdFieldActionPerformed
 
     private void dateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFieldActionPerformed
-        dateField.addActionListener(new ActionListener() {
+        String result = dateField.getText();
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String result = dateField.getText();
-
-                if (!(Pattern.matches("^((?:19|20)\\d\\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$", result))) {
-                    dateField.setText("");
-                }
-            }
-        });
+        if (!(Pattern.matches("^((?:19|20)\\d\\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$", result))) {
+            dateField.setText("");
+        }
     }//GEN-LAST:event_dateFieldActionPerformed
 
     private void headCountFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_headCountFieldActionPerformed
@@ -504,6 +490,10 @@ public class TransactionAdd extends javax.swing.JFrame {
             );
             try {
                 rsDAO.save(rs);
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Add successfully."
+                );     
             } catch (SQLException ex) {
                 Logger.getLogger(TransactionAdd.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -520,6 +510,7 @@ public class TransactionAdd extends javax.swing.JFrame {
                     member,
                     memberTypeName.get(member.getMember_level()),
                     staff,
+                    1,
                     (int) unixTime,
                     (int) unixTime
             );

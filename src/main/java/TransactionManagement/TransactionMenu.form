@@ -30,7 +30,6 @@
                   <Component id="transactionTitle" alignment="0" pref="288" max="32767" attributes="0"/>
                   <Component id="searchTransButton" alignment="0" max="32767" attributes="0"/>
                   <Component id="refundTransButton" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                   <Component id="addTransButton" alignment="0" max="32767" attributes="0"/>
                   <Component id="companyName" alignment="0" max="32767" attributes="0"/>
                   <Component id="backButton" alignment="0" max="32767" attributes="0"/>
@@ -46,9 +45,7 @@
               <Component id="companyName" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="transactionTitle" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
               <Component id="addTransButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="searchTransButton" min="-2" max="-2" attributes="0"/>
@@ -58,7 +55,7 @@
               <Component id="deleteTransButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="backButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="171" max="32767" attributes="0"/>
+              <EmptySpace pref="57" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -116,15 +113,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteTransButtonActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="16" style="1"/>
-        </Property>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="00/00/0000 00:00"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="companyName">
       <Properties>

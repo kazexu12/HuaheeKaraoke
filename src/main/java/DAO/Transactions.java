@@ -52,12 +52,13 @@ public class Transactions implements DAOInterface<Transaction> {
 
                 Transaction sess = new Transaction(
                         sessionResult.getString("transaction_id"),
-                        rs.findBySessionId("session.id"),
+                        rs.findBySessionId(sessionResult.getString("session_id")),
                         sessionResult.getDouble("discount"),
                         sessionResult.getDouble("final_price"),
-                        us.findUserById("member_id"),
+                        us.findUserById(sessionResult.getString("member_id")),
                         sessionResult.getString("member_level_atm"),
-                        us.findUserById("staff_id"),
+                        us.findUserById(sessionResult.getString("staff_id")),
+                        sessionResult.getInt("status"),
                         sessionResult.getInt("date_created"),
                         sessionResult.getInt("date_modified")
                 );
@@ -81,6 +82,7 @@ public class Transactions implements DAOInterface<Transaction> {
             t.getMemberId(),
             t.getMemberLevelAtm(),
             t.getStaffId(),
+            t.getStatus(),
             t.getDateCreated(),
             t.getDateModified()
         };
@@ -92,6 +94,7 @@ public class Transactions implements DAOInterface<Transaction> {
                 + "'%s',"
                 + "'%s',"
                 + "'%s',"
+                + "%d,"
                 + "strftime('%%s', 'now'),"
                 + "strftime('%%s', 'now')"
                 + ");", args);
@@ -117,11 +120,15 @@ public class Transactions implements DAOInterface<Transaction> {
             useSetClause = true;
         }
         if (params.containsKey("final_price")) {
-            setClause += String.format("final_price = %f,", params.get("final_price"));
+            setClause += String.format("final_price = '%f',", params.get("final_price"));
             useSetClause = true;
         }
         if (params.containsKey("member_id")) {
             setClause += String.format("member_id = '%s',", params.get("member_id"));
+            useSetClause = true;
+        }
+        if (params.containsKey("status")) {
+            setClause += String.format("status = %d,", params.get("status"));
             useSetClause = true;
         }
         if (params.containsKey("date_created")) {

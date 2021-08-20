@@ -32,7 +32,6 @@ public class TransactionMenu extends javax.swing.JFrame {
         searchTransButton = new javax.swing.JButton();
         refundTransButton = new javax.swing.JButton();
         deleteTransButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         companyName = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
 
@@ -74,10 +73,6 @@ public class TransactionMenu extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("00/00/0000 00:00");
-
         companyName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         companyName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         companyName.setText("HuaheeKaraoke");
@@ -101,7 +96,6 @@ public class TransactionMenu extends javax.swing.JFrame {
                     .addComponent(transactionTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(searchTransButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(refundTransButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(addTransButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(companyName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -114,9 +108,7 @@ public class TransactionMenu extends javax.swing.JFrame {
                 .addComponent(companyName)
                 .addGap(18, 18, 18)
                 .addComponent(transactionTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
                 .addComponent(addTransButton)
                 .addGap(18, 18, 18)
                 .addComponent(searchTransButton)
@@ -126,30 +118,34 @@ public class TransactionMenu extends javax.swing.JFrame {
                 .addComponent(deleteTransButton)
                 .addGap(18, 18, 18)
                 .addComponent(backButton)
-                .addContainerGap(171, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void addTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTransButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new TransactionAdd().setVisible(true);
     }//GEN-LAST:event_addTransButtonActionPerformed
 
     private void searchTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTransButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new TransactionSearch().setVisible(true);
     }//GEN-LAST:event_searchTransButtonActionPerformed
 
     private void refundTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refundTransButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new TransactionRefund().setVisible(true);
     }//GEN-LAST:event_refundTransButtonActionPerformed
 
     private void deleteTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTransButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new TransactionDelete().setVisible(true);
     }//GEN-LAST:event_deleteTransButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**
@@ -192,7 +188,6 @@ public class TransactionMenu extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private javax.swing.JLabel companyName;
     private javax.swing.JButton deleteTransButton;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton refundTransButton;
     private javax.swing.JButton searchTransButton;
     private javax.swing.JLabel transactionTitle;

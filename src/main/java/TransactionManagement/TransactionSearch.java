@@ -5,17 +5,53 @@
  */
 package TransactionManagement;
 
+import DAO.Transactions;
+import DTO.Transaction;
+import TransactionManagement.ADT.HashMap;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author cafer
  */
 public class TransactionSearch extends javax.swing.JFrame {
+    
+    ArrayList<Transaction> db;
+    HashMap<String, Transaction> hm;
+    HashMap<Integer, String> statusString;
 
     /**
      * Creates new form TransactionDelete
      */
     public TransactionSearch() {
         initComponents();
+        
+        Transactions tr = new Transactions();
+        db = tr.getAll();
+        
+        hm = new HashMap();
+        for (int i = 0; i < db.size(); i++) {
+            db.get(i).getDateCreated();
+            hm.add(db.get(i).getTransactionId(), db.get(i));
+        }
+        
+        statusString = new HashMap();
+        statusString.add(0, "Expired");
+        statusString.add(1, "Active");
+        statusString.add(2, "Refunded");
+    }
+    
+    public String toDate(int date) {
+        Date resultDate = new Date(date * 1000L);
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateFormatted = formatter.format(resultDate);
+        
+        return dateFormatted;
     }
 
     /**
@@ -31,13 +67,24 @@ public class TransactionSearch extends javax.swing.JFrame {
         searchField = new javax.swing.JTextField();
         schTransactionTitle = new javax.swing.JLabel();
         searchLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        resultTable = new javax.swing.JTable();
         searchButton = new javax.swing.JButton();
-        searchByField = new javax.swing.JComboBox<>();
-        searchByLabel = new javax.swing.JLabel();
         cancelButton = new javax.swing.JButton();
-        doubleClickLabel = new javax.swing.JLabel();
+        transIdLabel = new javax.swing.JLabel();
+        sessionIdLabel = new javax.swing.JLabel();
+        memberIdLabel = new javax.swing.JLabel();
+        staffIdLabel = new javax.swing.JLabel();
+        finalPriceLabel = new javax.swing.JLabel();
+        dateCreatedLabel = new javax.swing.JLabel();
+        dateModifiedLabel = new javax.swing.JLabel();
+        transIdField = new javax.swing.JTextField();
+        sessionIdField = new javax.swing.JTextField();
+        memberIdField = new javax.swing.JTextField();
+        staffIdField = new javax.swing.JTextField();
+        finalPriceField = new javax.swing.JTextField();
+        dateCreatedField = new javax.swing.JTextField();
+        dateModifiedField = new javax.swing.JTextField();
+        statusLabel = new javax.swing.JLabel();
+        statusField = new javax.swing.JTextField();
 
         jMenu1.setText("jMenu1");
 
@@ -55,19 +102,6 @@ public class TransactionSearch extends javax.swing.JFrame {
 
         searchLabel.setText("Search:");
 
-        resultTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Transaction ID", "Date Created", "Member Name", "Room Size", "Final Price"
-            }
-        ));
-        jScrollPane1.setViewportView(resultTable);
-
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,43 +109,95 @@ public class TransactionSearch extends javax.swing.JFrame {
             }
         });
 
-        searchByField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Transaction Id", "Date Created", "Member Name", "Final Price" }));
-        searchByField.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setText("Back To Menu");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchByFieldActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
 
-        searchByLabel.setText("Search By:");
+        transIdLabel.setText("Transaction Id:");
 
-        cancelButton.setText("Cancel");
+        sessionIdLabel.setText("Session Id:");
 
-        doubleClickLabel.setText("* Double click to show transaction details");
+        memberIdLabel.setText("Member Id:");
+
+        staffIdLabel.setText("Staff Id:");
+
+        finalPriceLabel.setText("Final Price:");
+
+        dateCreatedLabel.setText("Date Created:");
+
+        dateModifiedLabel.setText("Date Modified:");
+
+        transIdField.setEditable(false);
+
+        sessionIdField.setEditable(false);
+
+        memberIdField.setEditable(false);
+        memberIdField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                memberIdFieldActionPerformed(evt);
+            }
+        });
+
+        staffIdField.setEditable(false);
+
+        finalPriceField.setEditable(false);
+
+        dateCreatedField.setEditable(false);
+        dateCreatedField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateCreatedFieldActionPerformed(evt);
+            }
+        });
+
+        dateModifiedField.setEditable(false);
+
+        statusLabel.setText("Status:");
+
+        statusField.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(schTransactionTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(searchLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchField)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchButton))
-                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cancelButton)
+                            .addComponent(schTransactionTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(searchByLabel)
+                                .addComponent(searchLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(searchByField, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(doubleClickLabel))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(searchField)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cancelButton)
+                                .addGap(0, 483, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dateModifiedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dateCreatedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(finalPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(staffIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(memberIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sessionIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(transIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(transIdField)
+                            .addComponent(sessionIdField)
+                            .addComponent(memberIdField)
+                            .addComponent(staffIdField)
+                            .addComponent(finalPriceField)
+                            .addComponent(dateCreatedField)
+                            .addComponent(dateModifiedField)
+                            .addComponent(statusField))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -119,22 +205,46 @@ public class TransactionSearch extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(schTransactionTitle)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchByLabel)
-                    .addComponent(searchByField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchLabel)
                     .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(doubleClickLabel)
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(transIdLabel)
+                    .addComponent(transIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sessionIdLabel)
+                    .addComponent(sessionIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(memberIdLabel)
+                    .addComponent(memberIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(staffIdLabel)
+                    .addComponent(staffIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(finalPriceLabel)
+                    .addComponent(finalPriceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dateCreatedLabel)
+                    .addComponent(dateCreatedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dateModifiedLabel)
+                    .addComponent(dateModifiedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(statusLabel)
+                    .addComponent(statusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(cancelButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -145,12 +255,54 @@ public class TransactionSearch extends javax.swing.JFrame {
     }//GEN-LAST:event_searchFieldActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
+        String result = searchField.getText();
+        Transaction searchResult;
+      
+        
+        if (!result.isEmpty()) {
+            searchResult = hm.get(result);
+            
+            if (searchResult != null) {
+                transIdField.setText(searchResult.getTransactionId());
+                sessionIdField.setText(searchResult.getSessionId());
+                memberIdField.setText(searchResult.getMemberId());
+                staffIdField.setText(searchResult.getStaffId());
+                finalPriceField.setText(String.format("RM %.2f", searchResult.getFinalPrice()));
+                dateCreatedField.setText(this.toDate(searchResult.getDateCreated()));
+                dateModifiedField.setText(this.toDate(searchResult.getDateModified()));
+                statusField.setText(statusString.get(searchResult.getStatus()));
+            } else { 
+                transIdField.setText("");
+                sessionIdField.setText("");
+                memberIdField.setText("");
+                staffIdField.setText("");
+                finalPriceField.setText("");
+                dateCreatedField.setText("");
+                dateModifiedField.setText("");
+                statusField.setText("");
+                
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Transaction not found.",
+                        "Alert",
+                        JOptionPane.WARNING_MESSAGE
+                );     
+            }
+        }
     }//GEN-LAST:event_searchButtonActionPerformed
 
-    private void searchByFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchByFieldActionPerformed
+    private void memberIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberIdFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_searchByFieldActionPerformed
+    }//GEN-LAST:event_memberIdFieldActionPerformed
+
+    private void dateCreatedFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateCreatedFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dateCreatedFieldActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+        new TransactionMenu().setVisible(true);
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,35 +321,46 @@ public class TransactionSearch extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TransactionDelete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TransactionSearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TransactionDelete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TransactionSearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TransactionDelete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TransactionSearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TransactionDelete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TransactionSearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TransactionDelete().setVisible(true);
+                new TransactionSearch().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
-    private javax.swing.JLabel doubleClickLabel;
+    private javax.swing.JTextField dateCreatedField;
+    private javax.swing.JLabel dateCreatedLabel;
+    private javax.swing.JTextField dateModifiedField;
+    private javax.swing.JLabel dateModifiedLabel;
+    private javax.swing.JTextField finalPriceField;
+    private javax.swing.JLabel finalPriceLabel;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable resultTable;
+    private javax.swing.JTextField memberIdField;
+    private javax.swing.JLabel memberIdLabel;
     private javax.swing.JLabel schTransactionTitle;
     private javax.swing.JButton searchButton;
-    private javax.swing.JComboBox<String> searchByField;
-    private javax.swing.JLabel searchByLabel;
     private javax.swing.JTextField searchField;
     private javax.swing.JLabel searchLabel;
+    private javax.swing.JTextField sessionIdField;
+    private javax.swing.JLabel sessionIdLabel;
+    private javax.swing.JTextField staffIdField;
+    private javax.swing.JLabel staffIdLabel;
+    private javax.swing.JTextField statusField;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JTextField transIdField;
+    private javax.swing.JLabel transIdLabel;
     // End of variables declaration//GEN-END:variables
 }
