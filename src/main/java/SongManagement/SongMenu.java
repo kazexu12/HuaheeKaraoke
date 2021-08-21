@@ -36,6 +36,7 @@ public class SongMenu extends javax.swing.JFrame {
         sl = new cArrayList();
         for(int i = 0; i < songList.size(); i++){
             sl.add(songList.get(i));
+            search_list.add(songList.get(i));
         }
 
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
@@ -283,12 +284,8 @@ public class SongMenu extends javax.swing.JFrame {
         songDAO = new Songs();
         songList = songDAO.getAll();
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-        search_list.clear();
         
-        for(int i = 0; i < songList.size(); i++){
-            search_list.add(songList.get(i));
-        }
-        
+        search_list.add(songList.get(songList.size()-1));
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
         
         model.setRowCount(0);
@@ -328,11 +325,9 @@ public class SongMenu extends javax.swing.JFrame {
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
         songDAO = new Songs();
         songList = songDAO.getAll();
-        search_list.clear();
         
-        for(int i = 0; i < songList.size(); i++){
-            search_list.add(songList.get(i));
-        }
+        search_list.set(select, songList.get(select));
+        
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
         
         model.setRowCount(0);
@@ -359,31 +354,31 @@ public class SongMenu extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         int select = show_table.getSelectedRow();
-        
+        int confirm = 0;
         if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try{
                 if(search_list.isEmpty()){
                     songDAO.delete(sl.get(select));
+                    confirm = 1;
                 }else{
                     songDAO.delete(search_list.get(select));
+                    confirm = 1;
                 }
             }catch(SQLException e){
                 e.printStackTrace();
             }
+        }else{
+            confirm = 0;
         }
         
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
         
-        Songs s = new Songs();
-        songList = s.getAll();
-        search_list.clear();
-        
-        for(int i = 0; i < songList.size(); i++){
-            search_list.add(songList.get(i));
-        }
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
         
         model.setRowCount(0);
+        if(confirm == 1){
+            search_list.remove(select);
+        }
         
         for(int i = 0; i < search_list.size(); i++){
             Date date_created = new Date(search_list.get(i).getDateCreated() * 1000L);

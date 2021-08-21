@@ -6,7 +6,7 @@ package SongManagement.ADT;
 */
 public class cArrayList<T> implements ArrayListInterface<T>{
 
-    private int size;
+    private int size =0;
     private T[] array;
     private static int DEFAULT_CAPACITY =5;
     
@@ -80,7 +80,7 @@ public class cArrayList<T> implements ArrayListInterface<T>{
 
     @Override
     public T set(int x, T element) {
-        if(x < 0 || x >= array.length) throw new RuntimeException();
+        if(x < 0 || x >= this.size()) throw new RuntimeException();
 	T returnElement = array[x];
 	array[x] = element;
 	return returnElement;	
