@@ -210,11 +210,10 @@ public class userRegister extends javax.swing.JFrame {
             
         } catch (SQLException ex) {
             logger.info("Failed to insert the new user into User Table", ex);
-        }
-              
-             
-              
+        }      
         
+        this.dispose();
+        new userInterface().setVisible(true);
     }//GEN-LAST:event_registerActionPerformed
 
     private void membernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membernameActionPerformed

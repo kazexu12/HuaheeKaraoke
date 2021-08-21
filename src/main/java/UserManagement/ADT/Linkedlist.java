@@ -74,25 +74,22 @@ public class Linkedlist<T> implements ListInterface<T> {
     }
 
     @Override
-    public T deleteSelectList(int givenPosition) { //Delete the data that have been choose
-        T result = null;
+     public T deleteSelectList(int givenPosition) {
+    T result = null;                 // return value
 
-        if ((givenPosition >= 1) && (givenPosition <= numOfList)) {
-            if (givenPosition == 1) {
-                result = firstNode.data;
-                firstNode = firstNode.next;
-            } else {
-                Node nodeSelect = firstNode;
-                for (int i = 1; i < givenPosition - 1; ++i) {
-                    nodeSelect = nodeSelect.next;
-                }
-                result = nodeSelect.next.data;
-                nodeSelect.next = nodeSelect.next.next; //skip the node which want to delete
-            }
-            numOfList--;
-        }
-        return result;
-    }
+    if ((givenPosition >= 0) && (givenPosition <= numOfList)) {
+          for(int i = 0; i <givenPosition; ++i){
+              firstNode = firstNode.next;
+          }
+          for (int j =0; j < numOfList; j++){
+               firstNode.data = firstNode.next.data;     // save entry to be removed
+               firstNode = firstNode.next;
+          }
+      }
+      numOfList--;
+
+    return result; // return removed entry, or null if operation fails
+  }
 
     @Override
     public void clear() { //clear all data
@@ -104,7 +101,7 @@ public class Linkedlist<T> implements ListInterface<T> {
     public boolean changeDataFromFront(int givenPosition, T newEntry) {
         boolean replaceSuccess = true;
 
-        if ((givenPosition >= 1) && (givenPosition <= numOfList)) {
+        if ((givenPosition >= 0) && (givenPosition < numOfList)) {
             Node currentNode = firstNode;
             for (int i = 0; i < givenPosition - 1; ++i) {
                 currentNode = currentNode.next;
@@ -136,9 +133,9 @@ public class Linkedlist<T> implements ListInterface<T> {
     public T getDataFromFront(int givenPosition) { //get data result of givenPosition
         T result = null;
 
-        if ((givenPosition >= 1) && (givenPosition <= numOfList)) {
+        if ((givenPosition >= 0) && (givenPosition < numOfList)) {
             Node currentNode = firstNode;
-            for (int i = 0; i < givenPosition - 1; ++i) {
+            for (int i = 0; i < givenPosition ; i++) {
                 currentNode = currentNode.next;
             }
             result = currentNode.data;
@@ -151,8 +148,8 @@ public class Linkedlist<T> implements ListInterface<T> {
         T result = null;
 
         if ((givenPosition >= 1) && (givenPosition <= numOfList)) {
-            Node currentNode = firstNode;
-            for (int i = 0; i < givenPosition - 1; ++i) {
+            Node currentNode = lastNode;
+            for (int i = 0; i < givenPosition - 1; --i) {
                 currentNode = currentNode.next;
             }
             result = currentNode.data;

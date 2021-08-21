@@ -5,17 +5,64 @@
  */
 package UserInterface;
 
+import DAO.UserDAO;
+import DTO.UserDTO;
+import UserManagement.ADT.Linkedlist;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ASUS
  */
 public class profileChecking extends javax.swing.JFrame {
-
+    
+    ArrayList<UserDTO> db;
+    Linkedlist<UserDTO> llist;
+    Linkedlist<UserDTO> deletellist;
     /**
      * Creates new form profileChecking
      */
     public profileChecking() {
         initComponents();
+        
+        UserDAO ur = new UserDAO();
+        db = ur.getAll();
+        
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
+        
+        llist = new Linkedlist();
+        deletellist = new Linkedlist();
+        
+        for(int i=1; i<db.size();i++){
+            llist.addData(db.get(i));
+            deletellist.addData(db.get(i));
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) showtable.getModel();
+        
+        for(int i = 0; i < llist.size(); i++)
+            {
+                Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
+                String dateDateCreated = formatter.format(date_created);
+                
+                Object[] row = {
+                    llist.getDataFromFront(i).getUser_id(),
+                    llist.getDataFromFront(i).getName(),
+                    llist.getDataFromFront(i).getPrivillage(),
+                    llist.getDataFromFront(i).getFirst_name(),
+                    llist.getDataFromFront(i).getLast_name(),
+                    llist.getDataFromFront(i).getMember_point(),
+                    llist.getDataFromFront(i).getMember_level(),
+                    dateDateCreated,
+                        };
+                model.addRow(row);
+            }
     }
 
     /**
@@ -28,27 +75,28 @@ public class profileChecking extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        search_bar = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        showtable = new javax.swing.JTable();
         Search = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        select_bar = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Member Profile Checking");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        search_bar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                search_barActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Search with Mmeber_ID :");
+        jLabel2.setText("Search:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        showtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null}
             },
@@ -56,9 +104,14 @@ public class profileChecking extends javax.swing.JFrame {
                 "No", "Name", "Privillage", "First_Name", "Last_Name", "Member_Point", "Member_Level", "Date_Create"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(showtable);
 
         Search.setText("Search");
+        Search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Back");
 
@@ -69,28 +122,32 @@ public class profileChecking extends javax.swing.JFrame {
             }
         });
 
+        select_bar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Member_ID", "Name" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(342, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(select_bar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(search_bar, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(331, 331, 331))))
         );
         layout.setVerticalGroup(
@@ -98,14 +155,19 @@ public class profileChecking extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(select_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(search_bar, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                        .addGap(1, 1, 1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(42, 42, 42)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -115,13 +177,143 @@ public class profileChecking extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        int selectdelete = showtable.getSelectedRow();
+        int conform = 0;
+        
+         UserDAO ur = new UserDAO();
+        
+        if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            try{
+               ur.delete(deletellist.getDataFromFront(selectdelete));
+               conform = 1;
+            }
+            catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            conform = 0;
+        }
+        
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
+        
+        
+        DefaultTableModel model = (DefaultTableModel) showtable.getModel();
+        
+        model.setRowCount(0);
+        if(conform == 1){
+            deletellist.deleteSelectList(selectdelete);
+        }
+        
+        for(int i = 0; i < deletellist.size(); i++){
+            Date date_created = new Date(deletellist.getDataFromFront(i).getDate_created() * 1000L);
+            String dateDateCreated = formatter.format(date_created);
+            Object[] row = {
+                    deletellist.getDataFromFront(i).getUser_id(),
+                    deletellist.getDataFromFront(i).getName(),
+                    deletellist.getDataFromFront(i).getPrivillage(),
+                    deletellist.getDataFromFront(i).getFirst_name(),
+                    deletellist.getDataFromFront(i).getLast_name(),
+                    deletellist.getDataFromFront(i).getMember_point(),
+                    deletellist.getDataFromFront(i).getMember_level(),
+                    dateDateCreated,
+            };
+            model.addRow(row);
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void search_barActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_barActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_search_barActionPerformed
+
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
+        UserDAO ur = new UserDAO();
+        db = ur.getAll();
+        
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
+        
+        llist = new Linkedlist();
+        
+        for(int i=1; i<db.size();i++){
+            llist.addData(db.get(i));
+        }
+        
+        String search = search_bar.getText().toUpperCase();
+        int searchby = select_bar.getSelectedIndex();
+        
+        DefaultTableModel model = (DefaultTableModel) showtable.getModel();
+        model.setRowCount(0);
+        if(search.isEmpty()){
+            deletellist = new Linkedlist();
+            for(int i = 0; i < llist.size(); i++)
+            {
+                Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
+                String dateDateCreated = formatter.format(date_created);
+                
+                deletellist.addData(llist.getDataFromFront(i));
+                Object[] row = {
+                    llist.getDataFromFront(i).getUser_id(),
+                    llist.getDataFromFront(i).getName(),
+                    llist.getDataFromFront(i).getPrivillage(),
+                    llist.getDataFromFront(i).getFirst_name(),
+                    llist.getDataFromFront(i).getLast_name(),
+                    llist.getDataFromFront(i).getMember_point(),
+                    llist.getDataFromFront(i).getMember_level(),
+                    dateDateCreated,
+                        };
+                model.addRow(row);
+            }
+        } else{
+            switch(searchby){
+                case 0:
+                    deletellist = new Linkedlist();
+                    for(int i = 0; i < llist.size(); i++){
+                        if(llist.getDataFromFront(i).getUser_id().startsWith(search)){
+                            
+                            Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
+                            String dateDateCreated = formatter.format(date_created);
+                            deletellist.addData(llist.getDataFromFront(i));
+                            Object[] row = {
+                                llist.getDataFromFront(i).getUser_id(),
+                                llist.getDataFromFront(i).getName(),
+                                llist.getDataFromFront(i).getPrivillage(),
+                                llist.getDataFromFront(i).getFirst_name(),
+                                llist.getDataFromFront(i).getLast_name(),
+                                llist.getDataFromFront(i).getMember_point(),
+                                llist.getDataFromFront(i).getMember_level(),
+                                dateDateCreated,
+                            };
+                            model.addRow(row);
+                        }
+                    }
+                    break;
+                default:
+                    deletellist = new Linkedlist();
+                    for(int i = 0; i < llist.size(); i++){
+                        if(llist.getDataFromFront(i).getName().toUpperCase().startsWith(search)){
+                            
+                            Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
+                            String dateDateCreated = formatter.format(date_created);
+                            deletellist.addData(llist.getDataFromFront(i));
+                            Object[] row = {
+                                llist.getDataFromFront(i).getUser_id(),
+                                llist.getDataFromFront(i).getName(),
+                                llist.getDataFromFront(i).getPrivillage(),
+                                llist.getDataFromFront(i).getFirst_name(),
+                                llist.getDataFromFront(i).getLast_name(),
+                                llist.getDataFromFront(i).getMember_point(),
+                                llist.getDataFromFront(i).getMember_level(),
+                                dateDateCreated,
+                            };
+                            model.addRow(row);
+                        }
+                    }
+                    
+            }
+        }
+    }//GEN-LAST:event_SearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,7 +357,8 @@ public class profileChecking extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField search_bar;
+    private javax.swing.JComboBox<String> select_bar;
+    private javax.swing.JTable showtable;
     // End of variables declaration//GEN-END:variables
 }
