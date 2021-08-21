@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class SongMenu extends javax.swing.JFrame {
 
     private java.util.ArrayList<Song> songList;
+    private java.util.ArrayList<Song> temp;
     private cArrayList<Song> sl;
     private cArrayList<Song> search_list;
     private Songs songDAO;
@@ -279,6 +280,9 @@ public class SongMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        songDAO = new Songs();
+        temp = songDAO.getAll();
+        
         Object[] response = new SongAdd(this).run();
         System.out.println(response[0]);
         
@@ -286,7 +290,7 @@ public class SongMenu extends javax.swing.JFrame {
         songList = songDAO.getAll();
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
         
-        if(search_list.size() != songList.size()){
+        if(temp.size() != songList.size()){
             search_list.add(songList.get(songList.size()-1));
         }
         

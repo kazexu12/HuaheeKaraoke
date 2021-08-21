@@ -182,14 +182,13 @@ public class profileChecking extends javax.swing.JFrame {
         ur = new UserDAO();
         db = ur.getAll();
         if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-//            try{
-//               ur.delete(deletellist.getDataFromFront(selectdelete));
+            try{
+               ur.delete(deletellist.getDataFromFront(selectdelete));
                conform = 1;
-               JOptionPane.showConfirmDialog(null, "testing?", "WARNING", JOptionPane.YES_NO_OPTION);
-//            }
-//            catch(SQLException e){
-//                e.printStackTrace();
-//            }
+            }
+            catch(SQLException e){
+                e.printStackTrace();
+            }
         }
         else{
             conform = 0;
