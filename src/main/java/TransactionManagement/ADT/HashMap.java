@@ -28,12 +28,6 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
     }
 
     @Override
-    public String toString() {
-        return "HashMap{" + "hashTable=" + hashTable + '}';
-    }
-    
-
-    @Override
     public V add(K key, V value) {
         boolean isAdded = false;
         int index = 0;
