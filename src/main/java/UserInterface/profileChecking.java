@@ -39,12 +39,13 @@ public class profileChecking extends javax.swing.JFrame {
         llist = new Linkedlist();
         deletellist = new Linkedlist();
         
-        for(int i=1; i<db.size();i++){
+        for(int i=0; i<db.size();i++){
             llist.addData(db.get(i));
             deletellist.addData(db.get(i));
         }
         
         DefaultTableModel model = (DefaultTableModel) showtable.getModel();
+        
         
         for(int i = 0; i < llist.size(); i++)
             {
@@ -98,7 +99,7 @@ public class profileChecking extends javax.swing.JFrame {
 
         showtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "No", "Name", "Privillage", "First_Name", "Last_Name", "Member_Point", "Member_Level", "Date_Create"
@@ -236,8 +237,9 @@ public class profileChecking extends javax.swing.JFrame {
         
         llist = new Linkedlist();
         
-        for(int i=1; i<db.size();i++){
+        for(int i=0; i<db.size();i++){
             llist.addData(db.get(i));
+            System.out.print(llist.getDataFromFront(i));
         }
         
         String search = search_bar.getText().toUpperCase();
