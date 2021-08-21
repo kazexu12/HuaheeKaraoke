@@ -22,22 +22,21 @@ import javax.swing.table.DefaultTableModel;
  */
 public class profileChecking extends javax.swing.JFrame {
     
-    ArrayList<UserDTO> db;
-    Linkedlist<UserDTO> llist;
-    Linkedlist<UserDTO> deletellist;
+    private ArrayList<UserDTO> db;
+    private Linkedlist<UserDTO> llist;
+    private Linkedlist<UserDTO> deletellist;
+    private UserDAO ur;
     /**
      * Creates new form profileChecking
      */
     public profileChecking() {
         initComponents();
-        
-        UserDAO ur = new UserDAO();
+        ur = new UserDAO();
         db = ur.getAll();
-        
-        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-        
         llist = new Linkedlist();
         deletellist = new Linkedlist();
+        
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
         
         for(int i=0; i<db.size();i++){
             llist.addData(db.get(i));
@@ -45,7 +44,6 @@ public class profileChecking extends javax.swing.JFrame {
         }
         
         DefaultTableModel model = (DefaultTableModel) showtable.getModel();
-        
         
         for(int i = 0; i < llist.size(); i++)
             {
@@ -181,24 +179,23 @@ public class profileChecking extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int selectdelete = showtable.getSelectedRow();
         int conform = 0;
-        
-         UserDAO ur = new UserDAO();
-        
+        ur = new UserDAO();
+        db = ur.getAll();
         if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-            try{
-               ur.delete(deletellist.getDataFromFront(selectdelete));
+//            try{
+//               ur.delete(deletellist.getDataFromFront(selectdelete));
                conform = 1;
-            }
-            catch(SQLException e){
-                e.printStackTrace();
-            }
+               JOptionPane.showConfirmDialog(null, "testing?", "WARNING", JOptionPane.YES_NO_OPTION);
+//            }
+//            catch(SQLException e){
+//                e.printStackTrace();
+//            }
         }
         else{
             conform = 0;
         }
         
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-        
         
         DefaultTableModel model = (DefaultTableModel) showtable.getModel();
         
@@ -230,16 +227,11 @@ public class profileChecking extends javax.swing.JFrame {
     }//GEN-LAST:event_search_barActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        UserDAO ur = new UserDAO();
-        db = ur.getAll();
-        
+
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-        
-        llist = new Linkedlist();
-        
+        llist.clear();
         for(int i=0; i<db.size();i++){
             llist.addData(db.get(i));
-            System.out.print(llist.getDataFromFront(i));
         }
         
         String search = search_bar.getText().toUpperCase();
@@ -248,13 +240,13 @@ public class profileChecking extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) showtable.getModel();
         model.setRowCount(0);
         if(search.isEmpty()){
-            deletellist = new Linkedlist();
+            deletellist.clear();
             for(int i = 0; i < llist.size(); i++)
             {
                 Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
                 String dateDateCreated = formatter.format(date_created);
-                
                 deletellist.addData(llist.getDataFromFront(i));
+                
                 Object[] row = {
                     llist.getDataFromFront(i).getUser_id(),
                     llist.getDataFromFront(i).getName(),
@@ -270,7 +262,7 @@ public class profileChecking extends javax.swing.JFrame {
         } else{
             switch(searchby){
                 case 0:
-                    deletellist = new Linkedlist();
+                    deletellist.clear();
                     for(int i = 0; i < llist.size(); i++){
                         if(llist.getDataFromFront(i).getUser_id().startsWith(search)){
                             
@@ -292,7 +284,7 @@ public class profileChecking extends javax.swing.JFrame {
                     }
                     break;
                 default:
-                    deletellist = new Linkedlist();
+                    deletellist.clear();
                     for(int i = 0; i < llist.size(); i++){
                         if(llist.getDataFromFront(i).getName().toUpperCase().startsWith(search)){
                             

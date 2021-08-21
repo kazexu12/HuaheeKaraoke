@@ -34,6 +34,7 @@ public class SongMenu extends javax.swing.JFrame {
         songList = songDAO.getAll();
         search_list = new cArrayList();
         sl = new cArrayList();
+        
         for(int i = 0; i < songList.size(); i++){
             sl.add(songList.get(i));
             search_list.add(songList.get(i));
