@@ -285,7 +285,10 @@ public class SongMenu extends javax.swing.JFrame {
         songList = songDAO.getAll();
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
         
-        search_list.add(songList.get(songList.size()-1));
+        if(search_list.size() != songList.size()){
+            search_list.add(songList.get(songList.size()-1));
+        }
+        
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
         
         model.setRowCount(0);
@@ -313,20 +316,20 @@ public class SongMenu extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         int select = show_table.getSelectedRow();
         
-        if(search_list.isEmpty()){
-            Object[] response = new SongEdit(this, sl.get(select)).run();
-            System.out.println(response[0]);
-        }else{
-            Object[] response = new SongEdit(this, search_list.get(select)).run();
-            System.out.println(response[0]);
-        }
-        
+        Object[] response = new SongEdit(this, search_list.get(select)).run();
+        System.out.println(response[0]); 
         
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
         songDAO = new Songs();
         songList = songDAO.getAll();
+        int editedrow = 0;
         
-        search_list.set(select, songList.get(select));
+        for(int i = 0; i < songList.size(); i++){
+            if(search_list.get(editedrow).getSongId().equals(songList.get(i).getSongId())){
+                search_list.set(editedrow, songList.get(i));
+                editedrow++;
+            }
+        }
         
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
         
@@ -357,13 +360,8 @@ public class SongMenu extends javax.swing.JFrame {
         int confirm = 0;
         if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try{
-                if(search_list.isEmpty()){
-                    songDAO.delete(sl.get(select));
-                    confirm = 1;
-                }else{
-                    songDAO.delete(search_list.get(select));
-                    confirm = 1;
-                }
+                songDAO.delete(search_list.get(select));
+                confirm = 1;
             }catch(SQLException e){
                 e.printStackTrace();
             }
