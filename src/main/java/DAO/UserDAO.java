@@ -19,7 +19,6 @@ public class UserDAO implements DAOInterface<UserDTO> {
 
     private DBManager db;
     private final Logger logger = LogManager.getLogger(UserDAO.class.getName());
-    private ArrayList<DTO.UserDTO> userArray;
 
     public UserDAO() {
         db = new DBManager();
@@ -156,7 +155,6 @@ public class UserDAO implements DAOInterface<UserDTO> {
     public void delete(UserDTO t) throws SQLException {
         db = new DBManager();
         DBManager db = new DBManager();
-        this.userArray.remove(t);
         String query = String.format("DELETE FROM Users WHERE user_id='%s'", new Object[]{t.getUser_id()});
         db.execQuery(query);
         logger.info("Successfully deleted record in DB (user_id: " + t.getUser_id() + ")");
