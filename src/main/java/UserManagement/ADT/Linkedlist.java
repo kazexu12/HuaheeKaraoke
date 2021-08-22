@@ -36,7 +36,7 @@ public class Linkedlist<T> implements ListInterface<T> {
         if ((nextPosition < 1) || (nextPosition > numOfList + 1)) {
             return false;
         }
-        
+
         if (numOfList == 0) {
             firstNode = new Node(newEntry);
             lastNode = firstNode;
@@ -74,22 +74,37 @@ public class Linkedlist<T> implements ListInterface<T> {
     }
 
     @Override
-     public T deleteSelectList(int givenPosition) {
-    T result = null;                 // return value
+    public T deleteSelectList(int givenPosition) {
+        if (givenPosition < 1 || givenPosition > numOfList) {
+            return null;
+        }
 
-    if ((givenPosition >= 0) && (givenPosition <= numOfList)) {
-          for(int i = 0; i <givenPosition; ++i){
-              firstNode = firstNode.next;
-          }
-          for (int j =0; j < numOfList; j++){
-               firstNode.data = firstNode.next.data;     // save entry to be removed
-               firstNode = firstNode.next;
-          }
-      }
-      numOfList--;
+        if (givenPosition == 1) {
+            T ret = firstNode.data;
+            firstNode = firstNode.next;
+            numOfList--;
+            return ret;
+        }
 
-    return result; // return removed entry, or null if operation fails
-  }
+        if (givenPosition == numOfList) {
+            T ret = lastNode.data;
+            lastNode = lastNode.next;
+            numOfList--;
+            return ret;
+        }
+
+        Node ptr = firstNode;
+        while (givenPosition > 2) {
+            ptr = ptr.next;
+            givenPosition--;
+        }
+
+        T removeItem = ptr.next.data;
+        ptr.next = ptr.next.next;
+        numOfList--;
+        return removeItem;
+
+    }
 
     @Override
     public void clear() { //clear all data
@@ -131,16 +146,19 @@ public class Linkedlist<T> implements ListInterface<T> {
 
     @Override
     public T getDataFromFront(int givenPosition) { //get data result of givenPosition
-        T result = null;
-
-        if ((givenPosition >= 0) && (givenPosition < numOfList)) {
-            Node currentNode = firstNode;
-            for (int i = 0; i < givenPosition ; i++) {
-                currentNode = currentNode.next;
-            }
-            result = currentNode.data;
+        var ori = givenPosition;
+        if (givenPosition < 1 || givenPosition > numOfList) {
+            return null;
         }
-        return result;
+        Node ptr = this.firstNode;
+        while (givenPosition != 1) {
+            ptr = ptr.next;
+            givenPosition--;
+        }
+        if (ptr == null) {
+            return null;
+        }
+        return ptr.data;
     }
 
     @Override
