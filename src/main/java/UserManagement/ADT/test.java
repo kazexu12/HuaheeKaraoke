@@ -5,6 +5,10 @@
  */
 package UserManagement.ADT;
 
+import DAO.UserDAO;
+import DTO.UserDTO;
+import java.util.ArrayList;
+
 
 
 /**
@@ -13,12 +17,21 @@ package UserManagement.ADT;
  */
 public class test {
     public static void main(String[] args){
-        Linkedlist<String> llist = new Linkedlist();
         
+        ArrayList<UserDTO> db;
+        Linkedlist<String> llist = new Linkedlist();
+        UserDAO ur = new UserDAO();
+        db = ur.getAll();
+        Linkedlist<UserDTO> dbllist = new Linkedlist();
         llist.addData("Hello");
         llist.addData("Fuck!");
         llist.addData("AAAAAA!");
         llist.addData("NOOOOO!");
+        
+        for(int i = 1; i < dbllist.size(); i++ ){
+            System.out.print(dbllist.getDataFromFront(i).getName());
+        }
+        
  
 
        
