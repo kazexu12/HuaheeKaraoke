@@ -181,7 +181,7 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
 
     private String getNewSessionID() {
         String sql = "SELECT max(session_id) as session_id FROM RegisteredSessions";
-        String maxSessionID = "S001";
+        String maxSessionID = "RS001";
         try {
             Pair<Connection, ResultSet> result = db.resultQuery(sql);
             Connection conn = result.getLeft();
@@ -202,8 +202,8 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
 
         // U014
         // "014"
-        int num = Integer.parseInt(maxSessionID.substring(1, maxSessionID.length())) + 1;
-        maxSessionID = String.format("S%03d", new Object[]{num});
+        int num = Integer.parseInt(maxSessionID.substring(2, maxSessionID.length())) + 1;
+        maxSessionID = String.format("RS%03d", new Object[]{num});
         return maxSessionID;
     }
 
