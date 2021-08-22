@@ -127,6 +127,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         addSongBtn = new javax.swing.JButton();
         removeSongBtn = new javax.swing.JButton();
+        hintLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         nowPlayingListTable = new javax.swing.JTable();
         bottomPanel = new javax.swing.JPanel();
@@ -181,6 +182,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel3.setPreferredSize(new java.awt.Dimension(100, 42));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
+        jPanel6.setPreferredSize(new java.awt.Dimension(82, 32));
         jPanel6.setLayout(new java.awt.GridBagLayout());
 
         infoBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/info.png"))); // NOI18N
@@ -193,7 +195,9 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                 infoBtnActionPerformed(evt);
             }
         });
-        jPanel6.add(infoBtn, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 50);
+        jPanel6.add(infoBtn, gridBagConstraints);
 
         jPanel3.add(jPanel6, java.awt.BorderLayout.WEST);
 
@@ -204,6 +208,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel5Layout.rowWeights = new double[] {1.0};
         jPanel5.setLayout(jPanel5Layout);
 
+        addSongBtn.setBackground(new java.awt.Color(204, 255, 204));
         addSongBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/plus.png"))); // NOI18N
         addSongBtn.setToolTipText("Add Song(s)");
         addSongBtn.setMaximumSize(new java.awt.Dimension(32, 32));
@@ -239,6 +244,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel5.add(removeSongBtn, gridBagConstraints);
 
         jPanel3.add(jPanel5, java.awt.BorderLayout.EAST);
+
+        hintLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        hintLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        hintLabel.setText("HINT: Double click rows to play song after adding them !");
+        jPanel3.add(hintLabel, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
@@ -573,6 +583,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     private javax.swing.JButton addSongBtn;
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel centerPanel;
+    private javax.swing.JLabel hintLabel;
     private javax.swing.JButton infoBtn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
