@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -89,7 +90,7 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
         Pair<Connection, ResultSet> result = db.resultQuery(query);
         Connection conn = result.getLeft();
         ResultSet rs = result.getRight();
-        
+
         rs.next();
         t.setSessionId(newSessionID);
         t.setSessionKey(newSessionKey);
@@ -165,7 +166,17 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
     }
 
     private String getNewSessionKey() {
-        return "key";
+        String charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder sb = new StringBuilder();
+
+        int unixTime = (int) System.currentTimeMillis() / 1000;
+
+        for (int i = 0; i < 6; i++) {
+            int val = Math.abs((new Random().nextInt() + unixTime) % charset.length());
+            sb.append(charset.charAt(val));
+        }
+
+        return sb.toString();
     }
 
     private String getNewSessionID() {
