@@ -53,3 +53,6 @@ CREATE TABLE IF NOT EXISTS Transactions (
         FOREIGN KEY(session_id) REFERENCES RegisteredSessions(session_id),
 	FOREIGN KEY(staff_id) REFERENCES Users(user_id)
 );
+
+INSERT OR IGNORE INTO RegisteredSessions 
+VALUES ('S001', '', 'N', 1, '2021-08-23', '', '', 1629454720, 1629454720);
