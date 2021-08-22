@@ -242,18 +242,18 @@ public class profileChecking extends javax.swing.JFrame {
         if (search.isEmpty()) {
             deletellist.clear();
             for (int i = 0; i < llist.size(); i++) {
-                Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
+                Date date_created = new Date(llist.getDataForChecking(i).getDate_created() * 1000L);
                 String dateDateCreated = formatter.format(date_created);
-                deletellist.addData(llist.getDataFromFront(i));
+                deletellist.addData(llist.getDataForChecking(i));
 
                 Object[] row = {
-                    llist.getDataFromFront(i).getUser_id(),
-                    llist.getDataFromFront(i).getName(),
-                    llist.getDataFromFront(i).getPrivillage(),
-                    llist.getDataFromFront(i).getFirst_name(),
-                    llist.getDataFromFront(i).getLast_name(),
-                    llist.getDataFromFront(i).getMember_point(),
-                    llist.getDataFromFront(i).getMember_level(),
+                    llist.getDataForChecking(i).getUser_id(),
+                    llist.getDataForChecking(i).getName(),
+                    llist.getDataForChecking(i).getPrivillage(),
+                    llist.getDataForChecking(i).getFirst_name(),
+                    llist.getDataForChecking(i).getLast_name(),
+                    llist.getDataForChecking(i).getMember_point(),
+                    llist.getDataForChecking(i).getMember_level(),
                     dateDateCreated,};
                 model.addRow(row);
             }
@@ -262,19 +262,19 @@ public class profileChecking extends javax.swing.JFrame {
                 case 0:
                     deletellist.clear();
                     for (int i = 0; i < llist.size(); i++) {
-                        if (llist.getDataFromFront(i).getUser_id().startsWith(search)) {
+                        if (llist.getDataForChecking(i).getUser_id().startsWith(search)) {
 
-                            Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
+                            Date date_created = new Date(llist.getDataForChecking(i).getDate_created() * 1000L);
                             String dateDateCreated = formatter.format(date_created);
-                            deletellist.addData(llist.getDataFromFront(i));
+                            deletellist.addData(llist.getDataForChecking(i));
                             Object[] row = {
-                                llist.getDataFromFront(i).getUser_id(),
-                                llist.getDataFromFront(i).getName(),
-                                llist.getDataFromFront(i).getPrivillage(),
-                                llist.getDataFromFront(i).getFirst_name(),
-                                llist.getDataFromFront(i).getLast_name(),
-                                llist.getDataFromFront(i).getMember_point(),
-                                llist.getDataFromFront(i).getMember_level(),
+                                llist.getDataForChecking(i).getUser_id(),
+                                llist.getDataForChecking(i).getName(),
+                                llist.getDataForChecking(i).getPrivillage(),
+                                llist.getDataForChecking(i).getFirst_name(),
+                                llist.getDataForChecking(i).getLast_name(),
+                                llist.getDataForChecking(i).getMember_point(),
+                                llist.getDataForChecking(i).getMember_level(),
                                 dateDateCreated,};
                             model.addRow(row);
                         }
@@ -283,19 +283,19 @@ public class profileChecking extends javax.swing.JFrame {
                 default:
                     deletellist.clear();
                     for (int i = 0; i < llist.size(); i++) {
-                        if (llist.getDataFromFront(i).getName().toUpperCase().startsWith(search)) {
+                        if (llist.getDataForChecking(i).getName().toUpperCase().startsWith(search)) {
 
-                            Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
+                            Date date_created = new Date(llist.getDataForChecking(i).getDate_created() * 1000L);
                             String dateDateCreated = formatter.format(date_created);
-                            deletellist.addData(llist.getDataFromFront(i));
+                            deletellist.addData(llist.getDataForChecking(i));
                             Object[] row = {
-                                llist.getDataFromFront(i).getUser_id(),
-                                llist.getDataFromFront(i).getName(),
-                                llist.getDataFromFront(i).getPrivillage(),
-                                llist.getDataFromFront(i).getFirst_name(),
-                                llist.getDataFromFront(i).getLast_name(),
-                                llist.getDataFromFront(i).getMember_point(),
-                                llist.getDataFromFront(i).getMember_level(),
+                                llist.getDataForChecking(i).getUser_id(),
+                                llist.getDataForChecking(i).getName(),
+                                llist.getDataForChecking(i).getPrivillage(),
+                                llist.getDataForChecking(i).getFirst_name(),
+                                llist.getDataForChecking(i).getLast_name(),
+                                llist.getDataForChecking(i).getMember_point(),
+                                llist.getDataForChecking(i).getMember_level(),
                                 dateDateCreated,};
                             model.addRow(row);
                         }

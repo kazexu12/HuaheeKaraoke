@@ -118,10 +118,12 @@ public class Linkedlist<T> implements ListInterface<T> {
 
         if ((givenPosition >= 0) && (givenPosition < numOfList)) {
             Node currentNode = firstNode;
-            for (int i = 0; i < givenPosition - 1; ++i) {
+            for (int i = 0; i <= givenPosition; ++i) {
+                if(i == givenPosition){
+                    currentNode.data = newEntry;
+                }
                 currentNode = currentNode.next;
-            }
-            currentNode.data = newEntry;
+            } 
         } else {
             replaceSuccess = false;
         }
@@ -174,6 +176,21 @@ public class Linkedlist<T> implements ListInterface<T> {
         }
         return result;
     }
+    
+    @Override
+    public T getDataForChecking(int givenPosition) {
+    T result = null;
+
+    if ((givenPosition >= 0) && (givenPosition < numOfList)) {
+      Node currentNode = firstNode;
+      for (int i = 0; i < givenPosition; ++i) {
+        currentNode = currentNode.next;		// advance currentNode to next node
+      }
+      result = currentNode.data;	// currentNode is pointing to the node at givenPosition
+    }
+
+    return result;
+  }
 
     @Override
     public boolean contain(T anEntry) { // if found is false, then means there are no have data in linkedlist list which same with data entry 

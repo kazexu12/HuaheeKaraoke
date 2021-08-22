@@ -125,7 +125,7 @@ public class adminInterface extends javax.swing.JFrame {
 
     private void modifiedProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifiedProfileActionPerformed
         this.dispose();
-        new modifiedProfile().setVisible(true);
+        new modifiedAdminProfile().setVisible(true);
     }//GEN-LAST:event_modifiedProfileActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

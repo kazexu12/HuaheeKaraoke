@@ -27,6 +27,8 @@ public interface ListInterface <T> {
      
      public T getDataFromFront(int givenPosition);
      
+     public T getDataForChecking(int givenPosition);
+     
      public boolean contain(T anEntry);
      
      public boolean checkEmpty();

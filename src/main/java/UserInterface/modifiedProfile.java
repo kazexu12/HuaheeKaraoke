@@ -8,6 +8,8 @@ package UserInterface;
 import DAO.UserDAO;
 import DTO.UserDTO;
 import UserManagement.ADT.Linkedlist;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author ASUS
  */
-public class modifiedProfile extends javax.swing.JFrame {
+public class modifiedProfile extends javax.swing.JDialog {
     
     ArrayList<UserDTO> db;
     Linkedlist<UserDTO> llist;
@@ -25,8 +27,14 @@ public class modifiedProfile extends javax.swing.JFrame {
     /**
      * Creates new form modifiedProfile
      */
-    public modifiedProfile() {
+    public modifiedProfile(javax.swing.JFrame parent, DTO.UserDTO passeddata) {
         initComponents();
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                e.getWindow().dispose();
+            }
+        });
     }
 
     /**
@@ -46,7 +54,7 @@ public class modifiedProfile extends javax.swing.JFrame {
         back = new javax.swing.JButton();
         confirm = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jLabel1.setText("ProfileModified");
 
@@ -135,44 +143,54 @@ public class modifiedProfile extends javax.swing.JFrame {
                UserDAO ur = new UserDAO();
                db = ur.getAll();
                
-               long unixTime = System.currentTimeMillis()/1000L;
-              int uTime = (int)unixTime;
-               
                java.util.HashMap<String, Object> editDataHashMap = new java.util.HashMap<>();
                
                llist = new Linkedlist();
                for(int i = 0; i < db.size();i++){
-                   llist.addData(i,db.get(i));
+                   llist.addData(db.get(i));
                }
                
                UserDTO urs = MainDriver.UserSesstionManager.getLogonUser();
+               
                String name = newFirstName.getText();
                char[] password =  newpassword.getPassword();
-              String pwd = String.valueOf(password);
+               String pwd = String.valueOf(password);
+              
+              if(newFirstName.getText().isEmpty() || newpassword.getPassword().length == 0 ){
+            JOptionPane.showMessageDialog(null, "Cannot be empty!", "Error!!", JOptionPane.PLAIN_MESSAGE);
+        }
                
                String replaceName = urs.getName();
                
-               for(int i =1; i < llist.size(); i++){
-                   if(llist.getDataFromFront(i).getName() == replaceName){
-                       urs.setName(name);
-                       urs.setPw_hash(pwd);
+               for(int i =0; i < llist.size(); i++){
+                   if(llist.getDataForChecking(i).getName() == replaceName){
+                       
                        boolean successModified = llist.changeDataFromFront(i,urs);
-                       editDataHashMap.put("name", newFirstName.getText());
-                       UserDTO newurs = new DTO.UserDTO(urs.getUser_id(), 0, "", "", "", "", 0, 'S', 0, 0);
-//                       UserDTO newusr = urs.UserDTO(llist.getDataFromFront(i).getName(i),"",privillage,"","","",memberpoint,'',llist.getDataFromFront(i).getDateCreated(),uTime);
-                       try{
-                             ur.update(urs, editDataHashMap);
-                                }catch(SQLException e){
-                                       e.printStackTrace();
-                                }
+                       editDataHashMap.put("name", name);
+                       editDataHashMap.put("pw_hash", pwd);
+                       
+                       JOptionPane.showMessageDialog(null, "Modified Success" + name, "Congratulation!!", JOptionPane.PLAIN_MESSAGE);
+                           new userInterface().setVisible(true);
+                           this.dispose();
                        
                        if (successModified = true){
-                           JOptionPane.showMessageDialog(null, "Modified Success" + name, "Congratulation!!", JOptionPane.PLAIN_MESSAGE);
+                           
                        }
                        else
                        {
                            JOptionPane.showMessageDialog(null, "Modified Unsuccess" + name, "Error!!", JOptionPane.PLAIN_MESSAGE);
                        }
+//                       UserDTO newusr = urs.UserDTO(llist.getDataFromFront(i).getName(i),"",privillage,"","","",memberpoint,'',llist.getDataFromFront(i).getDateCreated(),uTime);
+                       try{
+                             ur.update(urs, editDataHashMap);
+                             
+                       }catch(SQLException e){
+                                       e.printStackTrace();
+                                       this.dispose();
+                        new adminInterface().setVisible(true);
+                                }
+                       
+                       
                    }
                }
                
@@ -185,38 +203,12 @@ public class modifiedProfile extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new modifiedProfile().setVisible(true);
-            }
-        });
+    public Object[] run() {
+        this.setVisible(true);
+        return new Object[]{"Test"};
     }
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back;
     private javax.swing.JButton confirm;

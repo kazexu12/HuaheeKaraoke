@@ -28,18 +28,13 @@ public class test {
         llist.addData("AAAAAA!");
         llist.addData("NOOOOO!");
         
-        for(int i = 1; i < dbllist.size(); i++ ){
-            System.out.print(dbllist.getDataFromFront(i).getName());
+        llist.changeDataFromFront(1, "fucking!!");
+        
+        for(int i = 0; i < llist.size(); i++ ){
+            System.out.print(llist.getDataForChecking(i));
         }
         
- 
 
-       
-        
- 
-            System.out.print(llist.getDataFromFront(0));
-            System.out.print(llist.getDataFromFront(1));
-            System.out.print(llist.getDataFromFront(2));
 
 
         

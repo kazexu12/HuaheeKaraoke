@@ -161,18 +161,18 @@ public class userLogin extends javax.swing.JFrame {
 
         llist = new Linkedlist();
         for (int i = 0; i < db.size(); i++) {
-            llist.addData(i, db.get(i));
+            llist.addData(db.get(i));
         }
         String name = userId.getText();
         String pwd = new String(passwordUser.getPassword());
 
-        for (int i = 1; i < llist.size(); i++) {
-            if (0 == llist.getDataFromFront(i).getPrivillage()) {
-                if (name.equals(llist.getDataFromFront(i).getName())) {
-                    if (pwd.equals(llist.getDataFromFront(i).getPw_hash())) {
+        for (int i = 0; i < llist.size(); i++) {
+            if (0 == llist.getDataForChecking(i).getPrivillage()) {
+                if (name.equals(llist.getDataForChecking(i).getName())) {
+                    if (pwd.equals(llist.getDataForChecking(i).getPw_hash())) {
                         JOptionPane.showMessageDialog(null, "Welcome " + name, "Successfull Login", JOptionPane.PLAIN_MESSAGE);
                         this.dispose();
-                        UserSesstionManager.login(llist.getDataFromFront(i));
+                        UserSesstionManager.login(llist.getDataForChecking(i));
                         
                         new userInterface().setVisible(true);
                         break;
