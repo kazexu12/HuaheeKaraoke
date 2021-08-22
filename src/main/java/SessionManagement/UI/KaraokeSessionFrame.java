@@ -99,7 +99,6 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         
         this.sessionData = sessionData;
         this.setTitle(String.format("Huahee Karaoke >> Karaoke Session (%s)", new Object[]{sessionData.getSessionId()}));
-        System.out.println(sessionData.toString());
         // Hide last column
         this.nowPlayingListTable.removeColumn(nowPlayingListTable.getColumnModel().getColumn(5));
     }
