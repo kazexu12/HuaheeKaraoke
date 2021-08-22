@@ -5,6 +5,7 @@
  */
 package SessionManagement.UI;
 
+import DTO.RegisteredSession;
 import DTO.Song;
 import Generic.Pair;
 import SessionManagement.Utility.BackgroundPlayer;
@@ -30,11 +31,12 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     private static final Logger logger = LogManager.getLogger(KaraokeSessionFrame.class.getName());
     private BackgroundPlayer player;
     private java.util.ArrayList<Song> songList;
+    private RegisteredSession sessionData;
 
     /**
      * Creates new form Temp
      */
-    public KaraokeSessionFrame() {
+    public KaraokeSessionFrame(RegisteredSession sessionData) {
         player = new BackgroundPlayer();
 
         songList = new DAO.Songs().getAll();
@@ -93,6 +95,9 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
         initComponents();
         this.setLocationRelativeTo(null);
+
+        this.sessionData = sessionData;
+        this.setTitle(String.format("Huahee Karaoke >> Karaoke Session (%s)", new Object[]{sessionData.getSessionId()}));
 
         // Hide last column
         this.nowPlayingListTable.removeColumn(nowPlayingListTable.getColumnModel().getColumn(5));

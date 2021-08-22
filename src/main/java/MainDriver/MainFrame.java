@@ -5,11 +5,14 @@
  */
 package MainDriver;
 
+import DAO.RegisteredSessions;
+import DTO.RegisteredSession;
 import SessionManagement.UI.KaraokeSessionFrame;
 import Generic.DBManager;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -173,17 +176,25 @@ public class MainFrame extends javax.swing.JFrame {
         if (userInputSessionKey == null) {
             return;
         }
-        System.out.println("Do something with the session key here");
+        RegisteredSessions sessionDAO = new RegisteredSessions();
+        ArrayList<RegisteredSession> sessions = sessionDAO.getAll();
+        RegisteredSession foundSession = null;
+        for(int i = 0; i < sessions.size(); i++) {
+            if(sessions.get(i).getSessionKey().equalsIgnoreCase(userInputSessionKey)) {
+                foundSession = sessions.get(i);
+            }
+        }
         // Future code to validate session_key
-        if (true) {
+        if (foundSession != null) {
             // Code to pass session data into the JFrame
-            new KaraokeSessionFrame().setVisible(true);
+            new KaraokeSessionFrame(foundSession).setVisible(true);
 
             // Close the menu jframe
             this.setVisible(false);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Invalid session key", "Error", JOptionPane.ERROR_MESSAGE);
+            enterSessKeyBtnActionPerformed(evt);
         }
     }//GEN-LAST:event_enterSessKeyBtnActionPerformed
 
