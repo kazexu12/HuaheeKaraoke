@@ -30,7 +30,8 @@ public class BackgroundPlayer extends Thread {
     private Event onPlayingEvent;
     private Event onStoppedEvent;
 
-    private final Object playerStateLock = new Object();
+    private final Object PLAYER_STATE_LOCK = new Object();
+    private final String[] LYRICS_LIST = new String[]{"LRC/lyric-1.lrc", "LRC/lyric-2.lrc", "LRC/lyric-3.lrc", "LRC/lyric-4.lrc"};
 
     /**
      * Boolean on the right indicate is the song is being played at the moment
@@ -40,7 +41,7 @@ public class BackgroundPlayer extends Thread {
     public BackgroundPlayer() {
         this.nowPlayingSongList = new ArrayList<>();
         this.playerState = PlayerState.STOPPED;
-        this.lyricReader = new LRCReader("LRC/lyrics.lrc", true);
+        this.lyricReader = new LRCReader(LYRICS_LIST[Math.abs(new java.util.Random().nextInt() % LYRICS_LIST.length)], true);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class BackgroundPlayer extends Thread {
             } catch (InterruptedException e) {
                 logger.error("Timer was interrupted", e);
             }
-            
+
             DoublyLinkedDeque<Pair<Integer, String>> lyricsDeque = this.lyricReader.getLyricsDeque();
             Pair<Integer, String> lyric = lyricsDeque.peekFront();
             if (lyric != null) {
@@ -165,14 +166,14 @@ public class BackgroundPlayer extends Thread {
 
     private void loadLyric() {
         // Preload lyrics
-        this.lyricReader = new LRCReader("LRC/lyrics.lrc", true);
+        this.lyricReader = new LRCReader(LYRICS_LIST[Math.abs(new java.util.Random().nextInt() % LYRICS_LIST.length)], true);
         this.lyricTop = null;
         this.lyricMiddle = null;
         this.lyricBottom = this.lyricReader.getLyricsDeque().peekFront();
     }
 
     public PlayerState getPlayerState() {
-        synchronized (playerStateLock) {
+        synchronized (PLAYER_STATE_LOCK) {
             return playerState;
         }
     }
@@ -182,7 +183,7 @@ public class BackgroundPlayer extends Thread {
     }
 
     public void setPlayerState(PlayerState playerState) {
-        synchronized (playerStateLock) {
+        synchronized (PLAYER_STATE_LOCK) {
             this.playerState = playerState;
         }
     }
