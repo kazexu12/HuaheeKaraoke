@@ -21,11 +21,12 @@ import javax.swing.table.DefaultTableModel;
  * @author ASUS
  */
 public class profileChecking extends javax.swing.JFrame {
-    
+
     private ArrayList<UserDTO> db;
     private Linkedlist<UserDTO> llist;
     private Linkedlist<UserDTO> deletellist;
     private UserDAO ur;
+
     /**
      * Creates new form profileChecking
      */
@@ -35,33 +36,31 @@ public class profileChecking extends javax.swing.JFrame {
         db = ur.getAll();
         llist = new Linkedlist();
         deletellist = new Linkedlist();
-        
+
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-        
-        for(int i=0; i<db.size();i++){
+
+        for (int i = 0; i < db.size(); i++) {
             llist.addData(db.get(i));
             deletellist.addData(db.get(i));
         }
-        
+
         DefaultTableModel model = (DefaultTableModel) showtable.getModel();
-        
-        for(int i = 0; i < llist.size(); i++)
-            {
-                Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
-                String dateDateCreated = formatter.format(date_created);
-                
-                Object[] row = {
-                    llist.getDataFromFront(i).getUser_id(),
-                    llist.getDataFromFront(i).getName(),
-                    llist.getDataFromFront(i).getPrivillage(),
-                    llist.getDataFromFront(i).getFirst_name(),
-                    llist.getDataFromFront(i).getLast_name(),
-                    llist.getDataFromFront(i).getMember_point(),
-                    llist.getDataFromFront(i).getMember_level(),
-                    dateDateCreated,
-                        };
-                model.addRow(row);
-            }
+
+        for (int i = 1; i <= llist.size(); i++) {
+            Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
+            String dateDateCreated = formatter.format(date_created);
+
+            Object[] row = {
+                llist.getDataFromFront(i).getUser_id(),
+                llist.getDataFromFront(i).getName(),
+                llist.getDataFromFront(i).getPrivillage(),
+                llist.getDataFromFront(i).getFirst_name(),
+                llist.getDataFromFront(i).getLast_name(),
+                llist.getDataFromFront(i).getMember_point(),
+                llist.getDataFromFront(i).getMember_level(),
+                dateDateCreated,};
+            model.addRow(row);
+        }
     }
 
     /**
@@ -178,47 +177,49 @@ public class profileChecking extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int selectdelete = showtable.getSelectedRow();
+        if (selectdelete == -1) {
+            return;
+        }
+        selectdelete++;
         int conform = 0;
         ur = new UserDAO();
         db = ur.getAll();
-        if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-            try{
-               ur.delete(deletellist.getDataFromFront(selectdelete));
-               conform = 1;
-            }
-            catch(SQLException e){
+        if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            try {
+                ur.delete(deletellist.getDataFromFront(selectdelete));
+                conform = 1;
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
-        else{
+        } else {
             conform = 0;
         }
-        
+
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-        
+
         DefaultTableModel model = (DefaultTableModel) showtable.getModel();
-        
+
         model.setRowCount(0);
-        if(conform == 1){
+        if (conform == 1) {
+
             deletellist.deleteSelectList(selectdelete);
         }
-        
-        for(int i = 0; i < deletellist.size(); i++){
+
+        for (int i = 1; i <= deletellist.size(); i++) {
             Date date_created = new Date(deletellist.getDataFromFront(i).getDate_created() * 1000L);
             String dateDateCreated = formatter.format(date_created);
             Object[] row = {
-                    deletellist.getDataFromFront(i).getUser_id(),
-                    deletellist.getDataFromFront(i).getName(),
-                    deletellist.getDataFromFront(i).getPrivillage(),
-                    deletellist.getDataFromFront(i).getFirst_name(),
-                    deletellist.getDataFromFront(i).getLast_name(),
-                    deletellist.getDataFromFront(i).getMember_point(),
-                    deletellist.getDataFromFront(i).getMember_level(),
-                    dateDateCreated,
-            };
+                deletellist.getDataFromFront(i).getUser_id(),
+                deletellist.getDataFromFront(i).getName(),
+                deletellist.getDataFromFront(i).getPrivillage(),
+                deletellist.getDataFromFront(i).getFirst_name(),
+                deletellist.getDataFromFront(i).getLast_name(),
+                deletellist.getDataFromFront(i).getMember_point(),
+                deletellist.getDataFromFront(i).getMember_level(),
+                dateDateCreated,};
             model.addRow(row);
         }
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void search_barActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_barActionPerformed
@@ -229,23 +230,22 @@ public class profileChecking extends javax.swing.JFrame {
 
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
         llist.clear();
-        for(int i=0; i<db.size();i++){
+        for (int i = 0; i < db.size(); i++) {
             llist.addData(db.get(i));
         }
-        
+
         String search = search_bar.getText().toUpperCase();
         int searchby = select_bar.getSelectedIndex();
-        
+
         DefaultTableModel model = (DefaultTableModel) showtable.getModel();
         model.setRowCount(0);
-        if(search.isEmpty()){
+        if (search.isEmpty()) {
             deletellist.clear();
-            for(int i = 0; i < llist.size(); i++)
-            {
+            for (int i = 0; i < llist.size(); i++) {
                 Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
                 String dateDateCreated = formatter.format(date_created);
                 deletellist.addData(llist.getDataFromFront(i));
-                
+
                 Object[] row = {
                     llist.getDataFromFront(i).getUser_id(),
                     llist.getDataFromFront(i).getName(),
@@ -254,17 +254,16 @@ public class profileChecking extends javax.swing.JFrame {
                     llist.getDataFromFront(i).getLast_name(),
                     llist.getDataFromFront(i).getMember_point(),
                     llist.getDataFromFront(i).getMember_level(),
-                    dateDateCreated,
-                        };
+                    dateDateCreated,};
                 model.addRow(row);
             }
-        } else{
-            switch(searchby){
+        } else {
+            switch (searchby) {
                 case 0:
                     deletellist.clear();
-                    for(int i = 0; i < llist.size(); i++){
-                        if(llist.getDataFromFront(i).getUser_id().startsWith(search)){
-                            
+                    for (int i = 0; i < llist.size(); i++) {
+                        if (llist.getDataFromFront(i).getUser_id().startsWith(search)) {
+
                             Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
                             String dateDateCreated = formatter.format(date_created);
                             deletellist.addData(llist.getDataFromFront(i));
@@ -276,17 +275,16 @@ public class profileChecking extends javax.swing.JFrame {
                                 llist.getDataFromFront(i).getLast_name(),
                                 llist.getDataFromFront(i).getMember_point(),
                                 llist.getDataFromFront(i).getMember_level(),
-                                dateDateCreated,
-                            };
+                                dateDateCreated,};
                             model.addRow(row);
                         }
                     }
                     break;
                 default:
                     deletellist.clear();
-                    for(int i = 0; i < llist.size(); i++){
-                        if(llist.getDataFromFront(i).getName().toUpperCase().startsWith(search)){
-                            
+                    for (int i = 0; i < llist.size(); i++) {
+                        if (llist.getDataFromFront(i).getName().toUpperCase().startsWith(search)) {
+
                             Date date_created = new Date(llist.getDataFromFront(i).getDate_created() * 1000L);
                             String dateDateCreated = formatter.format(date_created);
                             deletellist.addData(llist.getDataFromFront(i));
@@ -298,12 +296,11 @@ public class profileChecking extends javax.swing.JFrame {
                                 llist.getDataFromFront(i).getLast_name(),
                                 llist.getDataFromFront(i).getMember_point(),
                                 llist.getDataFromFront(i).getMember_level(),
-                                dateDateCreated,
-                            };
+                                dateDateCreated,};
                             model.addRow(row);
                         }
                     }
-                    
+
             }
         }
     }//GEN-LAST:event_SearchActionPerformed
