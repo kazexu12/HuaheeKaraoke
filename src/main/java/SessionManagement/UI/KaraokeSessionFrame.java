@@ -21,13 +21,14 @@ import javax.swing.text.html.HTMLEditorKit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import Generic.Event;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author zkang
  */
 public class KaraokeSessionFrame extends javax.swing.JFrame {
-
+    
     private static final Logger logger = LogManager.getLogger(KaraokeSessionFrame.class.getName());
     private BackgroundPlayer player;
     private java.util.ArrayList<Song> songList;
@@ -38,16 +39,16 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
      */
     public KaraokeSessionFrame(RegisteredSession sessionData) {
         player = new BackgroundPlayer();
-
+        
         songList = new DAO.Songs().getAll();
-
+        
         player.onNextSong(new Event() {
             @Override
             public void callback(Object[] args) {
                 updateCurrentPlaylistTable(player.getNowPlayingSongList());
             }
         });
-
+        
         player.onPlaying(new Event() {
             @Override
             public void callback(Object[] args) {
@@ -63,7 +64,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                 );
             }
         });
-
+        
         player.onStopped(new Event() {
             @Override
             public void callback(Object[] args) {
@@ -80,7 +81,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                 );
             }
         });
-
+        
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -92,13 +93,13 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                 new MainFrame().setVisible(true);
             }
         });
-
+        
         initComponents();
         this.setLocationRelativeTo(null);
-
+        
         this.sessionData = sessionData;
         this.setTitle(String.format("Huahee Karaoke >> Karaoke Session (%s)", new Object[]{sessionData.getSessionId()}));
-
+        System.out.println(sessionData.toString());
         // Hide last column
         this.nowPlayingListTable.removeColumn(nowPlayingListTable.getColumnModel().getColumn(5));
     }
@@ -121,6 +122,8 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        infoBtn = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         addSongBtn = new javax.swing.JButton();
         removeSongBtn = new javax.swing.JButton();
@@ -177,6 +180,22 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel3.setMinimumSize(new java.awt.Dimension(100, 42));
         jPanel3.setPreferredSize(new java.awt.Dimension(100, 42));
         jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jPanel6.setLayout(new java.awt.GridBagLayout());
+
+        infoBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/info.png"))); // NOI18N
+        infoBtn.setToolTipText("Session Information");
+        infoBtn.setMaximumSize(new java.awt.Dimension(36, 36));
+        infoBtn.setMinimumSize(new java.awt.Dimension(36, 36));
+        infoBtn.setPreferredSize(new java.awt.Dimension(32, 32));
+        infoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoBtnActionPerformed(evt);
+            }
+        });
+        jPanel6.add(infoBtn, new java.awt.GridBagConstraints());
+
+        jPanel3.add(jPanel6, java.awt.BorderLayout.WEST);
 
         jPanel5.setMinimumSize(new java.awt.Dimension(82, 42));
         jPanel5.setPreferredSize(new java.awt.Dimension(82, 22));
@@ -377,6 +396,10 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         this.updateCurrentPlaylistTable(this.player.getNowPlayingSongList());
     }//GEN-LAST:event_skipSongBtnActionPerformed
 
+    private void infoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoBtnActionPerformed
+        JOptionPane.showMessageDialog(this, this.sessionData.toString(), "Session Information", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_infoBtnActionPerformed
+
     // =============================================================================
     // =============================================================================
     // =============================================================================
@@ -394,7 +417,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             table.setValueAt("<html><b>" + table.getValueAt(row, i) + "</b></html>", row, i);
         }
     }
-
+    
     private void removeHtmlTagsFromTable(JTable table) {
         int colCount = table.getColumnCount();
         int rowCount = table.getRowCount();
@@ -427,11 +450,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
         this.player.changeSong(row);
         this.updateCurrentPlaylistTable(this.player.getNowPlayingSongList());
-
+        
         this.player.setPlayerState(PlayerState.PLAYING);
         setNowPlayingText(this.player.getNowPlayingSongList().get(row).getLeft());
     }
-
+    
     private void setNowPlayingText(Song s) {
         if (s == null) {
             this.nowPlayingLabel.setText("Now Playing: ");
@@ -550,11 +573,13 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     private javax.swing.JButton addSongBtn;
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel centerPanel;
+    private javax.swing.JButton infoBtn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JEditorPane lyricsPane;
