@@ -21,11 +21,11 @@ public class TransactionDTO {
     private int date_created;
     private int date_modified;
     private int status;
-    
+
     public TransactionDTO() {
-        
+
     }
-    
+
     public TransactionDTO(String transaction_id, RegisteredSessionDTO session, double discount, double final_price, UserDTO member, String member_level_atm, UserDTO staff, int status, int date_created, int date_modified) {
         this.transaction_id = transaction_id;
         this.session = session;
@@ -54,7 +54,7 @@ public class TransactionDTO {
     public void setTransactionId(String transaction_id) {
         this.transaction_id = transaction_id;
     }
-    
+
     public String getSessionId() {
         return session.getSessionId();
     }
@@ -109,6 +109,21 @@ public class TransactionDTO {
 
     public int getStatus() {
         return status;
+    }
+
+    public String getStatusText() {
+        switch (status) {
+            case 0 -> {
+                return "Unknown";
+            }
+            case 1 -> {
+                return "Active";
+            }
+            case 2 -> {
+                return "Refunded";
+            }
+        }
+        return "Error";
     }
 
     public void setStatus(int status) {

@@ -85,6 +85,21 @@ public class RegisteredSessionDTO {
         return room_size;
     }
 
+    public String getRoomSizeText() {
+        switch (Character.toString(room_size).toUpperCase()) {
+            case "S" -> {
+                return "Small";
+            }
+            case "M" -> {
+                return "Medium";
+            }
+            case "L" -> {
+                return "Large";
+            }
+        }
+        return "Error";
+    }
+
     public void setRoomSize(char room_size) {
         this.room_size = room_size;
     }
@@ -156,14 +171,14 @@ public class RegisteredSessionDTO {
     public String toString() {
         return String.format("Date Registered\t\t: %s\n"
                 + "Head Count\t\t: %d\n"
-                + "Room Size\t\t: %c\n"
+                + "Room Size\t\t: %s\n"
                 + "Session Date\t\t: %s\n"
                 + "Session Start Time\t: %s\n"
                 + "Session End Time\t: %s\n"
                 + "Session ID\t\t: %s\n", new Object[]{
                     new java.util.Date((long) date_created * 1000).toString(),
                     head_count,
-                    room_size,
+                    this.getRoomSizeText(),
                     session_date,
                     session_start_time,
                     session_end_time,
