@@ -23,6 +23,11 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
     private KaraokeSessionFrame parent;
     private String searchVal = "";
     private TableRowSorter<DefaultTableModel> sorter;
+    
+    /**
+     * True if user press "Add Song(s)"
+     */
+    private boolean userResponse;
     /**
      *
      * @param parent parent window calling this dialog
@@ -30,6 +35,9 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
     public KaraokeSessionAddSongDialog(javax.swing.JFrame parent, ArrayList<SongDTO> songList) {
         // Call JDialog constructor
         super(parent, true);
+        
+        userResponse = false;
+        
         this.parent = (KaraokeSessionFrame) parent;
         // Prepare page
         initComponents();
@@ -255,10 +263,7 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
     private void addSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongBtnActionPerformed
         // TODO add your handling code here:
-//        ArrayList<Song> s = this.getAllSelectedSongs();
-//        for (int i = 0; i < s.size(); i++) {
-//            parent.addSong(s.get(i));
-//        }
+        userResponse = true;
         this.dispose();
     }//GEN-LAST:event_addSongBtnActionPerformed
 
@@ -297,6 +302,10 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
 
     private ArrayList<SongDTO> getAllSelectedSongs() {
         ArrayList<SongDTO> arr = new ArrayList<>();
+        if(!userResponse) {
+            return arr;
+        }
+        
         DefaultTableModel tableModel = (DefaultTableModel) this.addSongListingTable.getModel();
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             Object check = tableModel.getValueAt(i, 0);
