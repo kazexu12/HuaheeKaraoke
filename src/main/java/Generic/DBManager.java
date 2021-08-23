@@ -62,6 +62,10 @@ public class DBManager {
      * @throws IOException
      */
     public void prepareTable() throws SQLException, IOException {
+        File f = new File(dbPath);
+        if (!f.exists() || f.isDirectory()) {
+            return;
+        }
         Connection conn = connectDB();
 
         // Read SQL file from resource folder
@@ -129,10 +133,11 @@ public class DBManager {
     }
 
     /**
-     * Execute query that returns rows of data
-     * As ResultSet cant be read after connection is closed, Connection instance will be returned
-     * 
+     * Execute query that returns rows of data As ResultSet cant be read after
+     * connection is closed, Connection instance will be returned
+     *
      * Developer are expected to close the connection after usage
+     *
      * @param q SQLITE query
      * @return Connection and ResultSet instance in a pair
      * @see Generic.Pair
