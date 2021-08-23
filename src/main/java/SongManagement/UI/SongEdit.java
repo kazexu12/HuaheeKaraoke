@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SongManagement;
+package SongManagement.UI;
 
-import DAO.Songs;
-import DTO.Song;
+import DAO.SongDAO;
+import DTO.SongDTO;
 import SongManagement.ADT.cArrayList;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -19,18 +19,18 @@ import javax.swing.JOptionPane;
  */
 public class SongEdit extends javax.swing.JDialog {
     
-    private java.util.ArrayList<Song> songList;
-    private cArrayList<Song> search_edit;
-    private Songs songDAO;
-    private DTO.Song songToEdit;
+    private java.util.ArrayList<SongDTO> songList;
+    private cArrayList<SongDTO> search_edit;
+    private SongDAO songDAO;
+    private DTO.SongDTO songToEdit;
     /**
      * Creates new form SongEdit
      */
-    public SongEdit(javax.swing.JFrame parent, DTO.Song passeddata) {
+    public SongEdit(javax.swing.JFrame parent, DTO.SongDTO passeddata) {
         super(parent,true);
         this.songToEdit = passeddata;
         search_edit = new cArrayList();
-        songDAO = new Songs();
+        songDAO = new SongDAO();
         songList = songDAO.getAll();
         initComponents();
          this.addWindowListener(new WindowAdapter() {
@@ -251,7 +251,7 @@ public class SongEdit extends javax.swing.JDialog {
         }
         else if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             
-            Songs songsDAO = new Songs();
+            SongDAO songsDAO = new SongDAO();
             long unixTime = System.currentTimeMillis()/1000L;
             int uTime = (int)unixTime;
             

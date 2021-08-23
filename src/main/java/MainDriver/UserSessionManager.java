@@ -11,7 +11,7 @@ import DTO.UserDTO;
  *
  * @author ASUS
  */
-public class UserSesstionManager {
+public class UserSessionManager {
     static UserDTO logonUser;
 
 public static boolean login(UserDTO u) {
@@ -25,6 +25,6 @@ public static boolean logout() {
 }
 
 public static UserDTO getLogonUser() {
-	return UserSesstionManager.logonUser;
+	return UserSessionManager.logonUser;
 }
 }

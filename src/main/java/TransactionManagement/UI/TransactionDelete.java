@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TransactionManagement;
+package TransactionManagement.UI;
 
-import DAO.Transactions;
-import DTO.Transaction;
+import DAO.TransactionDAO;
+import DTO.TransactionDTO;
 import TransactionManagement.ADT.HashMap;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -24,11 +24,11 @@ import javax.swing.JOptionPane;
  */
 public class TransactionDelete extends javax.swing.JFrame {
     
-    Transactions tr;
-    ArrayList<Transaction> db;
-    HashMap<String, Transaction> hm;
+    TransactionDAO tr;
+    ArrayList<TransactionDTO> db;
+    HashMap<String, TransactionDTO> hm;
     
-    Transaction searchResult;
+    TransactionDTO searchResult;
 
     /**
      * Creates new form TransactionDelete
@@ -36,7 +36,7 @@ public class TransactionDelete extends javax.swing.JFrame {
     public TransactionDelete() {
         initComponents();
         
-        tr = new Transactions();
+        tr = new TransactionDAO();
         db = tr.getAll();
         
         hm = new HashMap();

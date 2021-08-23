@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserInterface;
+package UserManagement.UI;
 
 import DAO.UserDAO;
 import DTO.UserDTO;
@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author ASUS
  */
-public class modifiedAdminProfile extends javax.swing.JFrame {
+public class modifiedProfile extends javax.swing.JFrame {
     
     ArrayList<UserDTO> db;
     Linkedlist<UserDTO> llist;
@@ -27,7 +27,7 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
     /**
      * Creates new form modifiedProfile
      */
-    public modifiedAdminProfile(javax.swing.JFrame parent, DTO.UserDTO passeddata) {
+    public modifiedProfile(javax.swing.JFrame parent, DTO.UserDTO passeddata) {
         initComponents();
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -37,7 +37,7 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
         });
     }
     
-     public modifiedAdminProfile() {
+     public modifiedProfile() {
         initComponents();
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -142,7 +142,7 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         this.dispose();
-        new adminInterface().setVisible(true);
+        new userInterface().setVisible(true);
     }//GEN-LAST:event_backActionPerformed
 
     private void newFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFirstNameActionPerformed
@@ -160,7 +160,7 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
                    llist.addData(db.get(i));
                }
                
-               UserDTO urs = MainDriver.UserSesstionManager.getLogonUser();
+               UserDTO urs = MainDriver.UserSessionManager.getLogonUser();
                
                String name = newFirstName.getText();
                String pwd = new String(newpassword.getPassword());
@@ -180,7 +180,7 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
 
                        if (successModified = true){
                            JOptionPane.showMessageDialog(null, "Modified Success!! " + name, "Congratulation!!", JOptionPane.PLAIN_MESSAGE);
-                           new adminInterface().setVisible(true);
+                           new userInterface().setVisible(true);
                            this.dispose();
                        }
                        else
@@ -224,21 +224,20 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(modifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(modifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(modifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(modifiedAdminProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifiedProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new modifiedAdminProfile().setVisible(true);
+                new modifiedProfile().setVisible(true);
             }
         });
            }

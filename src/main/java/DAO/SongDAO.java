@@ -1,6 +1,6 @@
 package DAO;
 
-import DTO.Song;
+import DTO.SongDTO;
 import Generic.DBManager;
 import Generic.Pair;
 import java.sql.Connection;
@@ -15,18 +15,18 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Chin Sze Sing
  */
-public class Songs implements DAOInterface<Song> {
+public class SongDAO implements DAOInterface<SongDTO> {
 
     private DBManager db;
-    private final Logger logger = LogManager.getLogger(Songs.class.getName());
-    private ArrayList<DTO.Song> songArray;
+    private final Logger logger = LogManager.getLogger(SongDAO.class.getName());
+    private ArrayList<DTO.SongDTO> songArray;
     
-    public Songs() {
+    public SongDAO() {
         songArray = new ArrayList<>();
     }
 
     @Override
-    public ArrayList<Song> getAll() {
+    public ArrayList<SongDTO> getAll() {
         db = new DBManager();
         String sql = "SELECT * FROM songs";
         try {
@@ -35,7 +35,7 @@ public class Songs implements DAOInterface<Song> {
             ResultSet resultSet = result.getRight();
 
             while (resultSet.next()) {
-                Song songData = new Song(
+                SongDTO songData = new SongDTO(
                         resultSet.getString("song_id"),
                         resultSet.getString("name"),
                         resultSet.getString("artist"),
@@ -55,7 +55,7 @@ public class Songs implements DAOInterface<Song> {
     }
 
     @Override
-    public void save(Song t) throws SQLException {
+    public void save(SongDTO t) throws SQLException {
         db = new DBManager();
         String sql = String.format(
                 "INSERT INTO songs VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d')",
@@ -72,7 +72,7 @@ public class Songs implements DAOInterface<Song> {
         db.execQuery(sql);
     }
 
-    public Song findSongById(String song_id) {
+    public SongDTO findSongById(String song_id) {
         db = new DBManager();
         String sql = String.format("SELECT * FROM songs WHERE song_id = '%s'", new Object[]{song_id});
         try {
@@ -82,7 +82,7 @@ public class Songs implements DAOInterface<Song> {
             boolean found = false;
             while (rs.next()) {
                 found = true;
-                Song songData = new Song(
+                SongDTO songData = new SongDTO(
                         rs.getString("song_id"),
                         rs.getString("name"),
                         rs.getString("artist"),
@@ -104,7 +104,7 @@ public class Songs implements DAOInterface<Song> {
     }
 
     @Override
-    public void update(Song t, HashMap params) throws SQLException {
+    public void update(SongDTO t, HashMap params) throws SQLException {
         db = new DBManager();
         String setClause = "SET ";
         String whereClause = String.format(" WHERE song_id='%s'", t.getSongId());
@@ -145,7 +145,7 @@ public class Songs implements DAOInterface<Song> {
     }
 
     @Override
-    public void delete(Song t) throws SQLException {
+    public void delete(SongDTO t) throws SQLException {
         db = new DBManager();
         DBManager db = new DBManager();
         this.songArray.remove(t);

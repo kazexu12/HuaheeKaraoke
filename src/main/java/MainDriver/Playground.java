@@ -5,8 +5,8 @@
  */
 package MainDriver;
 
-import DAO.RegisteredSessions;
-import DTO.RegisteredSession;
+import DAO.RegisteredSessionDAO;
+import DTO.RegisteredSessionDTO;
 import SessionManagement.ADT.ArrayList;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -107,8 +107,8 @@ public class Playground extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        DAO.RegisteredSessions rs = new DAO.RegisteredSessions();
-        DTO.RegisteredSession item = new DTO.RegisteredSession('a', 2, "2020-01-01");
+        DAO.RegisteredSessionDAO rs = new DAO.RegisteredSessionDAO();
+        DTO.RegisteredSessionDTO item = new DTO.RegisteredSessionDTO('a', 2, "2020-01-01");
         try {
             rs.save(item);
         } catch (SQLException e) {

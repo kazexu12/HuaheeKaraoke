@@ -5,8 +5,8 @@
  */
 package MainDriver;
 
-import DAO.RegisteredSessions;
-import DTO.RegisteredSession;
+import DAO.RegisteredSessionDAO;
+import DTO.RegisteredSessionDTO;
 import SessionManagement.UI.KaraokeSessionFrame;
 import Generic.DBManager;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -177,9 +177,9 @@ public class MainFrame extends javax.swing.JFrame {
         if (userInputSessionKey == null) {
             return;
         }
-        RegisteredSessions sessionDAO = new RegisteredSessions();
-        ArrayList<RegisteredSession> sessions = sessionDAO.getAll();
-        RegisteredSession foundSession = null;
+        RegisteredSessionDAO sessionDAO = new RegisteredSessionDAO();
+        ArrayList<RegisteredSessionDTO> sessions = sessionDAO.getAll();
+        RegisteredSessionDTO foundSession = null;
         for (int i = 0; i < sessions.size(); i++) {
             if (sessions.get(i).getSessionKey().equalsIgnoreCase(userInputSessionKey)) {
                 foundSession = sessions.get(i);
@@ -210,13 +210,13 @@ public class MainFrame extends javax.swing.JFrame {
     private void adminLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginBtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new UserInterface.adminLogin().setVisible(true);
+        new UserManagement.UI.adminLogin().setVisible(true);
     }//GEN-LAST:event_adminLoginBtnActionPerformed
 
     private void memberLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberLoginBtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new UserInterface.userLogin().setVisible(true);
+        new UserManagement.UI.userLogin().setVisible(true);
     }//GEN-LAST:event_memberLoginBtnActionPerformed
 
     /**

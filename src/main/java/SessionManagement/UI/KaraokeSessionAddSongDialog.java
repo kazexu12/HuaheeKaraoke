@@ -5,8 +5,8 @@
  */
 package SessionManagement.UI;
 
-import DAO.Songs;
-import DTO.Song;
+import DAO.SongDAO;
+import DTO.SongDTO;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
      *
      * @param parent parent window calling this dialog
      */
-    public KaraokeSessionAddSongDialog(javax.swing.JFrame parent, ArrayList<Song> songList) {
+    public KaraokeSessionAddSongDialog(javax.swing.JFrame parent, ArrayList<SongDTO> songList) {
         // Call JDialog constructor
         super(parent, true);
         this.parent = (KaraokeSessionFrame) parent;
@@ -79,11 +79,11 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
      *
      * @param songs
      */
-    private void init(ArrayList<Song> songs) {
+    private void init(ArrayList<SongDTO> songs) {
         DefaultTableModel tabModel = (DefaultTableModel) this.addSongListingTable.getModel();
 
         for (int i = 0; i < songs.size(); i++) {
-            Song sg = songs.get(i);
+            SongDTO sg = songs.get(i);
             tabModel.addRow(new Object[]{null, sg.getName(), sg.getArtist(), sg.getGenre(), sg.getDurationString(), sg});
         }
     }
@@ -296,15 +296,15 @@ public class KaraokeSessionAddSongDialog extends javax.swing.JDialog {
         sorter.sort();
     }//GEN-LAST:event_searchSongQueryTextFieldKeyReleased
 
-    private ArrayList<Song> getAllSelectedSongs() {
-        ArrayList<Song> arr = new ArrayList<>();
+    private ArrayList<SongDTO> getAllSelectedSongs() {
+        ArrayList<SongDTO> arr = new ArrayList<>();
         DefaultTableModel tableModel = (DefaultTableModel) this.addSongListingTable.getModel();
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             Object check = tableModel.getValueAt(i, 0);
             if (check == null || !((boolean) check)) {
                 continue;
             }
-            Song s = (Song) tableModel.getValueAt(i, 5);
+            SongDTO s = (SongDTO) tableModel.getValueAt(i, 5);
             arr.add(s);
         }
         return arr;

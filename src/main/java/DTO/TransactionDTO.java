@@ -11,11 +11,11 @@ import java.util.List;
  *
  * @author cafer
  */
-public class Transaction {
+public class TransactionDTO {
 
     private String transaction_id;
     private String member_level_atm;
-    private RegisteredSession session;
+    private RegisteredSessionDTO session;
     private double discount;
     private double final_price;
     private UserDTO member;
@@ -24,11 +24,11 @@ public class Transaction {
     private int date_modified;
     private int status;
     
-    public Transaction() {
+    public TransactionDTO() {
         
     }
     
-    public Transaction(String transaction_id, RegisteredSession session, double discount, double final_price, UserDTO member, String member_level_atm, UserDTO staff, int status, int date_created, int date_modified) {
+    public TransactionDTO(String transaction_id, RegisteredSessionDTO session, double discount, double final_price, UserDTO member, String member_level_atm, UserDTO staff, int status, int date_created, int date_modified) {
         this.transaction_id = transaction_id;
         this.session = session;
         this.discount = discount;
@@ -61,11 +61,11 @@ public class Transaction {
         return session.getSessionId();
     }
 
-    public RegisteredSession getSession() {
+    public RegisteredSessionDTO getSession() {
         return session;
     }
 
-    public void setSessionId(RegisteredSession session) {
+    public void setSessionId(RegisteredSessionDTO session) {
         this.session = session;
     }
 

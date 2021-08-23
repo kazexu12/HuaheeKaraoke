@@ -1,6 +1,6 @@
 package DAO;
 
-import DTO.RegisteredSession;
+import DTO.RegisteredSessionDTO;
 import Generic.DBManager;
 import Generic.Pair;
 import java.util.ArrayList;
@@ -17,18 +17,18 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Loo Zi Kang
  */
-public class RegisteredSessions implements DAOInterface<RegisteredSession> {
+public class RegisteredSessionDAO implements DAOInterface<RegisteredSessionDTO> {
 
-    private final Logger logger = LogManager.getLogger(RegisteredSessions.class.getName());
+    private final Logger logger = LogManager.getLogger(RegisteredSessionDAO.class.getName());
     private final DBManager db;
 
-    public RegisteredSessions() {
+    public RegisteredSessionDAO() {
         db = new DBManager();
     }
 
     @Override
-    public ArrayList<RegisteredSession> getAll() {
-        ArrayList<RegisteredSession> sessions = new ArrayList<>();
+    public ArrayList<RegisteredSessionDTO> getAll() {
+        ArrayList<RegisteredSessionDTO> sessions = new ArrayList<>();
         String query = "SELECT * FROM RegisteredSessions;";
         Pair<Connection, ResultSet> queryResult;
         Connection dbconn;
@@ -39,7 +39,7 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
             sessionResult = queryResult.getRight();
 
             while (sessionResult.next()) {
-                RegisteredSession sess = readRegisteredSessionFromResultSet(sessionResult);
+                RegisteredSessionDTO sess = readRegisteredSessionFromResultSet(sessionResult);
                 sessions.add(sess);
             }
 
@@ -61,7 +61,7 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
      * @inheritDoc
      */
     @Override
-    public void save(RegisteredSession t) throws SQLException {
+    public void save(RegisteredSessionDTO t) throws SQLException {
         String newSessionID = this.getNewSessionID();
         String newSessionKey = this.getNewSessionKey();
         Object[] args = new Object[]{
@@ -101,7 +101,7 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
     }
 
     @Override
-    public void update(RegisteredSession t, HashMap<String, Object> params) throws SQLException {
+    public void update(RegisteredSessionDTO t, HashMap<String, Object> params) throws SQLException {
         String setClause = "SET ";
         String whereClause = String.format(" WHERE session_id='%s'", t.getSessionId());
 
@@ -141,20 +141,20 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
     }
 
     @Override
-    public void delete(RegisteredSession t) throws SQLException {
+    public void delete(RegisteredSessionDTO t) throws SQLException {
         String query = String.format("DELETE FROM RegisteredSessions WHERE session_id='%s'", new Object[]{t.getSessionId()});
         db.execQuery(query);
         logger.info("Successfully deleted record in DB (session_id: " + t.getSessionId() + ")");
     }
 
-    public RegisteredSession findBySessionId(String session_id) {
+    public RegisteredSessionDTO findBySessionId(String session_id) {
         String sql = String.format("SELECT * FROM RegisteredSessions WHERE session_id = '%s'", new Object[]{session_id});
         try {
             Pair<Connection, ResultSet> queryResult = db.resultQuery(sql);
             Connection dbconn = queryResult.getLeft();
             ResultSet rs = queryResult.getRight();
             while (rs.next()) {
-                RegisteredSession data = readRegisteredSessionFromResultSet(rs);
+                RegisteredSessionDTO data = readRegisteredSessionFromResultSet(rs);
                 dbconn.close();
                 return data;
             }
@@ -207,8 +207,8 @@ public class RegisteredSessions implements DAOInterface<RegisteredSession> {
         return maxSessionID;
     }
 
-    private RegisteredSession readRegisteredSessionFromResultSet(ResultSet rs) throws SQLException {
-        return new RegisteredSession(
+    private RegisteredSessionDTO readRegisteredSessionFromResultSet(ResultSet rs) throws SQLException {
+        return new RegisteredSessionDTO(
                 rs.getString("session_id"),
                 rs.getString("session_key"),
                 rs.getString("room_size").charAt(0),

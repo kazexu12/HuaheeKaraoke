@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SongManagement;
+package SongManagement.UI;
 
-import DAO.Songs;
-import DTO.Song;
+import DAO.SongDAO;
+import DTO.SongDTO;
 import SongManagement.ADT.cArrayList;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -20,17 +20,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SongMenu extends javax.swing.JFrame {
 
-    private java.util.ArrayList<Song> songList;
-    private java.util.ArrayList<Song> temp;
-    private cArrayList<Song> sl;
-    private cArrayList<Song> search_list;
-    private Songs songDAO;
+    private java.util.ArrayList<SongDTO> songList;
+    private java.util.ArrayList<SongDTO> temp;
+    private cArrayList<SongDTO> sl;
+    private cArrayList<SongDTO> search_list;
+    private SongDAO songDAO;
     /**
      * Creates new form testing123
      */
     public SongMenu() {
         initComponents();
-        songDAO = new Songs();
+        songDAO = new SongDAO();
         songList = songDAO.getAll();
         search_list = new cArrayList();
         sl = new cArrayList();
@@ -267,17 +267,17 @@ public class SongMenu extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.dispose();
-        new UserInterface.adminInterface().setVisible(true);
+        new UserManagement.UI.adminInterface().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        songDAO = new Songs();
+        songDAO = new SongDAO();
         temp = songDAO.getAll();
         
         Object[] response = new SongAdd(this).run();
         System.out.println(response[0]);
         
-        songDAO = new Songs();
+        songDAO = new SongDAO();
         songList = songDAO.getAll();
         
         if(temp.size() != songList.size()){
@@ -308,7 +308,7 @@ public class SongMenu extends javax.swing.JFrame {
         Object[] response = new SongEdit(this, search_list.get(select)).run();
         System.out.println(response[0]); 
         
-        songDAO = new Songs();
+        songDAO = new SongDAO();
         songList = songDAO.getAll();
         int editedrow = 0;
         

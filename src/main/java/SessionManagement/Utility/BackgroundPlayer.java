@@ -1,6 +1,6 @@
 package SessionManagement.Utility;
 
-import DTO.Song;
+import DTO.SongDTO;
 import Generic.Pair;
 import SessionManagement.ADT.ArrayList;
 import SessionManagement.ADT.DoublyLinkedDeque;
@@ -36,7 +36,7 @@ public class BackgroundPlayer extends Thread {
     /**
      * Boolean on the right indicate is the song is being played at the moment
      */
-    private ArrayList<Pair<Song, Boolean>> nowPlayingSongList;
+    private ArrayList<Pair<SongDTO, Boolean>> nowPlayingSongList;
 
     public BackgroundPlayer() {
         this.nowPlayingSongList = new ArrayList<>();
@@ -87,7 +87,7 @@ public class BackgroundPlayer extends Thread {
     public void nextSong() {
         loadLyric();
         for (int i = 0; i < this.nowPlayingSongList.size(); i++) {
-            Song song = nowPlayingSongList.get(i).getLeft();
+            SongDTO song = nowPlayingSongList.get(i).getLeft();
             boolean isPlaying = nowPlayingSongList.get(i).getRight();
             if (isPlaying && i != nowPlayingSongList.size() - 1) {
                 this.changeSong(i + 1);
@@ -151,7 +151,7 @@ public class BackgroundPlayer extends Thread {
      */
     public void changeSong(int idx) {
         for (int i = 0; i < nowPlayingSongList.size(); i++) {
-            Pair<Song, Boolean> item = nowPlayingSongList.get(i);
+            Pair<SongDTO, Boolean> item = nowPlayingSongList.get(i);
             if (i != idx) {
                 item.setRight(false);
                 continue;
@@ -178,7 +178,7 @@ public class BackgroundPlayer extends Thread {
         }
     }
 
-    public ArrayList<Pair<Song, Boolean>> getNowPlayingSongList() {
+    public ArrayList<Pair<SongDTO, Boolean>> getNowPlayingSongList() {
         return this.nowPlayingSongList;
     }
 
@@ -188,12 +188,12 @@ public class BackgroundPlayer extends Thread {
         }
     }
 
-    public void addSong(Song newSong) {
+    public void addSong(SongDTO newSong) {
         nowPlayingSongList.add(new Pair<>(newSong, false));
     }
 
     public void removeSongs(int[] idxs) {
-        ArrayList<Pair<Song, Boolean>> newSongList = new ArrayList<>();
+        ArrayList<Pair<SongDTO, Boolean>> newSongList = new ArrayList<>();
         boolean found = false;
         boolean needToChangeSongToClosest = false;
         int closestIdx = -1;

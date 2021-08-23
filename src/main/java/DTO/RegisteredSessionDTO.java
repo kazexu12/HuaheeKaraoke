@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author Loo Zi Kang
  */
-public class RegisteredSession {
+public class RegisteredSessionDTO {
 
     private String session_id;
     private String session_key;
@@ -23,7 +23,7 @@ public class RegisteredSession {
     private int date_created;
     private int date_modified;
 
-    public RegisteredSession() {
+    public RegisteredSessionDTO() {
 
     }
 
@@ -34,7 +34,7 @@ public class RegisteredSession {
      * @param head_count
      * @param session_date
      */
-    public RegisteredSession(char room_size, int head_count, String session_date) {
+    public RegisteredSessionDTO(char room_size, int head_count, String session_date) {
         this.room_size = room_size;
         this.head_count = head_count;
         this.session_date = session_date;
@@ -53,7 +53,7 @@ public class RegisteredSession {
      * @param date_created
      * @param date_modified
      */
-    public RegisteredSession(String session_id, String session_key, char room_size, int head_count, String session_date, String session_start_time, String session_end_time, int date_created, int date_modified) {
+    public RegisteredSessionDTO(String session_id, String session_key, char room_size, int head_count, String session_date, String session_start_time, String session_end_time, int date_created, int date_modified) {
         this.session_id = session_id;
         this.session_key = session_key;
         this.room_size = room_size;
@@ -148,7 +148,7 @@ public class RegisteredSession {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final RegisteredSession other = (RegisteredSession) obj;
+        final RegisteredSessionDTO other = (RegisteredSessionDTO) obj;
         return Objects.equals(this.session_id, other.session_id);
     }
 

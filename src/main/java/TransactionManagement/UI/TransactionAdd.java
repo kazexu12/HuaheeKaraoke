@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TransactionManagement;
+package TransactionManagement.UI;
 
-import DAO.RegisteredSessions;
-import DAO.Transactions;
+import DAO.RegisteredSessionDAO;
+import DAO.TransactionDAO;
 import DAO.UserDAO;
-import DTO.RegisteredSession;
-import DTO.Transaction;
+import DTO.RegisteredSessionDTO;
+import DTO.TransactionDTO;
 import DTO.UserDTO;
 import TransactionManagement.ADT.HashMap;
 import java.awt.event.KeyEvent;
@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  */
 public class TransactionAdd extends javax.swing.JFrame {
 
-    Transactions transDAO = new Transactions();
+    TransactionDAO transDAO = new TransactionDAO();
     UserDAO usersDAO = new UserDAO();
 
     UserDTO member;
@@ -482,8 +482,8 @@ public class TransactionAdd extends javax.swing.JFrame {
 
         if (JOptionPane.showConfirmDialog(null, "Confirm add?", "Confirmation",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            RegisteredSessions rsDAO = new RegisteredSessions();
-            RegisteredSession rs = new RegisteredSession(
+            RegisteredSessionDAO rsDAO = new RegisteredSessionDAO();
+            RegisteredSessionDTO rs = new RegisteredSessionDTO(
                     member.getMember_level(),
                     Integer.parseInt(headCountField.getText()),
                     dateField.getText()
@@ -502,7 +502,7 @@ public class TransactionAdd extends javax.swing.JFrame {
             double discount = memberTypeDiscount.get(member.getMember_level());
             long unixTime = System.currentTimeMillis() / 1000L;
 
-            Transaction newTrans = new Transaction(
+            TransactionDTO newTrans = new TransactionDTO(
                     transIdField.getText(),
                     rs,
                     roomPrice * discount / 100,

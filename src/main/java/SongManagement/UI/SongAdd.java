@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SongManagement;
+package SongManagement.UI;
 
-import DAO.Songs;
-import DTO.Song;
+import DAO.SongDAO;
+import DTO.SongDTO;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -206,7 +206,7 @@ public class SongAdd extends javax.swing.JDialog{
         else if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             
-            Songs songsDAO = new Songs();
+            SongDAO songsDAO = new SongDAO();
             long unixTime = System.currentTimeMillis()/1000L;
             String name = add_name.getText();
             String artist = add_artist.getText();
@@ -215,7 +215,7 @@ public class SongAdd extends javax.swing.JDialog{
             int duration = Integer.parseInt(add_duration.getText());
             int uTime = (int)unixTime;
             
-            Song newSong = new DTO.Song(songsDAO.getNewSongID(),name,artist,album,genre,duration,uTime,uTime);
+            SongDTO newSong = new DTO.SongDTO(songsDAO.getNewSongID(),name,artist,album,genre,duration,uTime,uTime);
             try{
             songsDAO.save(newSong);
             

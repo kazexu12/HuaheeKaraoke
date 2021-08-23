@@ -5,8 +5,8 @@
  */
 package SessionManagement.UI;
 
-import DTO.RegisteredSession;
-import DTO.Song;
+import DTO.RegisteredSessionDTO;
+import DTO.SongDTO;
 import Generic.Pair;
 import SessionManagement.Utility.BackgroundPlayer;
 import MainDriver.MainFrame;
@@ -31,16 +31,16 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     
     private static final Logger logger = LogManager.getLogger(KaraokeSessionFrame.class.getName());
     private BackgroundPlayer player;
-    private java.util.ArrayList<Song> songList;
-    private RegisteredSession sessionData;
+    private java.util.ArrayList<SongDTO> songList;
+    private RegisteredSessionDTO sessionData;
 
     /**
      * Creates new form Temp
      */
-    public KaraokeSessionFrame(RegisteredSession sessionData) {
+    public KaraokeSessionFrame(RegisteredSessionDTO sessionData) {
         player = new BackgroundPlayer();
         
-        songList = new DAO.Songs().getAll();
+        songList = new DAO.SongDAO().getAll();
         
         player.onNextSong(new Event() {
             @Override
@@ -375,7 +375,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
 
     private void addSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongBtnActionPerformed
         // TODO add your handling code here:
-        java.util.ArrayList<Song> songsToAdd = (java.util.ArrayList) new KaraokeSessionAddSongDialog(this, songList).run();
+        java.util.ArrayList<SongDTO> songsToAdd = (java.util.ArrayList) new KaraokeSessionAddSongDialog(this, songList).run();
         for (int i = 0; i < songsToAdd.size(); i++) {
             addSong(songsToAdd.get(i));
         }
@@ -464,7 +464,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         setNowPlayingText(this.player.getNowPlayingSongList().get(row).getLeft());
     }
     
-    private void setNowPlayingText(Song s) {
+    private void setNowPlayingText(SongDTO s) {
         if (s == null) {
             this.nowPlayingLabel.setText("Now Playing: ");
             return;
@@ -482,12 +482,12 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
      *
      * @param currentPlaylist
      */
-    public void updateCurrentPlaylistTable(ArrayList<Pair<Song, Boolean>> currentPlaylist) {
+    public void updateCurrentPlaylistTable(ArrayList<Pair<SongDTO, Boolean>> currentPlaylist) {
         DefaultTableModel tabModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
         tabModel.setRowCount(0);
         boolean songPlaying = false;
         for (int i = 0; i < currentPlaylist.size(); i++) {
-            Song s = currentPlaylist.get(i).getLeft();
+            SongDTO s = currentPlaylist.get(i).getLeft();
             tabModel.addRow(new Object[]{Integer.toString(i + 1), s.getName(), s.getArtist(), s.getGenre(), s.getDurationString(), s});
             if (currentPlaylist.get(i).getRight()) {
                 boldTableRow(this.nowPlayingListTable, i);
@@ -505,7 +505,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
      *
      * @param item
      */
-    public void addSong(Song item) {
+    public void addSong(SongDTO item) {
         this.player.addSong(item);
         this.updateCurrentPlaylistTable(player.getNowPlayingSongList());
     }

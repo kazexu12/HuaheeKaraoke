@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import DTO.Transaction;
+import DTO.TransactionDTO;
 import Generic.DBManager;
 import Generic.Pair;
 import java.util.ArrayList;
@@ -20,17 +20,17 @@ import org.apache.logging.log4j.Logger;
  *
  * @author cafer
  */
-public class Transactions implements DAOInterface<Transaction> {
+public class TransactionDAO implements DAOInterface<TransactionDTO> {
 
-    private final Logger logger = LogManager.getLogger(RegisteredSessions.class.getName());
-    private ArrayList<DTO.Transaction> transactions;
+    private final Logger logger = LogManager.getLogger(RegisteredSessionDAO.class.getName());
+    private ArrayList<DTO.TransactionDTO> transactions;
 
-    public Transactions() {
+    public TransactionDAO() {
         transactions = new ArrayList<>();
     }
 
     @Override
-    public ArrayList<Transaction> getAll() {
+    public ArrayList<TransactionDTO> getAll() {
         DBManager db = new DBManager();
         String query = "SELECT * FROM Transactions;";
         Pair<Connection, ResultSet> queryResult;
@@ -47,10 +47,10 @@ public class Transactions implements DAOInterface<Transaction> {
 
         try {
             while (sessionResult.next()) {
-                RegisteredSessions rs = new RegisteredSessions();
+                RegisteredSessionDAO rs = new RegisteredSessionDAO();
                 UserDAO us = new UserDAO();
 
-                Transaction sess = new Transaction(
+                TransactionDTO sess = new TransactionDTO(
                         sessionResult.getString("transaction_id"),
                         rs.findBySessionId(sessionResult.getString("session_id")),
                         sessionResult.getDouble("discount"),
@@ -72,7 +72,7 @@ public class Transactions implements DAOInterface<Transaction> {
     }
 
     @Override
-    public void save(Transaction t) throws SQLException {
+    public void save(TransactionDTO t) throws SQLException {
         DBManager db = new DBManager();
         Object[] args = new Object[]{
             t.getTransactionId(),
@@ -105,7 +105,7 @@ public class Transactions implements DAOInterface<Transaction> {
     }
 
     @Override
-    public void update(Transaction t, HashMap<String, Object> params) throws SQLException {
+    public void update(TransactionDTO t, HashMap<String, Object> params) throws SQLException {
         DBManager db = new DBManager();
         String setClause = "SET ";
         String whereClause = String.format(" WHERE transaction_id='%s'", t.getTransactionId());
@@ -150,7 +150,7 @@ public class Transactions implements DAOInterface<Transaction> {
     }
 
     @Override
-    public void delete(Transaction t) throws SQLException {
+    public void delete(TransactionDTO t) throws SQLException {
         DBManager db = new DBManager();
         this.transactions.remove(t);
         String query = String.format("DELETE FROM Transactions WHERE transaction_id='%s'", new Object[]{t.getTransactionId()});
@@ -158,7 +158,7 @@ public class Transactions implements DAOInterface<Transaction> {
         logger.info("Successfully deleted record in DB (transaction_id: " + t.getTransactionId() + ")");
     }
 
-    public Transaction findByTransactionid(String transaction_id) {
+    public TransactionDTO findByTransactionid(String transaction_id) {
         for (int i = 0; i < this.transactions.size(); i++) {
             if (this.transactions.get(i).getTransactionId().equals(transaction_id)) {
                 return this.transactions.get(i);

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TransactionManagement;
+package TransactionManagement.UI;
 
-import DAO.Transactions;
-import DTO.Transaction;
+import DAO.TransactionDAO;
+import DTO.TransactionDTO;
 import TransactionManagement.ADT.HashMap;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,8 +21,8 @@ import javax.swing.JOptionPane;
  */
 public class TransactionSearch extends javax.swing.JFrame {
     
-    ArrayList<Transaction> db;
-    HashMap<String, Transaction> hm;
+    ArrayList<TransactionDTO> db;
+    HashMap<String, TransactionDTO> hm;
     HashMap<Integer, String> statusString;
 
     /**
@@ -31,7 +31,7 @@ public class TransactionSearch extends javax.swing.JFrame {
     public TransactionSearch() {
         initComponents();
         
-        Transactions tr = new Transactions();
+        TransactionDAO tr = new TransactionDAO();
         db = tr.getAll();
         
         hm = new HashMap();
@@ -256,7 +256,7 @@ public class TransactionSearch extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         String result = searchField.getText();
-        Transaction searchResult;
+        TransactionDTO searchResult;
       
         
         if (!result.isEmpty()) {

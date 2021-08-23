@@ -2,7 +2,7 @@
 package DTO;
 
 
-public class Song {
+public class SongDTO {
 
     private String song_id;
     private String name;
@@ -13,11 +13,11 @@ public class Song {
     private int date_created;
     private int date_modified;
 
-    public Song() {
+    public SongDTO() {
 
     }
 
-    public Song(String song_id, String name, String artist, String album, String genre, int duration, int date_created, int date_modified) {
+    public SongDTO(String song_id, String name, String artist, String album, String genre, int duration, int date_created, int date_modified) {
         this.song_id = song_id;
         this.name = name;
         this.artist = artist;

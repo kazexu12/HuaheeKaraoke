@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserInterface;
+package UserManagement.UI;
 
 import DAO.UserDAO;
 import DTO.UserDTO;
-import MainDriver.UserSesstionManager;
+import MainDriver.UserSessionManager;
 import UserManagement.ADT.Linkedlist;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -183,7 +183,7 @@ public class adminLogin extends javax.swing.JFrame {
         if (success > 0){
             this.dispose();
             JOptionPane.showMessageDialog(null, "Welcome " + name, "Successfull Login", JOptionPane.PLAIN_MESSAGE);
-            UserSesstionManager.login(llist.getDataForChecking(getId));
+            UserSessionManager.login(llist.getDataForChecking(getId));
         }else if(namecheck > 0 && passwordcheck == 0){
             JOptionPane.showMessageDialog(null, "Your User Name is invalid\n Please try again.", "Error!!", JOptionPane.PLAIN_MESSAGE);
         }else if(passwordcheck > 0){

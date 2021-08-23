@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TransactionManagement;
+package TransactionManagement.UI;
 
-import UserInterface.adminInterface;
+import UserManagement.UI.adminInterface;
 
 /**
  *
