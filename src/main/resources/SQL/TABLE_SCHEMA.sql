@@ -77,7 +77,7 @@ INSERT OR IGNORE INTO Users
 VALUES
 ('U001', 0, 'kazexu', 'handsome', 'Philip', 'Khaw', 100, 'N', strftime('%s', 'now'), strftime('%s', 'now')),
 ('U002', 0, 'mintong', 'chenxiang', 'Ong', 'Xiang', 34, 'S', strftime('%s', 'now'), strftime('%s', 'now')),
-('U003', 0, 'xiaoming', 'xiaoming', 'Xiao', 'Ming', 230, 'G', strftime('%s', 'now'), strftime('%s', 'now')),
+('U003', 0, 'user1', 'user123', 'Xiao', 'Ming', 230, 'G', strftime('%s', 'now'), strftime('%s', 'now')),
 ('U004', 0, 'zikang', 'lzikang', 'Loo', 'Kang', 10000, 'G', strftime('%s', 'now'), strftime('%s', 'now')),
 ('U005', 0, 'kirito', 'saogame', 'Kirigaya', 'Kazuto', 123, 'S', strftime('%s', 'now'), strftime('%s', 'now')),
 ('U006', 1, 'admin1', 'admin123', 'Lim', 'Hang', 0, '-', strftime('%s', 'now'), strftime('%s', 'now')),
