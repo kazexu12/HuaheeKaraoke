@@ -20,17 +20,29 @@ public class DoublyLinkedDequeTest {
     }
 
     @Test
-    @DisplayName("Able to add item to back of the deque")
-    void addItemFront() {
+    @DisplayName("A - Able to clear deque")
+    void ableToClearDeque() {
         deque.pushBack("Item 1");
         deque.pushBack("Item 2");
         deque.pushBack("Item 3");
-        assertEquals(deque.peekBack(), "Item 3");
-        assertEquals(deque.size(), 3);
+        deque.clear();
+        assertEquals(deque.size(), 0);
+        assertNull(deque.peekFront());
+        assertNull(deque.peekBack());
     }
 
     @Test
-    @DisplayName("Able to add item to the in front of the deque")
+    @DisplayName("B - Able to check if deque is empty")
+    void dequeIsEmptyTest() {
+        assertTrue(deque.isEmpty());
+        deque.pushBack("Item 1");
+        assertFalse(deque.isEmpty());
+        deque.removeFront();
+        assertTrue(deque.isEmpty());
+    }
+
+    @Test
+    @DisplayName("C - Able to add item to the in front of the deque")
     void addItemBack() {
         deque.pushBack("Item 1");
         deque.pushBack("Item 2");
@@ -41,7 +53,17 @@ public class DoublyLinkedDequeTest {
     }
 
     @Test
-    @DisplayName("Able to remove item from the in front of the deque")
+    @DisplayName("D - Able to add item to back of the deque")
+    void addItemFront() {
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        assertEquals(deque.peekBack(), "Item 3");
+        assertEquals(deque.size(), 3);
+    }
+
+    @Test
+    @DisplayName("E - Able to remove item from the in front of the deque")
     void removeItemFront() {
         deque.pushBack("Item 1");
         deque.pushBack("Item 2");
@@ -54,7 +76,20 @@ public class DoublyLinkedDequeTest {
     }
 
     @Test
-    @DisplayName("Able to remove item from front of the deque until empty")
+    @DisplayName("F - Able to remove item from back of the deque")
+    void removeItemBack() {
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        String item = deque.removeBack();
+        assertEquals(item, "Item 3");
+        assertEquals(deque.size(), 2);
+        assertEquals(deque.peekFront(), "Item 1");
+        assertEquals(deque.peekBack(), "Item 2");
+    }
+
+    @Test
+    @DisplayName("G - Able to remove item from front of the deque until empty")
     void removeItemFrontUntilEmpty() {
         deque.pushBack("Item 1");
         deque.pushBack("Item 2");
@@ -68,20 +103,7 @@ public class DoublyLinkedDequeTest {
     }
 
     @Test
-    @DisplayName("Able to remove item from back of the deque")
-    void removeItemBack() {
-        deque.pushBack("Item 1");
-        deque.pushBack("Item 2");
-        deque.pushBack("Item 3");
-        String item = deque.removeBack();
-        assertEquals(item, "Item 3");
-        assertEquals(deque.size(), 2);
-        assertEquals(deque.peekFront(), "Item 1");
-        assertEquals(deque.peekBack(), "Item 2");
-    }
-
-    @Test
-    @DisplayName("Able to remove item from back of the deque until empty")
+    @DisplayName("H - Able to remove item from back of the deque until empty")
     void removeItemBackUntilEmpty() {
         deque.pushBack("Item 1");
         deque.pushBack("Item 2");
@@ -95,41 +117,7 @@ public class DoublyLinkedDequeTest {
     }
 
     @Test
-    @DisplayName("Able to clear deque")
-    void ableToClearDeque() {
-        deque.pushBack("Item 1");
-        deque.pushBack("Item 2");
-        deque.pushBack("Item 3");
-        deque.clear();
-        assertEquals(deque.size(), 0);
-        assertNull(deque.peekFront());
-        assertNull(deque.peekBack());
-    }
-
-    @Test
-    @DisplayName("Able to check if deque is empty")
-    void dequeIsEmptyTest() {
-        assertTrue(deque.isEmpty());
-        deque.pushBack("Item 1");
-        assertFalse(deque.isEmpty());
-        deque.removeFront();
-        assertTrue(deque.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Able to make a copy of the deque")
-    void copyTest() {
-        deque.pushBack("Item 1");
-        deque.pushBack("Item 2");
-        deque.pushBack("Item 3");
-        DoublyLinkedDeque<String> cloned = (DoublyLinkedDeque) deque.copy();
-        cloned.clear();
-        assertEquals(cloned.size(), 0);
-        assertEquals(deque.size(), 3);
-    }
-
-    @Test
-    @DisplayName("Able to iterate through Deque from front")
+    @DisplayName("I - Able to iterate through Deque from front")
     void iterateFrontTest() {
         deque.pushBack("Item 1");
         deque.pushBack("Item 2");
@@ -146,7 +134,7 @@ public class DoublyLinkedDequeTest {
     }
 
     @Test
-    @DisplayName("Able to iterate through Deque from back")
+    @DisplayName("J - Able to iterate through Deque from back")
     void iterateRearTest() {
         deque.pushBack("Item 1");
         deque.pushBack("Item 2");
@@ -161,4 +149,17 @@ public class DoublyLinkedDequeTest {
         assertFalse(i.hasNext());
         assertNull(i.next());
     }
+
+    @Test
+    @DisplayName("K - Able to make a shallow copy of the deque")
+    void copyTest() {
+        deque.pushBack("Item 1");
+        deque.pushBack("Item 2");
+        deque.pushBack("Item 3");
+        DoublyLinkedDeque<String> cloned = (DoublyLinkedDeque) deque.copy();
+        cloned.clear();
+        assertEquals(cloned.size(), 0);
+        assertEquals(deque.size(), 3);
+    }
+
 }
