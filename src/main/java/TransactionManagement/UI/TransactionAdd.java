@@ -433,7 +433,7 @@ public class TransactionAdd extends javax.swing.JFrame {
         UserDAO usersDAO = new UserDAO();
 
         member = usersDAO.findUserById(memberIdField.getText());
-        if (member != null) {
+        if (member != null && member.getPrivillage() != 1) {
             memberNameField.setText(member.getFirst_name() + ' ' + member.getLast_name());
             memberTypeField.setText(memberTypeName.get(member.getMember_level()));
         } else {
@@ -506,10 +506,8 @@ public class TransactionAdd extends javax.swing.JFrame {
             );
             try {
                 rsDAO.save(rs);
-                JOptionPane.showMessageDialog(
-                    null,
-                    "Add successfully. Session Key is " + rs.getSessionKey()
-                );     
+                Object[] response = new AddSuccess(this, rs.getSessionKey()).run();
+                System.out.println(response[0]);
                 this.dispose();
                 new TransactionMenu().setVisible(true);
             } catch (SQLException ex) {
