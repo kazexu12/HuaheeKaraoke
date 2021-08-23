@@ -56,9 +56,9 @@ CREATE TABLE IF NOT EXISTS Transactions (
 
 INSERT OR IGNORE INTO RegisteredSessions 
 VALUES 
-('RS001', '', 'N', 1, '2021-08-23', '14:00', '16:00', strftime('%s', 'now'), strftime('%s', 'now')),
-('RS002', 'aaaaaa', 'N', 1, '2021-08-24', '20:00', '22:00', strftime('%s', 'now'), strftime('%s', 'now')),
-('RS003', 'bbbbbb', 'N', 1, '2021-08-25', '11:00', '13:00', strftime('%s', 'now'), strftime('%s', 'now'));
+('RS001', '', 'N', 1, '2021-08-23', '14:00', '16:00', 1629717928, 1629717928),
+('RS002', 'aaaaaa', 'N', 1, '2021-08-24', '20:00', '22:00', 1629717992, 1629717992),
+('RS003', 'bbbbbb', 'N', 1, '2021-08-25', '11:00', '13:00', 1629718014, 1629719060);
 
 INSERT OR IGNORE INTO Songs
 VALUES 
@@ -85,3 +85,8 @@ VALUES
 ('U008', 1, 'admin3', 'malaysia', 'Deng', 'Wang', 0, '-', strftime('%s', 'now'), strftime('%s', 'now')),
 ('U009', 1, 'admin4', 'hairshampoo', 'Hwoo', 'Sang', 0, '-', strftime('%s', 'now'), strftime('%s', 'now')),
 ('U010', 1, 'admin5', 'taruc', 'Wang', 'Yangg', 0, '-', strftime('%s', 'now'), strftime('%s', 'now'));
+
+INSERT OR IGNORE INTO Transactions VALUES
+('T0001', 'RS001', 0.0, 8.0, 'U001', 'Normal', 'U006', 1, 1629717928, 1629717928),
+('T0002', 'RS002', 0.75, 14.25, 'U002', 'Silver', 'U006', 1, 1629717992, 1629717992),
+('T0003', 'RS003', 1.2, 10.8, 'U004', 'Gold', 'U006', 2, 1629718014, 1629719060);
