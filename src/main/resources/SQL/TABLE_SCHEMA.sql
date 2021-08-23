@@ -63,15 +63,15 @@ VALUES
 INSERT OR IGNORE INTO Songs
 VALUES 
 ('S001', 'See You Again', 'Wiz Knalifa ft. Charlie Puth', 'See You Again', 'Jazz', 237, strftime('%s', 'now'), strftime('%s', 'now')),
-('S002', 'Sorry', 'Justin Bieber', '', 'Chill', 198, strftime('%s', 'now'), strftime('%s', 'now')),
-('S003', 'Uptown Funk', 'Mark Ronson ft. Bruno Mars', '', 'Chill', 270, strftime('%s', 'now'), strftime('%s', 'now')),
-('S004', 'Blank Space', 'Taylor Swift', '', 'Jazz', 30, strftime('%s', 'now'), strftime('%s', 'now')),
-('S005', 'Shake It Off', 'Taylor Swift', '', 'Jazz', 120, strftime('%s', 'now'), strftime('%s', 'now')),
+('S002', 'Sorry', 'Justin Bieber', 'Sorry', 'Chill', 198, strftime('%s', 'now'), strftime('%s', 'now')),
+('S003', 'Uptown Funk', 'Mark Ronson ft. Bruno Mars', 'Uptown Funk', 'Chill', 270, strftime('%s', 'now'), strftime('%s', 'now')),
+('S004', 'Blank Space', 'Taylor Swift', 'Blank Space', 'Jazz', 30, strftime('%s', 'now'), strftime('%s', 'now')),
+('S005', 'Shake It Off', 'Taylor Swift', 'Shake It Off', 'Jazz', 120, strftime('%s', 'now'), strftime('%s', 'now')),
 ('S006', 'Lean On', 'Major Lazer & Dj Shake ft. Mo', 'Shakey', 'Rock', 180, strftime('%s', 'now'), strftime('%s', 'now')),
 ('S007', 'Hello', 'Adele', 'ClassicalFlock', 'Rock', 89, strftime('%s', 'now'), strftime('%s', 'now')),
 ('S008', 'Roar', 'Kary Perry', 'Perry', 'Rock', 200, strftime('%s', 'now'), strftime('%s', 'now')),
 ('S009', 'Sugar', 'Maroon 5', 'Ivy', 'Rock', 177, strftime('%s', 'now'), strftime('%s', 'now')),
-('S010', 'All About That Bass', 'Meghan Trainor', '', 'Jazz', 199, strftime('%s', 'now'), strftime('%s', 'now'));
+('S010', 'All About That Bass', 'Meghan Trainor', 'Flock', 'Jazz', 199, strftime('%s', 'now'), strftime('%s', 'now'));
 
 INSERT OR IGNORE INTO Users 
 VALUES
