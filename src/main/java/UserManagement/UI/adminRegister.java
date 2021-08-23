@@ -162,7 +162,7 @@ public class adminRegister extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        new MainDriver.MainFrame().setVisible(true);
+        new adminInterface().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackActionPerformed
 

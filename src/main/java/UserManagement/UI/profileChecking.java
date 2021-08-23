@@ -85,7 +85,7 @@ public class profileChecking extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Member Profile Checking");
+        jLabel1.setText("Profile Checking");
 
         search_bar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,8 +102,26 @@ public class profileChecking extends javax.swing.JFrame {
             new String [] {
                 "No", "Name", "Privillage", "First_Name", "Last_Name", "Member_Point", "Member_Level", "Date_Create"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(showtable);
+        if (showtable.getColumnModel().getColumnCount() > 0) {
+            showtable.getColumnModel().getColumn(0).setResizable(false);
+            showtable.getColumnModel().getColumn(1).setResizable(false);
+            showtable.getColumnModel().getColumn(2).setResizable(false);
+            showtable.getColumnModel().getColumn(3).setResizable(false);
+            showtable.getColumnModel().getColumn(4).setResizable(false);
+            showtable.getColumnModel().getColumn(5).setResizable(false);
+            showtable.getColumnModel().getColumn(6).setResizable(false);
+            showtable.getColumnModel().getColumn(7).setResizable(false);
+        }
 
         Search.setText("Search");
         Search.addActionListener(new java.awt.event.ActionListener() {
@@ -151,15 +169,15 @@ public class profileChecking extends javax.swing.JFrame {
                         .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(331, 331, 331))))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(315, 315, 315))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(select_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
