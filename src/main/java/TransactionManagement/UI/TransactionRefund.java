@@ -107,7 +107,7 @@ public class TransactionRefund extends javax.swing.JFrame {
         delTransactionTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         delTransactionTitle.setText("Refund a transaction");
 
-        searchLabel.setText("Search:");
+        searchLabel.setText("Search by ID:");
 
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -328,6 +328,8 @@ public class TransactionRefund extends javax.swing.JFrame {
                     null,
                     "Refund successfully."
                 );     
+                this.dispose();
+                new TransactionMenu().setVisible(true);
             } catch (SQLException ex) {
                 Logger.getLogger(TransactionRefund.class.getName()).log(Level.SEVERE, null, ex);
             }

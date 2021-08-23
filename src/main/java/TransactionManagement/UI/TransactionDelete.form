@@ -154,7 +154,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="searchLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Search:"/>
+        <Property name="text" type="java.lang.String" value="Search by ID:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="searchButton">

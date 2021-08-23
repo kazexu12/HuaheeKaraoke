@@ -100,7 +100,7 @@ public class TransactionSearch extends javax.swing.JFrame {
         schTransactionTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         schTransactionTitle.setText("Search a transaction");
 
-        searchLabel.setText("Search:");
+        searchLabel.setText("Search by ID:");
 
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {

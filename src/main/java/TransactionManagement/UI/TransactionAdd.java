@@ -29,13 +29,14 @@ public class TransactionAdd extends javax.swing.JFrame {
     UserDAO usersDAO = new UserDAO();
 
     UserDTO member;
-    UserDTO staff = usersDAO.findUserById("U002");
+    UserDTO staff = MainDriver.UserSessionManager.getLogonUser();
 
     int roomSizeResult;
     double[] roomSizePrice = {8.00, 12.00, 15.00};
 
     HashMap<Character, String> memberTypeName = new HashMap<>();
     HashMap<Character, Double> memberTypeDiscount = new HashMap<>();
+    HashMap<Integer, Character> roomSizeChar = new HashMap<>();
 
     /**
      * Creates new form TransactionAdd
@@ -53,6 +54,11 @@ public class TransactionAdd extends javax.swing.JFrame {
         memberTypeDiscount.add('N', 0.00);
         memberTypeDiscount.add('S', 5.00);
         memberTypeDiscount.add('G', 10.00);
+        
+        roomSizeChar.add(0, 'S');
+        roomSizeChar.add(1, 'M');
+        roomSizeChar.add(2, 'L');
+        
 
         this.roomSizeResult = -1;
         this.setLocationRelativeTo(null);
@@ -82,6 +88,7 @@ public class TransactionAdd extends javax.swing.JFrame {
         jInternalFrame2 = new javax.swing.JInternalFrame();
         dateLabel = new javax.swing.JLabel();
         dateField = new javax.swing.JTextField();
+        formatDateLabel = new javax.swing.JLabel();
         staffIdLabel = new javax.swing.JLabel();
         staffIdField = new javax.swing.JTextField();
         jInternalFrame6 = new javax.swing.JInternalFrame();
@@ -205,6 +212,8 @@ public class TransactionAdd extends javax.swing.JFrame {
             }
         });
 
+        formatDateLabel.setText("Format date: yyyy-mm-dd");
+
         javax.swing.GroupLayout jInternalFrame2Layout = new javax.swing.GroupLayout(jInternalFrame2.getContentPane());
         jInternalFrame2.getContentPane().setLayout(jInternalFrame2Layout);
         jInternalFrame2Layout.setHorizontalGroup(
@@ -213,7 +222,11 @@ public class TransactionAdd extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(dateLabel)
                 .addGap(81, 81, 81)
-                .addComponent(dateField, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                .addGroup(jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dateField, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                    .addGroup(jInternalFrame2Layout.createSequentialGroup()
+                        .addComponent(formatDateLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jInternalFrame2Layout.setVerticalGroup(
@@ -223,7 +236,9 @@ public class TransactionAdd extends javax.swing.JFrame {
                 .addGroup(jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dateLabel)
                     .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(256, 256, 256))
+                .addGap(18, 18, 18)
+                .addComponent(formatDateLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         staffIdLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -344,7 +359,7 @@ public class TransactionAdd extends javax.swing.JFrame {
                 .addComponent(finalPriceLabel)
                 .addGap(18, 18, 18)
                 .addComponent(finalPriceField)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -485,7 +500,7 @@ public class TransactionAdd extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             RegisteredSessionDAO rsDAO = new RegisteredSessionDAO();
             RegisteredSessionDTO rs = new RegisteredSessionDTO(
-                    member.getMember_level(),
+                    roomSizeChar.get(roomSizeField.getSelectedIndex()),
                     Integer.parseInt(headCountField.getText()),
                     dateField.getText()
             );
@@ -493,8 +508,10 @@ public class TransactionAdd extends javax.swing.JFrame {
                 rsDAO.save(rs);
                 JOptionPane.showMessageDialog(
                     null,
-                    "Add successfully."
+                    "Add successfully. Session Key is " + rs.getSessionKey()
                 );     
+                this.dispose();
+                new TransactionMenu().setVisible(true);
             } catch (SQLException ex) {
                 Logger.getLogger(TransactionAdd.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -584,6 +601,7 @@ public class TransactionAdd extends javax.swing.JFrame {
     private javax.swing.JLabel discountLabel;
     private javax.swing.JLabel finalPriceField;
     private javax.swing.JLabel finalPriceLabel;
+    private javax.swing.JLabel formatDateLabel;
     private javax.swing.JTextField headCountField;
     private javax.swing.JLabel headCountLabel;
     private javax.swing.JInternalFrame jInternalFrame1;

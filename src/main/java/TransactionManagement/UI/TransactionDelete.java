@@ -99,7 +99,7 @@ public class TransactionDelete extends javax.swing.JFrame {
         delTransactionTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         delTransactionTitle.setText("Delete a transaction");
 
-        searchLabel.setText("Search:");
+        searchLabel.setText("Search by ID:");
 
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -298,6 +298,8 @@ public class TransactionDelete extends javax.swing.JFrame {
                     null,
                     "Delete successfully."
                 );     
+                this.dispose();
+                new TransactionMenu().setVisible(true);
             } catch (SQLException ex) {
                 Logger.getLogger(TransactionDelete.class.getName()).log(Level.SEVERE, null, ex);
             }
