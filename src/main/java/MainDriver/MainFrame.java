@@ -192,7 +192,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         if (foundSession == null) {
-            JOptionPane.showMessageDialog(this, "Invalid session key\nPlease check your session key or make an transaction through an Admin", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid session key\nPlease check your session key.\n\nOr make an transaction through:\nAdmin Login > Transaction Management > Add a Transaction", "Error", JOptionPane.ERROR_MESSAGE);
             enterSessKeyBtnActionPerformed(evt);
             return;
         }
@@ -206,7 +206,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         // Future code to validate session_key
         if (trans == null) {
-            JOptionPane.showMessageDialog(this, "Unable to locate related Transaction.\nContact Admin.", "Error", JOptionPane.ERROR_MESSAGE);
+            logger.warn("Session Data in DB do not have corresponding Transaction Data; SessionID: " + foundSession.getSessionId());
+            JOptionPane.showMessageDialog(this, "Unable to locate related Transaction.\nContact Developers.", "Error", JOptionPane.ERROR_MESSAGE);
             enterSessKeyBtnActionPerformed(evt);
             return;
         }
