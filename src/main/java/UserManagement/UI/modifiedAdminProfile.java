@@ -35,6 +35,7 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
                 e.getWindow().dispose();
             }
         });
+        this.setLocationRelativeTo(null);
     }
     
      public modifiedAdminProfile() {
@@ -45,6 +46,7 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
                 e.getWindow().dispose();
             }
         });
+        this.setLocationRelativeTo(null);
     }
 
     /**

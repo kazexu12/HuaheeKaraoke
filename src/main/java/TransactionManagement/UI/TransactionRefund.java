@@ -50,6 +50,7 @@ public class TransactionRefund extends javax.swing.JFrame {
         statusString.add(0, "Expired");
         statusString.add(1, "Active");
         statusString.add(2, "Refunded");
+        this.setLocationRelativeTo(null);
     }
     
     public String toDate(int date) {

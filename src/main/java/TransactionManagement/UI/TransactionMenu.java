@@ -18,6 +18,7 @@ public class TransactionMenu extends javax.swing.JFrame {
      */
     public TransactionMenu() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

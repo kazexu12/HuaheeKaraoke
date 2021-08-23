@@ -31,6 +31,7 @@ public class adminRegister extends javax.swing.JFrame {
      */
     public adminRegister() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

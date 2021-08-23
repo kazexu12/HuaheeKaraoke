@@ -55,6 +55,7 @@ public class TransactionAdd extends javax.swing.JFrame {
         memberTypeDiscount.add('G', 10.00);
 
         this.roomSizeResult = -1;
+        this.setLocationRelativeTo(null);
     }
 
     /**

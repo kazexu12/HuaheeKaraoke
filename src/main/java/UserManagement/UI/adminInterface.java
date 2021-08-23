@@ -16,6 +16,7 @@ public class adminInterface extends javax.swing.JFrame {
      */
     public adminInterface() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

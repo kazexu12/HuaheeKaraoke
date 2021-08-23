@@ -11,24 +11,27 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Chin Sze Sing
  */
-public class SongAdd extends javax.swing.JDialog{
+public class SongAdd extends javax.swing.JDialog {
 
     /**
      * Creates new form SongAdd
      */
     public SongAdd(javax.swing.JFrame parent) {
-        super(parent,true);
+        super(parent, true);
         initComponents();
-         this.addWindowListener(new WindowAdapter() {
+        this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 e.getWindow().dispose();
             }
         });
+
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -196,37 +199,35 @@ public class SongAdd extends javax.swing.JDialog{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-        if(add_name.getText().isEmpty() || add_artist.getText().isEmpty() || add_album.getText().isEmpty() || add_genre.getText().isEmpty() || add_duration.getText().isEmpty()){
-                error_massage.setText("Can't insert empty data !");
-        }
-        else if(add_duration.getText().matches("^[1-9]*$") != true){
-                error_massage.setText("Duration only accept number and more then one!");
-        }
-        else if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
-        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            
+
+        if (add_name.getText().isEmpty() || add_artist.getText().isEmpty() || add_album.getText().isEmpty() || add_genre.getText().isEmpty() || add_duration.getText().isEmpty()) {
+            error_massage.setText("Can't insert empty data !");
+        } else if (add_duration.getText().matches("^[1-9]*$") != true) {
+            error_massage.setText("Duration only accept number and more then one!");
+        } else if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
             SongDAO songsDAO = new SongDAO();
-            long unixTime = System.currentTimeMillis()/1000L;
+            long unixTime = System.currentTimeMillis() / 1000L;
             String name = add_name.getText();
             String artist = add_artist.getText();
             String album = add_album.getText();
             String genre = add_genre.getText();
             int duration = Integer.parseInt(add_duration.getText());
-            int uTime = (int)unixTime;
-            
-            SongDTO newSong = new DTO.SongDTO(songsDAO.getNewSongID(),name,artist,album,genre,duration,uTime,uTime);
-            try{
-            songsDAO.save(newSong);
-            
-            }catch(SQLException e){
+            int uTime = (int) unixTime;
+
+            SongDTO newSong = new DTO.SongDTO(songsDAO.getNewSongID(), name, artist, album, genre, duration, uTime, uTime);
+            try {
+                songsDAO.save(newSong);
+
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             this.dispose();
         } else {
-            
+
         }
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -267,7 +268,6 @@ public class SongAdd extends javax.swing.JDialog{
 //            }
 //        });
 //    }
-    
     public Object[] run() {
         this.setVisible(true);
         return new Object[]{"Test"};

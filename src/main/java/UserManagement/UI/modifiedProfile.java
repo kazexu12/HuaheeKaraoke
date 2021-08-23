@@ -35,6 +35,7 @@ public class modifiedProfile extends javax.swing.JFrame {
                 e.getWindow().dispose();
             }
         });
+        this.setLocationRelativeTo(null);
     }
     
      public modifiedProfile() {
@@ -45,6 +46,7 @@ public class modifiedProfile extends javax.swing.JFrame {
                 e.getWindow().dispose();
             }
         });
+        this.setLocationRelativeTo(null);
     }
 
     /**

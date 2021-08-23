@@ -18,6 +18,7 @@ public class userInterface extends javax.swing.JFrame {
      */
     public userInterface() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

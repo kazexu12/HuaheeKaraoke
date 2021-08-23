@@ -39,6 +39,7 @@ public class SongEdit extends javax.swing.JDialog {
                 e.getWindow().dispose();
             }
         });
+        this.setLocationRelativeTo(null);
         
         edit_id.setText(this.songToEdit.getSongId());
         edit_name.setText(this.songToEdit.getName());

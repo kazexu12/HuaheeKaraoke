@@ -54,6 +54,8 @@ public class SongMenu extends javax.swing.JFrame {
             model.addRow(row);
         }
         show_record.setText("Have search "+ sl.size() +" record(s)");
+        
+        this.setLocationRelativeTo(null);
     }
 
     /**

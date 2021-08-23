@@ -25,6 +25,7 @@ public class adminLogin extends javax.swing.JFrame {
      */
     public adminLogin() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

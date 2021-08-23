@@ -31,6 +31,7 @@ public class userRegister extends javax.swing.JFrame {
      */
     public userRegister() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

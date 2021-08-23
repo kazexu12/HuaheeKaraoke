@@ -44,6 +44,7 @@ public class TransactionDelete extends javax.swing.JFrame {
             db.get(i).getDateCreated();
             hm.add(db.get(i).getTransactionId(), db.get(i));
         }
+        this.setLocationRelativeTo(null);
     }
     
     public String toDate(int date) {

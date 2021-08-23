@@ -61,6 +61,7 @@ public class profileChecking extends javax.swing.JFrame {
                 dateDateCreated,};
             model.addRow(row);
         }
+        this.setLocationRelativeTo(null);
     }
 
     /**
