@@ -7,21 +7,21 @@ package SessionManagement.UI;
 
 import DTO.RegisteredSessionDTO;
 import DTO.SongDTO;
+import Generic.Event;
 import Generic.Pair;
-import SessionManagement.Utility.BackgroundPlayer;
 import MainDriver.MainFrame;
-import SessionManagement.Utility.PlayerState;
 import SessionManagement.ADT.ArrayList;
+import SessionManagement.Utility.BackgroundPlayer;
+import SessionManagement.Utility.PlayerState;
 import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.html.HTMLEditorKit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import Generic.Event;
-import javax.swing.JOptionPane;
 
 /**
  *

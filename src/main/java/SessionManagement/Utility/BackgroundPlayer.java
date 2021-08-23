@@ -1,13 +1,13 @@
 package SessionManagement.Utility;
 
 import DTO.SongDTO;
+import Generic.Event;
 import Generic.Pair;
 import SessionManagement.ADT.ArrayList;
 import SessionManagement.ADT.DoublyLinkedDeque;
 import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import Generic.Event;
 
 /**
  * Class that creates a new Thread upon creation and serve as a timer and

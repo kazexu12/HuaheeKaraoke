@@ -5,11 +5,8 @@
  */
 package MainDriver;
 
-import DAO.RegisteredSessionDAO;
-import DTO.RegisteredSessionDTO;
 import SessionManagement.ADT.ArrayList;
 import java.sql.SQLException;
-import java.util.HashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

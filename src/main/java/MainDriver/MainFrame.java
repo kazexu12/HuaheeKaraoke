@@ -7,8 +7,8 @@ package MainDriver;
 
 import DAO.RegisteredSessionDAO;
 import DTO.RegisteredSessionDTO;
-import SessionManagement.UI.KaraokeSessionFrame;
 import Generic.DBManager;
+import SessionManagement.UI.KaraokeSessionFrame;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;

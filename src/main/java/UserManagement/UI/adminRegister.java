@@ -7,13 +7,7 @@ package UserManagement.UI;
 
 import DAO.UserDAO;
 import DTO.UserDTO;
-import MainDriver.MainFrame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 
 
