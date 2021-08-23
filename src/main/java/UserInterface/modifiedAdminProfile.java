@@ -142,7 +142,7 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         this.dispose();
-        new userInterface().setVisible(true);
+        new adminInterface().setVisible(true);
     }//GEN-LAST:event_backActionPerformed
 
     private void newFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFirstNameActionPerformed
