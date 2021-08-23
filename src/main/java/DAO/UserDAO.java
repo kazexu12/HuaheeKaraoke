@@ -110,41 +110,54 @@ public class UserDAO implements DAOInterface<UserDTO> {
     @Override
     public void update(UserDTO t, HashMap params) throws SQLException {
         db = new DBManager();
-        String setClause = "SET";
+        String setClause = "SET ";
         String whereClause = String.format(" WHERE user_id= '%s'", t.getUser_id());
         
         boolean useSetClause = false;
         if (params.containsKey("privillage")){
             setClause += String.format("privillage = '%s',",params.get("privillage"));
+            useSetClause = true;
         }
         if (params.containsKey("name")){
             setClause += String.format("name = '%s',",params.get("name"));
+            useSetClause = true;
         }
         if (params.containsKey("pw_hash")){
             setClause += String.format("pw_hash = '%s',",params.get("pw_hash"));
+            useSetClause = true;
         }
         if (params.containsKey("first_name")){
             setClause += String.format("first_name = '%s',",params.get("first_name"));
+            useSetClause = true;
         }
         if (params.containsKey("last_name")){
             setClause += String.format("last_name = '%s',",params.get("last_name"));
+            useSetClause = true;
         }
         if (params.containsKey("member_point")){
             setClause += String.format("member_point = '%s',",params.get("member_point"));
+            useSetClause = true;
         }
         if (params.containsKey("member_level")){
             setClause += String.format("member_level = '%s',",params.get("member_level"));
+            useSetClause = true;
         }
         if (params.containsKey("date_created")){
             setClause += String.format("date_created = '%s',",params.get("date_created"));
+            useSetClause = true;
         }
         if (params.containsKey("date_modified")){
             setClause += String.format("date_modified = '%s',",params.get("date_modified"));
+            useSetClause = true;
         }
         
         // Remove last character from setClause to remove additional ',' from string
         setClause = setClause.substring(0, setClause.length() - 1);
-
+        
+        if(useSetClause == false){
+            return;
+        }
+            
         String query = "UPDATE Users " + (useSetClause ? setClause : "") + whereClause;
         logger.info("Executing query: " + query);
         db.execQuery(query);

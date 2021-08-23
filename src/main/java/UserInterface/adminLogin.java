@@ -181,8 +181,8 @@ public class adminLogin extends javax.swing.JFrame {
         }
         
         if (success > 0){
-            JOptionPane.showMessageDialog(null, "Welcome " + name, "Successfull Login", JOptionPane.PLAIN_MESSAGE);
             this.dispose();
+            JOptionPane.showMessageDialog(null, "Welcome " + name, "Successfull Login", JOptionPane.PLAIN_MESSAGE);
             UserSesstionManager.login(llist.getDataForChecking(getId));
         }else if(namecheck > 0 && passwordcheck == 0){
             JOptionPane.showMessageDialog(null, "Your User Name is invalid\n Please try again.", "Error!!", JOptionPane.PLAIN_MESSAGE);
