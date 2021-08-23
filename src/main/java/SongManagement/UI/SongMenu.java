@@ -11,6 +11,7 @@ import SongManagement.ADT.cArrayList;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -22,6 +23,7 @@ public class SongMenu extends javax.swing.JFrame {
     private cArrayList<SongDTO> sl;
     private cArrayList<SongDTO> search_list;
     private SongDAO songDAO;
+
     /**
      * Creates new form testing123
      */
@@ -31,27 +33,25 @@ public class SongMenu extends javax.swing.JFrame {
         songList = songDAO.getAll();
         search_list = new cArrayList();
         sl = new cArrayList();
-        
-        for(int i = 0; i < songList.size(); i++){
+
+        for (int i = 0; i < songList.size(); i++) {
             sl.add(songList.get(i));
             search_list.add(songList.get(i));
         }
 
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
 
-        for(int i = 0; i < sl.size(); i++){
+        for (int i = 0; i < sl.size(); i++) {
             Object[] row = {
                 sl.get(i).getSongId(),
                 sl.get(i).getName(),
                 sl.get(i).getArtist(),
                 sl.get(i).getAlbum(),
                 sl.get(i).getGenre(),
-                sl.get(i).getDuration(),
-            };
+                sl.get(i).getDuration(),};
             model.addRow(row);
         }
-        show_record.setText("Have search "+ sl.size() +" record(s)");
-        
+        show_record.setText("Have search " + sl.size() + " record(s)");
         this.setLocationRelativeTo(null);
     }
 
@@ -272,268 +272,252 @@ public class SongMenu extends javax.swing.JFrame {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         songDAO = new SongDAO();
         temp = songDAO.getAll();
-        
+
         Object[] response = new SongAdd(this).run();
         System.out.println(response[0]);
-        
+
         songDAO = new SongDAO();
         songList = songDAO.getAll();
-        
-        if(temp.size() != songList.size()){
-            search_list.add(songList.get(songList.size()-1));
+
+        if (temp.size() != songList.size()) {
+            search_list.add(songList.get(songList.size() - 1));
         }
-        
+
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
-        
+
         model.setRowCount(0);
-        
-        for(int i = 0; i < search_list.size(); i++){
+
+        for (int i = 0; i < search_list.size(); i++) {
             Object[] row = {
                 search_list.get(i).getSongId(),
                 search_list.get(i).getName(),
                 search_list.get(i).getArtist(),
                 search_list.get(i).getAlbum(),
                 search_list.get(i).getGenre(),
-                search_list.get(i).getDuration(),
-            };
+                search_list.get(i).getDuration(),};
             model.addRow(row);
         }
-        show_record.setText("Have search "+ search_list.size() +" record(s)");
+        show_record.setText("Have search " + search_list.size() + " record(s)");
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         int select = show_table.getSelectedRow();
-        
+
         Object[] response = new SongEdit(this, search_list.get(select)).run();
-        System.out.println(response[0]); 
-        
+        System.out.println(response[0]);
+
         songDAO = new SongDAO();
         songList = songDAO.getAll();
         int editedrow = 0;
-        
-        for(int i = 0; i < songList.size(); i++){
-            if (editedrow < search_list.size()){
-                if(search_list.get(editedrow).getSongId().equals(songList.get(i).getSongId())){
-                search_list.set(editedrow, songList.get(i));
-                editedrow++;
+
+        for (int i = 0; i < songList.size(); i++) {
+            if (editedrow < search_list.size()) {
+                if (search_list.get(editedrow).getSongId().equals(songList.get(i).getSongId())) {
+                    search_list.set(editedrow, songList.get(i));
+                    editedrow++;
                 }
             }
         }
-        
+
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
-        
+
         model.setRowCount(0);
-        
-        for(int i = 0; i < search_list.size(); i++){
+
+        for (int i = 0; i < search_list.size(); i++) {
             Object[] row = {
                 search_list.get(i).getSongId(),
                 search_list.get(i).getName(),
                 search_list.get(i).getArtist(),
                 search_list.get(i).getAlbum(),
                 search_list.get(i).getGenre(),
-                search_list.get(i).getDuration(),
-            };
+                search_list.get(i).getDuration(),};
             model.addRow(row);
         }
-        show_record.setText("Have search "+ search_list.size() +" record(s)");
+        show_record.setText("Have search " + search_list.size() + " record(s)");
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         int select = show_table.getSelectedRow();
         int confirm = 0;
         if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            try{
+            try {
                 songDAO.delete(search_list.get(select));
                 confirm = 1;
-            }catch(SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             confirm = 0;
         }
-        
-        
+
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
-        
+
         model.setRowCount(0);
-        if(confirm == 1){
+        if (confirm == 1) {
             search_list.remove(select);
         }
-        
-        for(int i = 0; i < search_list.size(); i++){
+
+        for (int i = 0; i < search_list.size(); i++) {
             Object[] row = {
                 search_list.get(i).getSongId(),
                 search_list.get(i).getName(),
                 search_list.get(i).getArtist(),
                 search_list.get(i).getAlbum(),
                 search_list.get(i).getGenre(),
-                search_list.get(i).getDuration(),
-            };
+                search_list.get(i).getDuration(),};
             model.addRow(row);
         }
-        show_record.setText("Have search "+ search_list.size() +" record(s)");
+        show_record.setText("Have search " + search_list.size() + " record(s)");
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void search_selectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_selectedActionPerformed
-        
+
     }//GEN-LAST:event_search_selectedActionPerformed
 
     private void search_textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_textActionPerformed
-        
+
     }//GEN-LAST:event_search_textActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+
         int search_show = 0;
         String search = search_text.getText().toUpperCase();
         int search_by = search_selected.getSelectedIndex();
         sl.clear();
-        for(int i = 0; i < songList.size(); i++){
+        for (int i = 0; i < songList.size(); i++) {
             sl.add(songList.get(i));
         }
-        
+
         DefaultTableModel model = (DefaultTableModel) show_table.getModel();
-        
+
         model.setRowCount(0);
-        
-        if(search.isEmpty()){
+
+        if (search.isEmpty()) {
             search_list.clear();
-            for(int i = 0; i < sl.size(); i++ ){
+            for (int i = 0; i < sl.size(); i++) {
                 search_list.add(sl.get(i));
                 Object[] row = {
-                            sl.get(i).getSongId(),
-                            sl.get(i).getName(),
-                            sl.get(i).getArtist(),
-                            sl.get(i).getAlbum(),
-                            sl.get(i).getGenre(),
-                            sl.get(i).getDuration(),
-                        };
-                        model.addRow(row);
+                    sl.get(i).getSongId(),
+                    sl.get(i).getName(),
+                    sl.get(i).getArtist(),
+                    sl.get(i).getAlbum(),
+                    sl.get(i).getGenre(),
+                    sl.get(i).getDuration(),};
+                model.addRow(row);
             }
-            show_record.setText("Have search "+ sl.size() +" record(s)");
-        }
-        else{
-            switch(search_by){
-            case 0:
-                search_list.clear();
-                for(int i = 0; i < sl.size(); i++){
-                    if(sl.get(i).getSongId().toUpperCase().startsWith(search)){
-                        search_list.add(sl.get(i));
-                        Object[] row = {
-                            sl.get(i).getSongId(),
-                            sl.get(i).getName(),
-                            sl.get(i).getArtist(),
-                            sl.get(i).getAlbum(),
-                            sl.get(i).getGenre(),
-                            sl.get(i).getDuration(),
-                        };
-                        model.addRow(row);
-                        search_show++;
+            show_record.setText("Have search " + sl.size() + " record(s)");
+        } else {
+            switch (search_by) {
+                case 0:
+                    search_list.clear();
+                    for (int i = 0; i < sl.size(); i++) {
+                        if (sl.get(i).getSongId().toUpperCase().startsWith(search)) {
+                            search_list.add(sl.get(i));
+                            Object[] row = {
+                                sl.get(i).getSongId(),
+                                sl.get(i).getName(),
+                                sl.get(i).getArtist(),
+                                sl.get(i).getAlbum(),
+                                sl.get(i).getGenre(),
+                                sl.get(i).getDuration(),};
+                            model.addRow(row);
+                            search_show++;
+                        }
                     }
-                }
-                if(search_show==0){
-                    show_record.setText("No record");
-                }
-                else{
-                    show_record.setText("Have search "+ search_show +" record(s)");
-                }
-                break;
-            case 1:
-                search_list.clear();
-                for(int i = 0; i < sl.size(); i++){
-                    if(sl.get(i).getName().toUpperCase().startsWith(search)){
-                        search_list.add(sl.get(i));
-                        Object[] row = {
-                            sl.get(i).getSongId(),
-                            sl.get(i).getName(),
-                            sl.get(i).getArtist(),
-                            sl.get(i).getAlbum(),
-                            sl.get(i).getGenre(),
-                            sl.get(i).getDuration(),
-                        };
-                        model.addRow(row);
-                        search_show++;
+                    if (search_show == 0) {
+                        show_record.setText("No record");
+                    } else {
+                        show_record.setText("Have search " + search_show + " record(s)");
                     }
-                }
-                if(search_show==0){
-                    show_record.setText("No record");
-                }
-                else{
-                    show_record.setText("Have search "+ search_show +" record(s)");
-                }
-                break;
-            case 2:
-                search_list.clear();
-                for(int i = 0; i < sl.size(); i++){
-                    if(sl.get(i).getArtist().toUpperCase().startsWith(search)){
-                        search_list.add(sl.get(i));
-                        Object[] row = {
-                            sl.get(i).getSongId(),
-                            sl.get(i).getName(),
-                            sl.get(i).getArtist(),
-                            sl.get(i).getAlbum(),
-                            sl.get(i).getGenre(),
-                            sl.get(i).getDuration(),
-                        };
-                        model.addRow(row);
-                        search_show++;
+                    break;
+                case 1:
+                    search_list.clear();
+                    for (int i = 0; i < sl.size(); i++) {
+                        if (sl.get(i).getName().toUpperCase().startsWith(search)) {
+                            search_list.add(sl.get(i));
+                            Object[] row = {
+                                sl.get(i).getSongId(),
+                                sl.get(i).getName(),
+                                sl.get(i).getArtist(),
+                                sl.get(i).getAlbum(),
+                                sl.get(i).getGenre(),
+                                sl.get(i).getDuration(),};
+                            model.addRow(row);
+                            search_show++;
+                        }
                     }
-                }
-                if(search_show==0){
-                    show_record.setText("No record");
-                }
-                else{
-                    show_record.setText("Have search "+ search_show +" record(s)");
-                }
-                break;
-            case 3:
-                search_list.clear();
-                for(int i = 0; i < sl.size(); i++){
-                    if(sl.get(i).getAlbum().toUpperCase().startsWith(search)){
-                        search_list.add(sl.get(i));
-                        Object[] row = {
-                            sl.get(i).getSongId(),
-                            sl.get(i).getName(),
-                            sl.get(i).getArtist(),
-                            sl.get(i).getAlbum(),
-                            sl.get(i).getGenre(),
-                            sl.get(i).getDuration(),
-                        };
-                        model.addRow(row);
-                        search_show++;
+                    if (search_show == 0) {
+                        show_record.setText("No record");
+                    } else {
+                        show_record.setText("Have search " + search_show + " record(s)");
                     }
-                }
-                if(search_show==0){
-                    show_record.setText("No record");
-                }
-                else{
-                    show_record.setText("Have search "+ search_show +" record(s)");
-                }
-                break;
-            default:
-                search_list.clear();
-                for(int i = 0; i < sl.size(); i++){
-                    if(sl.get(i).getGenre().toUpperCase().startsWith(search)){
-                        search_list.add(sl.get(i));
-                        Object[] row = {
-                            sl.get(i).getSongId(),
-                            sl.get(i).getName(),
-                            sl.get(i).getArtist(),
-                            sl.get(i).getAlbum(),
-                            sl.get(i).getGenre(),
-                            sl.get(i).getDuration(),
-                        };
-                        model.addRow(row);
-                        search_show++;
+                    break;
+                case 2:
+                    search_list.clear();
+                    for (int i = 0; i < sl.size(); i++) {
+                        if (sl.get(i).getArtist().toUpperCase().startsWith(search)) {
+                            search_list.add(sl.get(i));
+                            Object[] row = {
+                                sl.get(i).getSongId(),
+                                sl.get(i).getName(),
+                                sl.get(i).getArtist(),
+                                sl.get(i).getAlbum(),
+                                sl.get(i).getGenre(),
+                                sl.get(i).getDuration(),};
+                            model.addRow(row);
+                            search_show++;
+                        }
                     }
-                }
-                if(search_show==0){
-                    show_record.setText("No record");
-                }
-                else{
-                    show_record.setText("Have search "+ search_show +" record(s)");
-                }
-        }
+                    if (search_show == 0) {
+                        show_record.setText("No record");
+                    } else {
+                        show_record.setText("Have search " + search_show + " record(s)");
+                    }
+                    break;
+                case 3:
+                    search_list.clear();
+                    for (int i = 0; i < sl.size(); i++) {
+                        if (sl.get(i).getAlbum().toUpperCase().startsWith(search)) {
+                            search_list.add(sl.get(i));
+                            Object[] row = {
+                                sl.get(i).getSongId(),
+                                sl.get(i).getName(),
+                                sl.get(i).getArtist(),
+                                sl.get(i).getAlbum(),
+                                sl.get(i).getGenre(),
+                                sl.get(i).getDuration(),};
+                            model.addRow(row);
+                            search_show++;
+                        }
+                    }
+                    if (search_show == 0) {
+                        show_record.setText("No record");
+                    } else {
+                        show_record.setText("Have search " + search_show + " record(s)");
+                    }
+                    break;
+                default:
+                    search_list.clear();
+                    for (int i = 0; i < sl.size(); i++) {
+                        if (sl.get(i).getGenre().toUpperCase().startsWith(search)) {
+                            search_list.add(sl.get(i));
+                            Object[] row = {
+                                sl.get(i).getSongId(),
+                                sl.get(i).getName(),
+                                sl.get(i).getArtist(),
+                                sl.get(i).getAlbum(),
+                                sl.get(i).getGenre(),
+                                sl.get(i).getDuration(),};
+                            model.addRow(row);
+                            search_show++;
+                        }
+                    }
+                    if (search_show == 0) {
+                        show_record.setText("No record");
+                    } else {
+                        show_record.setText("Have search " + search_show + " record(s)");
+                    }
+            }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
