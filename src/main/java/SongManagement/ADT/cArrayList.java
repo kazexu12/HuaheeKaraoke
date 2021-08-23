@@ -65,9 +65,12 @@ public class cArrayList<T> implements ArrayListInterface<T>{
         if(x < 0 || x >= this.size) throw new RuntimeException();
 	T returnElement = array[x];
 	for(int i = x; i < this.size; i++){
-            array[i] = array[i+1];
+            if (i != this.size-1){
+                array[i] = array[i+1];
+            } 
         }
-        array[this.size] = null;
+        array[this.size-1] = null;
+        
         this.size--;
 	return returnElement;
     }
