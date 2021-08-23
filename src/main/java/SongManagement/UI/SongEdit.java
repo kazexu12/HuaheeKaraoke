@@ -247,7 +247,7 @@ public class SongEdit extends javax.swing.JDialog {
         if(edit_name.getText().isEmpty() || edit_artist.getText().isEmpty() || edit_album.getText().isEmpty() || edit_genre.getText().isEmpty() || edit_duration.getText().isEmpty() ){
             show_message.setText("Cannot edit data become empty!");
         }
-        else if (edit_duration.getText().matches("^[1-9]*$") != true){
+        else if (edit_duration.getText().matches("^[1-9][0-9]*$") != true){
             show_message.setText("Duration only accept number and more then one!");
         }
         else if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
