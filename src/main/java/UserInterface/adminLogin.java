@@ -167,7 +167,7 @@ public class adminLogin extends javax.swing.JFrame {
                     if (pwd.equals(llist.getDataForChecking(i).getPw_hash())) {
                         success++;
                         getId = i;
-                        new userInterface().setVisible(true);
+                        new adminInterface().setVisible(true);
                         break;
                     } else {
                         passwordcheck++;

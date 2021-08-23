@@ -22,14 +22,14 @@ import org.apache.logging.log4j.LogManager;
  *
  * @author ASUS
  */
-public class userRegister extends javax.swing.JFrame {
+public class adminRegister extends javax.swing.JFrame {
     
-    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(userRegister.class.getName());
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(adminRegister.class.getName());
 
     /**
      * Creates new form userRegister
      */
-    public userRegister() {
+    public adminRegister() {
         initComponents();
     }
 
@@ -188,7 +188,7 @@ public class userRegister extends javax.swing.JFrame {
               long unixTime = System.currentTimeMillis()/1000L;
               int uTime = (int)unixTime;
               int modifiedtime = 0;
-              UserDTO newUser = new DTO.UserDTO(newUserID,0,name,password1,nameFirst,nameLast,0,'N',uTime,modifiedtime);
+              UserDTO newUser = new DTO.UserDTO(newUserID,1,name,password1,nameFirst,nameLast,0,'-',uTime,modifiedtime);
               
         try {
             usersDAO.save(newUser);
@@ -198,7 +198,7 @@ public class userRegister extends javax.swing.JFrame {
         }      
         
         this.dispose();
-        new userInterface().setVisible(true);
+        new MainDriver.MainFrame().setVisible(true);
     }//GEN-LAST:event_registerActionPerformed
 
     private void membernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membernameActionPerformed
@@ -230,20 +230,21 @@ public class userRegister extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(userRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(userRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(userRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(userRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new userRegister().setVisible(true);
+                new adminRegister().setVisible(true);
             }
         });
     }

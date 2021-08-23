@@ -179,13 +179,13 @@ public class modifiedProfile extends javax.swing.JFrame {
                        editDataHashMap.put("pw_hash", pwd);
 
                        if (successModified = true){
-                           JOptionPane.showMessageDialog(null, "Modified Success" + name, "Congratulation!!", JOptionPane.PLAIN_MESSAGE);
+                           JOptionPane.showMessageDialog(null, "Modified Success!! " + name, "Congratulation!!", JOptionPane.PLAIN_MESSAGE);
                            new userInterface().setVisible(true);
                            this.dispose();
                        }
                        else
                        {
-                           JOptionPane.showMessageDialog(null, "Modified Unsuccess" + name, "Error!!", JOptionPane.PLAIN_MESSAGE);
+                           JOptionPane.showMessageDialog(null, "Modified Unsuccess!! " + name, "Error!!", JOptionPane.PLAIN_MESSAGE);
                        }
 //                       UserDTO newusr = urs.UserDTO(llist.getDataFromFront(i).getName(i),"",privillage,"","","",memberpoint,'',llist.getDataFromFront(i).getDateCreated(),uTime);
                        try{

@@ -113,7 +113,7 @@ public class profileChecking extends javax.swing.JFrame {
 
         jButton1.setText("Back");
 
-        jButton2.setText("Delete Member Profile");
+        jButton2.setText("Delete Profile");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
