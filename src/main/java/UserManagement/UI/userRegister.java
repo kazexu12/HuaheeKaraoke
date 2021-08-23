@@ -180,11 +180,12 @@ public class userRegister extends javax.swing.JFrame {
               
               String pwd = new String(password1.getPassword());
               
-               if(membername.getText().isEmpty() || memberFirstName.getText().isEmpty() || memberLastName.getText().isEmpty() || password1.getPassword().length == 0 ){
+              if(membername.getText().isEmpty() || memberFirstName.getText().isEmpty() || memberLastName.getText().isEmpty() || password1.getPassword().length == 0 ){
             JOptionPane.showMessageDialog(null, "Cannot be empty!", "Error!!", JOptionPane.PLAIN_MESSAGE);
         }
-              
-              long unixTime = System.currentTimeMillis()/1000L;
+              else
+              {
+                  long unixTime = System.currentTimeMillis()/1000L;
               int uTime = (int)unixTime;
               int modifiedtime = 0;
               UserDTO newUser = new DTO.UserDTO(newUserID,0,name,pwd,nameFirst,nameLast,0,'N',uTime,modifiedtime);
@@ -198,6 +199,8 @@ public class userRegister extends javax.swing.JFrame {
         
         this.dispose();
         new userInterface().setVisible(true);
+              }
+      
     }//GEN-LAST:event_registerActionPerformed
 
     private void membernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membernameActionPerformed

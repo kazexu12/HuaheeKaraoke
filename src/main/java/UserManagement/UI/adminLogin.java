@@ -160,9 +160,8 @@ public class adminLogin extends javax.swing.JFrame {
         
         if(adminId.getText().isEmpty() || passwordAdmin.getPassword().length == 0 ){
             JOptionPane.showMessageDialog(null, "Cannot be empty!", "Error!!", JOptionPane.PLAIN_MESSAGE);
-        }
-        
-        for (int i = 0; i < llist.size(); i++) {
+        }else{
+            for (int i = 0; i < llist.size(); i++) {
             if (1 == llist.getDataForChecking(i).getPrivillage()) {
                 if (name.equals(llist.getDataForChecking(i).getName())) {
                     if (pwd.equals(llist.getDataForChecking(i).getPw_hash())) {
@@ -192,6 +191,9 @@ public class adminLogin extends javax.swing.JFrame {
         }else if(checkpri > 0){
             JOptionPane.showMessageDialog(null, "You are insufficient power\n Please try again.", "Error!!", JOptionPane.PLAIN_MESSAGE);
         }
+        }
+        
+        
     }//GEN-LAST:event_submitActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

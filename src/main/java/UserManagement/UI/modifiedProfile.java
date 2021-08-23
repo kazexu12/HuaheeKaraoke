@@ -169,8 +169,9 @@ public class modifiedProfile extends javax.swing.JFrame {
               if(newFirstName.getText().isEmpty() || newpassword.getPassword().length == 0 ){
             JOptionPane.showMessageDialog(null, "Cannot be empty!", "Error!!", JOptionPane.PLAIN_MESSAGE);
         }
-               
-               String replaceName = urs.getName();
+              else
+              {
+                  String replaceName = urs.getName();
                
                for(int i =0; i < llist.size(); i++){
                    if(llist.getDataForChecking(i).getName().equals(replaceName)){
@@ -201,6 +202,9 @@ public class modifiedProfile extends javax.swing.JFrame {
                        
                    }
                }
+              }
+               
+               
                
                
                
