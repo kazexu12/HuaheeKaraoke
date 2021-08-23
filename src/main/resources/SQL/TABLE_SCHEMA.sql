@@ -73,9 +73,15 @@ VALUES
 ('S009', 'Sugar', 'Maroon 5', 'Ivy', 'Rock', 177, strftime('%s', 'now'), strftime('%s', 'now')),
 ('S010', 'All About That Bass', 'Meghan Trainor', '', 'Jazz', 199, strftime('%s', 'now'), strftime('%s', 'now'));
 
-
-INSERT OR IGNORE INTO Users
+INSERT OR IGNORE INTO Users 
 VALUES
-('U001', 0, 'admin', 'admin', '', '', -1, 'N', strftime('%s', 'now'), strftime('%s', 'now')),
-('U002', 0, 'admin2', 'admin2', 'Ong', 'Chen Xiang', -1, 'N', strftime('%s', 'now'), strftime('%s', 'now')),
-('U003', 0, 'admin3', 'admin3', 'Loo', 'Zi Kang', -1, 'N', strftime('%s', 'now'), strftime('%s', 'now'));
+('U001', 0, 'kazexu', 'handsome', 'Philip', 'Khaw', 100, 'N', strftime('%s', 'now'), strftime('%s', 'now')),
+('U002', 0, 'mintong', 'chenxiang', 'Ong', 'Xiang', 34, 'S', strftime('%s', 'now'), strftime('%s', 'now')),
+('U003', 0, 'xiaoming', 'xiaoming', 'Xiao', 'Ming', 230, 'G', strftime('%s', 'now'), strftime('%s', 'now')),
+('U004', 0, 'zikang', 'lzikang', 'Loo', 'Kang', 10000, 'G', strftime('%s', 'now'), strftime('%s', 'now')),
+('U005', 0, 'kirito', 'saogame', 'Kirigaya', 'Kazuto', 123, 'S', strftime('%s', 'now'), strftime('%s', 'now')),
+('U006', 1, 'admin1', 'admin123', 'Lim', 'Hang', 0, '-', strftime('%s', 'now'), strftime('%s', 'now')),
+('U007', 1, 'admin2', 'tokyolim', 'Teng', 'Huat', 0, '-', strftime('%s', 'now'), strftime('%s', 'now')),
+('U008', 1, 'admin3', 'malaysia', 'Deng', 'Wang', 0, '-', strftime('%s', 'now'), strftime('%s', 'now')),
+('U009', 1, 'admin4', 'hairshampoo', 'Hwoo', 'Sang', 0, '-', strftime('%s', 'now'), strftime('%s', 'now')),
+('U010', 1, 'admin5', 'taruc', 'Wang', 'Yangg', 0, '-', strftime('%s', 'now'), strftime('%s', 'now'));
