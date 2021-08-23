@@ -56,7 +56,9 @@ CREATE TABLE IF NOT EXISTS Transactions (
 
 INSERT OR IGNORE INTO RegisteredSessions 
 VALUES 
-('RS001', '', 'N', 1, '2021-08-23', '', '', strftime('%s', 'now'), strftime('%s', 'now'));
+('RS001', '', 'N', 1, '2021-08-23', '14:00', '16:00', strftime('%s', 'now'), strftime('%s', 'now')),
+('RS002', 'aaaaaa', 'N', 1, '2021-08-24', '20:00', '22:00', strftime('%s', 'now'), strftime('%s', 'now')),
+('RS003', 'bbbbbb', 'N', 1, '2021-08-25', '11:00', '13:00', strftime('%s', 'now'), strftime('%s', 'now'));
 
 INSERT OR IGNORE INTO Songs
 VALUES 
