@@ -62,8 +62,8 @@ public class DBManager {
      * @throws IOException
      */
     public void prepareTable() throws SQLException, IOException {
-        File f = new File(dbPath);
-        if (!f.exists() || f.isDirectory()) {
+        File f = new File(dbPath + dbName);
+        if (f.exists() && !f.isDirectory()) {
             return;
         }
         Connection conn = connectDB();
