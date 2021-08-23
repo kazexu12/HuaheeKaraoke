@@ -8,6 +8,7 @@ package UserManagement.UI;
 import DAO.UserDAO;
 import DTO.UserDTO;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 
 
@@ -177,13 +178,16 @@ public class userRegister extends javax.swing.JFrame {
               String nameLast = memberLastName.getText();
               String name = membername.getText();
               
-              char[] password =  password1.getPassword();
-              String password1 = String.valueOf(password);
+              String pwd = new String(password1.getPassword());
+              
+               if(membername.getText().isEmpty() || memberFirstName.getText().isEmpty() || memberLastName.getText().isEmpty() || password1.getPassword().length == 0 ){
+            JOptionPane.showMessageDialog(null, "Cannot be empty!", "Error!!", JOptionPane.PLAIN_MESSAGE);
+        }
               
               long unixTime = System.currentTimeMillis()/1000L;
               int uTime = (int)unixTime;
               int modifiedtime = 0;
-              UserDTO newUser = new DTO.UserDTO(newUserID,0,name,password1,nameFirst,nameLast,0,'N',uTime,modifiedtime);
+              UserDTO newUser = new DTO.UserDTO(newUserID,0,name,pwd,nameFirst,nameLast,0,'N',uTime,modifiedtime);
               
         try {
             usersDAO.save(newUser);

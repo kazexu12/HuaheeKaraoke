@@ -56,7 +56,7 @@ public class userLogin extends javax.swing.JFrame {
 
         jLabel1.setText("User Login");
 
-        jLabel2.setText("UserID:");
+        jLabel2.setText("User Name:");
 
         jLabel3.setText("Password:");
 

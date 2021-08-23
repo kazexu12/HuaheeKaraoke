@@ -49,7 +49,7 @@ public class adminLogin extends javax.swing.JFrame {
 
         jLabel1.setText("Admin Login");
 
-        jLabel2.setText("Admin ID :");
+        jLabel2.setText("Admin Name :");
 
         jLabel3.setText("Password:");
 

@@ -113,6 +113,11 @@ public class profileChecking extends javax.swing.JFrame {
         });
 
         jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Delete Profile");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -206,7 +211,7 @@ public class profileChecking extends javax.swing.JFrame {
             deletellist.deleteSelectList(selectdelete);
         }
 
-        for (int i = 1; i <= deletellist.size(); i++) {
+        for (int i = 1; i <= db.size(); i++) {
             Date date_created = new Date(deletellist.getDataFromFront(i).getDate_created() * 1000L);
             String dateDateCreated = formatter.format(date_created);
             Object[] row = {
@@ -305,6 +310,11 @@ public class profileChecking extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_SearchActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+        new adminInterface().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
