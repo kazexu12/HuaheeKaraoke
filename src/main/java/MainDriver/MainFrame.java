@@ -6,7 +6,9 @@
 package MainDriver;
 
 import DAO.RegisteredSessionDAO;
+import DAO.TransactionDAO;
 import DTO.RegisteredSessionDTO;
+import DTO.TransactionDTO;
 import Generic.DBManager;
 import SessionManagement.UI.KaraokeSessionFrame;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -26,6 +28,8 @@ import org.apache.logging.log4j.Logger;
 public class MainFrame extends javax.swing.JFrame {
 
     private static final Logger logger = LogManager.getLogger(MainFrame.class.getName());
+    private ArrayList<RegisteredSessionDTO> sessions;
+    private ArrayList<TransactionDTO> transactions;
 
     /**
      * Creates new form MainFrame
@@ -50,6 +54,9 @@ public class MainFrame extends javax.swing.JFrame {
             System.exit(1);
         }
 
+        // Load DB Data
+        sessions = new RegisteredSessionDAO().getAll();
+        transactions = new TransactionDAO().getAll();
     }
 
     /**
@@ -177,26 +184,47 @@ public class MainFrame extends javax.swing.JFrame {
         if (userInputSessionKey == null) {
             return;
         }
-        RegisteredSessionDAO sessionDAO = new RegisteredSessionDAO();
-        ArrayList<RegisteredSessionDTO> sessions = sessionDAO.getAll();
         RegisteredSessionDTO foundSession = null;
         for (int i = 0; i < sessions.size(); i++) {
             if (sessions.get(i).getSessionKey().equalsIgnoreCase(userInputSessionKey)) {
                 foundSession = sessions.get(i);
             }
         }
-        // Future code to validate session_key
-        if (foundSession != null) {
-            // Code to pass session data into the JFrame
-            new KaraokeSessionFrame(foundSession).setVisible(true);
 
-            // Close the menu jframe
-            this.setVisible(false);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid session key", "Error", JOptionPane.ERROR_MESSAGE);
+        if (foundSession == null) {
+            JOptionPane.showMessageDialog(this, "Invalid session key\nPlease check your session key or make an transaction through an Admin", "Error", JOptionPane.ERROR_MESSAGE);
             enterSessKeyBtnActionPerformed(evt);
+            return;
         }
+
+        TransactionDTO trans = null;
+        for (int i = 0; i < transactions.size(); i++) {
+            if (transactions.get(i).getSessionId().equals(foundSession.getSessionId())) {
+                trans = transactions.get(i);
+            }
+        }
+
+        // Future code to validate session_key
+        if (trans == null) {
+            JOptionPane.showMessageDialog(this, "Unable to locate related Transaction.\nContact Admin.", "Error", JOptionPane.ERROR_MESSAGE);
+            enterSessKeyBtnActionPerformed(evt);
+            return;
+        }
+
+        if (trans.getStatus() != 1) {
+            JOptionPane.showMessageDialog(this, "Transaction is " + trans.getStatusText(), "Error", JOptionPane.ERROR_MESSAGE);
+            enterSessKeyBtnActionPerformed(evt);
+            return;
+        }
+
+        // Code to pass session data into the JFrame
+        new KaraokeSessionFrame(foundSession).setVisible(true);
+
+        // Close the menu jframe
+        this.setVisible(false);
+        this.dispose();
+
+
     }//GEN-LAST:event_enterSessKeyBtnActionPerformed
 
     private void playgroundBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playgroundBtnActionPerformed
