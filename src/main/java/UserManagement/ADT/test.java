@@ -28,10 +28,21 @@ public class test {
         llist.addData("AAAAAA!");
         llist.addData("NOOOOO!");
         
+        int success = 0;
+        int getId = 0;
         llist.changeDataFromFront(1, "fucking!!");
-        
         for(int i = 0; i < llist.size(); i++ ){
-            System.out.print(llist.getDataForChecking(i));
+            if(llist.getDataForChecking(i).equals("NOOOOO!")){
+                success++;
+                getId = i;
+            } 
+        }
+        if (success > 0){
+            System.out.printf("Success!");
+            System.out.print(getId);
+        }else
+        {
+            System.out.printf("Error!");
         }
         
 

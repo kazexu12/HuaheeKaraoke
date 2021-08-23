@@ -153,8 +153,7 @@ public class modifiedProfile extends javax.swing.JDialog {
                UserDTO urs = MainDriver.UserSesstionManager.getLogonUser();
                
                String name = newFirstName.getText();
-               char[] password =  newpassword.getPassword();
-               String pwd = String.valueOf(password);
+               String pwd = new String(newpassword.getPassword());
               
               if(newFirstName.getText().isEmpty() || newpassword.getPassword().length == 0 ){
             JOptionPane.showMessageDialog(null, "Cannot be empty!", "Error!!", JOptionPane.PLAIN_MESSAGE);

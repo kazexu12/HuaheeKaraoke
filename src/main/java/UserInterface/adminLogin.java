@@ -7,6 +7,7 @@ package UserInterface;
 
 import DAO.UserDAO;
 import DTO.UserDTO;
+import MainDriver.UserSesstionManager;
 import UserManagement.ADT.Linkedlist;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -140,37 +141,56 @@ public class adminLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_adminIdActionPerformed
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
-        // TODO add your handling code here:
-        
-        UserDAO ur = new UserDAO();
+       UserDAO ur = new UserDAO();
         db = ur.getAll();
-        
+
         llist = new Linkedlist();
-        for(int i =0; i< db.size();i++){
+        for (int i = 0; i < db.size(); i++) {
             llist.addData(db.get(i));
         }
+        String name = adminId.getText();
+        String pwd = new String(passwordAdmin.getPassword());
         
-        String name =  adminId.getText();
-        String pwd = new String (passwordAdmin.getPassword());
+        int namecheck = 0;
+        int passwordcheck = 0;
+        int success = 0;
+        int getId = 0;
+        int checkpri = 0;
         
-        for(int i = 0; i< llist.size(); i++){
-            if(1 == llist.getDataForChecking(i).getPrivillage()){
-                if(name == llist.getDataForChecking(i).getName()){
-                    if(pwd == llist.getDataForChecking(i).getPw_hash()){
-                        JOptionPane.showMessageDialog(null, "Welcome " + name , "Successfull Login", JOptionPane.PLAIN_MESSAGE);
-                        this.dispose();
-                        new adminInterface().setVisible(true);
+        if(adminId.getText().isEmpty() || passwordAdmin.getPassword().length == 0 ){
+            JOptionPane.showMessageDialog(null, "Cannot be empty!", "Error!!", JOptionPane.PLAIN_MESSAGE);
+        }
+        
+        for (int i = 0; i < llist.size(); i++) {
+            if (1 == llist.getDataForChecking(i).getPrivillage()) {
+                if (name.equals(llist.getDataForChecking(i).getName())) {
+                    if (pwd.equals(llist.getDataForChecking(i).getPw_hash())) {
+                        success++;
+                        getId = i;
+                        new userInterface().setVisible(true);
                         break;
+                    } else {
+                        passwordcheck++;
                     }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Your Password is invalid\n Please try again." + name , "Error!!", JOptionPane.PLAIN_MESSAGE);
-                    }
-                    JOptionPane.showMessageDialog(null, "Your User Name is invalid\n Please try again." , "Error!!", JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    namecheck++;
                 }
-                JOptionPane.showMessageDialog(null, "You are insufficient power\n Please try again." , "Error!!", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                checkpri++;
             }
         }
         
+        if (success > 0){
+            JOptionPane.showMessageDialog(null, "Welcome " + name, "Successfull Login", JOptionPane.PLAIN_MESSAGE);
+            this.dispose();
+            UserSesstionManager.login(llist.getDataForChecking(getId));
+        }else if(namecheck > 0 && passwordcheck == 0){
+            JOptionPane.showMessageDialog(null, "Your User Name is invalid\n Please try again.", "Error!!", JOptionPane.PLAIN_MESSAGE);
+        }else if(passwordcheck > 0){
+            JOptionPane.showMessageDialog(null, "Your Password is invalid\n Please try again." + name, "Error!!", JOptionPane.PLAIN_MESSAGE);
+        }else if(checkpri > 0){
+            JOptionPane.showMessageDialog(null, "You are insufficient power\n Please try again.", "Error!!", JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_submitActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -165,29 +165,46 @@ public class userLogin extends javax.swing.JFrame {
         }
         String name = userId.getText();
         String pwd = new String(passwordUser.getPassword());
-
+        
+        int namecheck = 0;
+        int passwordcheck = 0;
+        int success = 0;
+        int getId = 0;
+        int checkpri = 0;
+        
+        if(userId.getText().isEmpty() || passwordUser.getPassword().length == 0 ){
+            JOptionPane.showMessageDialog(null, "Cannot be empty!", "Error!!", JOptionPane.PLAIN_MESSAGE);
+        }
+        
         for (int i = 0; i < llist.size(); i++) {
             if (0 == llist.getDataForChecking(i).getPrivillage()) {
                 if (name.equals(llist.getDataForChecking(i).getName())) {
                     if (pwd.equals(llist.getDataForChecking(i).getPw_hash())) {
-                        JOptionPane.showMessageDialog(null, "Welcome " + name, "Successfull Login", JOptionPane.PLAIN_MESSAGE);
-                        this.dispose();
-                        UserSesstionManager.login(llist.getDataForChecking(i));
-                        
+                        success++;
+                        getId = i;
                         new userInterface().setVisible(true);
                         break;
                     } else {
-                        JOptionPane.showMessageDialog(null, "Your Password is invalid\n Please try again." + name, "Error!!", JOptionPane.PLAIN_MESSAGE);
-                   
+                        passwordcheck++;
                     }
-
                 } else {
-                    JOptionPane.showMessageDialog(null, "Your User Name is invalid\n Please try again.", "Error!!", JOptionPane.PLAIN_MESSAGE);
-                    
+                    namecheck++;
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "You are insufficient power\n Please try again.", "Error!!", JOptionPane.PLAIN_MESSAGE);
+                checkpri++;
             }
+        }
+        
+        if (success > 0){
+            JOptionPane.showMessageDialog(null, "Welcome " + name, "Successfull Login", JOptionPane.PLAIN_MESSAGE);
+            this.dispose();
+            UserSesstionManager.login(llist.getDataForChecking(getId));
+        }else if(namecheck > 0 && passwordcheck == 0){
+            JOptionPane.showMessageDialog(null, "Your User Name is invalid\n Please try again.", "Error!!", JOptionPane.PLAIN_MESSAGE);
+        }else if(passwordcheck > 0){
+            JOptionPane.showMessageDialog(null, "Your Password is invalid\n Please try again." + name, "Error!!", JOptionPane.PLAIN_MESSAGE);
+        }else if(checkpri > 0){
+            JOptionPane.showMessageDialog(null, "You are insufficient power\n Please try again.", "Error!!", JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_jButton_submitActionPerformed
 
