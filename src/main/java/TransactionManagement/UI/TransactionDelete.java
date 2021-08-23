@@ -26,6 +26,7 @@ public class TransactionDelete extends javax.swing.JFrame {
     TransactionDAO tr;
     ArrayList<TransactionDTO> db;
     HashMap<String, TransactionDTO> hm;
+    HashMap<Integer, String> statusString;
     
     TransactionDTO searchResult;
 
@@ -43,6 +44,11 @@ public class TransactionDelete extends javax.swing.JFrame {
             db.get(i).getDateCreated();
             hm.add(db.get(i).getTransactionId(), db.get(i));
         }
+        
+        statusString = new HashMap();
+        statusString.add(0, "Expired");
+        statusString.add(1, "Active");
+        statusString.add(2, "Refunded");
         this.setLocationRelativeTo(null);
     }
     
@@ -84,6 +90,8 @@ public class TransactionDelete extends javax.swing.JFrame {
         dateCreatedField = new javax.swing.JTextField();
         dateModifiedField = new javax.swing.JTextField();
         deleteButton = new javax.swing.JButton();
+        statusLabel = new javax.swing.JLabel();
+        statusField = new javax.swing.JTextField();
 
         jMenu1.setText("jMenu1");
 
@@ -160,6 +168,10 @@ public class TransactionDelete extends javax.swing.JFrame {
             }
         });
 
+        statusLabel.setText("Status:");
+
+        statusField.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -189,8 +201,9 @@ public class TransactionDelete extends javax.swing.JFrame {
                             .addComponent(staffIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(memberIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(sessionIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(transIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(transIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(transIdField)
                             .addComponent(sessionIdField)
@@ -198,7 +211,8 @@ public class TransactionDelete extends javax.swing.JFrame {
                             .addComponent(staffIdField)
                             .addComponent(finalPriceField)
                             .addComponent(dateCreatedField)
-                            .addComponent(dateModifiedField))))
+                            .addComponent(dateModifiedField)
+                            .addComponent(statusField, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -239,7 +253,11 @@ public class TransactionDelete extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dateModifiedLabel)
                     .addComponent(dateModifiedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(statusLabel)
+                    .addComponent(statusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
                     .addComponent(deleteButton))
@@ -250,34 +268,11 @@ public class TransactionDelete extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        // TODO add your handling code here:
+        handleSearch();
     }//GEN-LAST:event_searchFieldActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        String result = searchField.getText();
-        
-        if (!result.isEmpty()) {
-            searchResult = hm.get(result);
-            
-            if (searchResult != null) {
-                transIdField.setText(searchResult.getTransactionId());
-                sessionIdField.setText(searchResult.getSessionId());
-                memberIdField.setText(searchResult.getMemberId());
-                staffIdField.setText(searchResult.getStaffId());
-                finalPriceField.setText(String.format("RM %.2f", searchResult.getFinalPrice()));
-                dateCreatedField.setText(this.toDate(searchResult.getDateCreated()));
-                dateModifiedField.setText(this.toDate(searchResult.getDateModified()));
-            } else { 
-                transIdField.setText("");
-                
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Transaction not found.",
-                        "Alert",
-                        JOptionPane.WARNING_MESSAGE
-                );     
-            }
-        }
+        handleSearch();
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void memberIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberIdFieldActionPerformed
@@ -311,6 +306,43 @@ public class TransactionDelete extends javax.swing.JFrame {
         new TransactionMenu().setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    void handleSearch() {
+        String result = searchField.getText().toUpperCase();
+        TransactionDTO searchResult;
+      
+        
+        if (!result.isEmpty()) {
+            searchResult = hm.get(result);
+            
+            if (searchResult != null) {
+                transIdField.setText(searchResult.getTransactionId());
+                sessionIdField.setText(searchResult.getSessionId());
+                memberIdField.setText(searchResult.getMemberId());
+                staffIdField.setText(searchResult.getStaffId());
+                finalPriceField.setText(String.format("RM %.2f", searchResult.getFinalPrice()));
+                dateCreatedField.setText(this.toDate(searchResult.getDateCreated()));
+                dateModifiedField.setText(this.toDate(searchResult.getDateModified()));
+                statusField.setText(statusString.get(searchResult.getStatus()));
+            } else { 
+                transIdField.setText("");
+                sessionIdField.setText("");
+                memberIdField.setText("");
+                staffIdField.setText("");
+                finalPriceField.setText("");
+                dateCreatedField.setText("");
+                dateModifiedField.setText("");
+                statusField.setText("");
+                
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Transaction not found.",
+                        "Alert",
+                        JOptionPane.WARNING_MESSAGE
+                );     
+            }
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -366,6 +398,8 @@ public class TransactionDelete extends javax.swing.JFrame {
     private javax.swing.JLabel sessionIdLabel;
     private javax.swing.JTextField staffIdField;
     private javax.swing.JLabel staffIdLabel;
+    private javax.swing.JTextField statusField;
+    private javax.swing.JLabel statusLabel;
     private javax.swing.JTextField transIdField;
     private javax.swing.JLabel transIdLabel;
     // End of variables declaration//GEN-END:variables

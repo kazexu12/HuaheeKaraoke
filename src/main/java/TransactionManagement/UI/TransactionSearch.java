@@ -251,11 +251,28 @@ public class TransactionSearch extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        // TODO add your handling code here:
+        handleSearch();
     }//GEN-LAST:event_searchFieldActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        String result = searchField.getText();
+        handleSearch();
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void memberIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberIdFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_memberIdFieldActionPerformed
+
+    private void dateCreatedFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateCreatedFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dateCreatedFieldActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+        new TransactionMenu().setVisible(true);
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    void handleSearch() {
+        String result = searchField.getText().toUpperCase();
         TransactionDTO searchResult;
       
         
@@ -289,21 +306,8 @@ public class TransactionSearch extends javax.swing.JFrame {
                 );     
             }
         }
-    }//GEN-LAST:event_searchButtonActionPerformed
-
-    private void memberIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberIdFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_memberIdFieldActionPerformed
-
-    private void dateCreatedFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateCreatedFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dateCreatedFieldActionPerformed
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        this.dispose();
-        new TransactionMenu().setVisible(true);
-    }//GEN-LAST:event_cancelButtonActionPerformed
-
+    }
+    
     /**
      * @param args the command line arguments
      */

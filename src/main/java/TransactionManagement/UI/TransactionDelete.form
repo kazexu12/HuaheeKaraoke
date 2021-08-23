@@ -64,8 +64,9 @@
                           <Component id="memberIdLabel" alignment="0" max="32767" attributes="0"/>
                           <Component id="sessionIdLabel" alignment="0" max="32767" attributes="0"/>
                           <Component id="transIdLabel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="statusLabel" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="transIdField" max="32767" attributes="0"/>
                           <Component id="sessionIdField" max="32767" attributes="0"/>
@@ -74,6 +75,7 @@
                           <Component id="finalPriceField" alignment="0" max="32767" attributes="0"/>
                           <Component id="dateCreatedField" alignment="0" max="32767" attributes="0"/>
                           <Component id="dateModifiedField" alignment="0" max="32767" attributes="0"/>
+                          <Component id="statusField" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -127,7 +129,12 @@
                   <Component id="dateModifiedLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="dateModifiedField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="53" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="statusLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="statusField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="deleteButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -256,6 +263,16 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="statusLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Status:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="statusField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

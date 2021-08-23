@@ -432,7 +432,7 @@ public class TransactionAdd extends javax.swing.JFrame {
 
         UserDAO usersDAO = new UserDAO();
 
-        member = usersDAO.findUserById(memberIdField.getText());
+        member = usersDAO.findUserById(memberIdField.getText().toUpperCase());
         if (member != null && member.getPrivillage() != 1) {
             memberNameField.setText(member.getFirst_name() + ' ' + member.getLast_name());
             memberTypeField.setText(memberTypeName.get(member.getMember_level()));

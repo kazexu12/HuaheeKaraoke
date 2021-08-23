@@ -268,42 +268,11 @@ public class TransactionRefund extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        // TODO add your handling code here:
+        handleSearch();
     }//GEN-LAST:event_searchFieldActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        String result = searchField.getText();
-        
-        if (!result.isEmpty()) {
-            searchResult = hm.get(result);
-            
-            if (searchResult != null) {
-                transIdField.setText(searchResult.getTransactionId());
-                sessionIdField.setText(searchResult.getSessionId());
-                memberIdField.setText(searchResult.getMemberId());
-                staffIdField.setText(searchResult.getStaffId());
-                finalPriceField.setText(String.format("RM %.2f", searchResult.getFinalPrice()));
-                dateCreatedField.setText(this.toDate(searchResult.getDateCreated()));
-                dateModifiedField.setText(this.toDate(searchResult.getDateModified()));
-                statusField.setText(statusString.get(searchResult.getStatus()));
-            } else { 
-                transIdField.setText("");
-                sessionIdField.setText("");
-                memberIdField.setText("");
-                staffIdField.setText("");
-                finalPriceField.setText("");
-                dateCreatedField.setText("");
-                dateModifiedField.setText("");
-                statusField.setText("");
-                
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Transaction not found.",
-                        "Alert",
-                        JOptionPane.WARNING_MESSAGE
-                );     
-            }
-        }
+        handleSearch();
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void memberIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberIdFieldActionPerformed
@@ -341,6 +310,41 @@ public class TransactionRefund extends javax.swing.JFrame {
         new TransactionMenu().setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    void handleSearch() {
+        String result = searchField.getText().toUpperCase();
+        
+        if (!result.isEmpty()) {
+            searchResult = hm.get(result);
+            
+            if (searchResult != null) {
+                transIdField.setText(searchResult.getTransactionId());
+                sessionIdField.setText(searchResult.getSessionId());
+                memberIdField.setText(searchResult.getMemberId());
+                staffIdField.setText(searchResult.getStaffId());
+                finalPriceField.setText(String.format("RM %.2f", searchResult.getFinalPrice()));
+                dateCreatedField.setText(this.toDate(searchResult.getDateCreated()));
+                dateModifiedField.setText(this.toDate(searchResult.getDateModified()));
+                statusField.setText(statusString.get(searchResult.getStatus()));
+            } else { 
+                transIdField.setText("");
+                sessionIdField.setText("");
+                memberIdField.setText("");
+                staffIdField.setText("");
+                finalPriceField.setText("");
+                dateCreatedField.setText("");
+                dateModifiedField.setText("");
+                statusField.setText("");
+                
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Transaction not found.",
+                        "Alert",
+                        JOptionPane.WARNING_MESSAGE
+                );     
+            }
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
