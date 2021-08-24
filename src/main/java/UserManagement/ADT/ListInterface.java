@@ -21,10 +21,6 @@ public interface ListInterface <T> {
      
      public boolean changeDataFromFront(int givenPosition, T newEntry);
      
-     public boolean changeDataFromLast(int givenPosition, T newEntry);
-     
-     public T getDataFromLast(int givenPosition);
-     
      public T getDataFromFront(int givenPosition);
      
      public T getDataForChecking(int givenPosition);

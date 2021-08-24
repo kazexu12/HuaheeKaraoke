@@ -131,22 +131,6 @@ public class Linkedlist<T> implements ListInterface<T> {
     }
 
     @Override
-    public boolean changeDataFromLast(int givenPosition, T newEntry) {
-        boolean replaceSuccess = true;
-
-        if ((givenPosition >= 1) && (givenPosition <= numOfList)) {
-            Node currentNode = firstNode;
-            for (int i = numOfList; i < givenPosition - 1; --i) {
-                currentNode = currentNode.next;
-            }
-            currentNode.data = newEntry;
-        } else {
-            replaceSuccess = false;
-        }
-        return replaceSuccess;
-    }
-
-    @Override
     public T getDataFromFront(int givenPosition) { //get data result of givenPosition
         var ori = givenPosition;
         if (givenPosition < 1 || givenPosition > numOfList) {
@@ -163,20 +147,6 @@ public class Linkedlist<T> implements ListInterface<T> {
         return ptr.data;
     }
 
-    @Override
-    public T getDataFromLast(int givenPosition) { //get data result of givenPosition
-        T result = null;
-
-        if ((givenPosition >= 1) && (givenPosition <= numOfList)) {
-            Node currentNode = lastNode;
-            for (int i = 0; i < givenPosition - 1; --i) {
-                currentNode = currentNode.next;
-            }
-            result = currentNode.data;
-        }
-        return result;
-    }
-    
     @Override
     public T getDataForChecking(int givenPosition) {
     T result = null;
