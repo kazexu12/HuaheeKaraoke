@@ -303,6 +303,8 @@ public class SongMenu extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         int select = show_table.getSelectedRow();
 
+        if(select != -1){
+        
         Object[] response = new SongEdit(this, search_list.get(select)).run();
         System.out.println(response[0]);
 
@@ -334,11 +336,15 @@ public class SongMenu extends javax.swing.JFrame {
             model.addRow(row);
         }
         show_record.setText("Have search " + search_list.size() + " record(s)");
+        }else{
+            JOptionPane.showMessageDialog(null, "You not have select the row want to edit!", "WARNING", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         int select = show_table.getSelectedRow();
         int confirm = 0;
+        if(select != -1){
         if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
                 songDAO.delete(search_list.get(select));
@@ -368,6 +374,9 @@ public class SongMenu extends javax.swing.JFrame {
             model.addRow(row);
         }
         show_record.setText("Have search " + search_list.size() + " record(s)");
+        }else{
+            JOptionPane.showMessageDialog(null, "You not have select the row want to delete!", "WARNING", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void search_selectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_selectedActionPerformed
