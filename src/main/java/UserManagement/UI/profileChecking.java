@@ -264,6 +264,12 @@ public class profileChecking extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) showtable.getModel();
         model.setRowCount(0);
         if (search.isEmpty()) {
+            llist.clear();
+            
+            for (int i = 0; i < db.size(); i++) {
+            llist.addData(db.get(i));
+        }
+            
             deletellist.clear();
             for (int i = 0; i < llist.size(); i++) {
                 Date date_created = new Date(llist.getDataForChecking(i).getDate_created() * 1000L);

@@ -5,10 +5,6 @@
  */
 package UserManagement.ADT;
 
-/**
- *
- * @author ASUS
- */
 public interface ListInterface <T> {
     
      public boolean addData(T newEntry);

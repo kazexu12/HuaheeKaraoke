@@ -30,10 +30,20 @@ public class test {
         
         int success = 0;
         int getId = 0;
-        llist.changeDataFromFront(1, "fucking!!");
+        llist.changeDataFromFront(3, "fucking!!");
         for(int i = 0; i < llist.size(); i++ ){
-//            System.out.print(llist.getDataFromLast(i));
-            } 
+            if(llist.contain("Fuck!")){
+                System.out.print("Ok!");
+            }
+           
+            }
+        
+        if(llist.checkEmpty()){
+            System.out.printf("OMG");
+        }else{
+            System.out.printf("SUCCESS");
+        }
+        
         }
 
     }

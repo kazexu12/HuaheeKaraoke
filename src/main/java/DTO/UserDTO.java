@@ -4,10 +4,9 @@
  * and open the template in the editor.
  */
 package DTO;
-
 /**
  *
- * @author Loo Zi Kang
+ * @author Khaw Zhe Xue
  */
 public class UserDTO {
 

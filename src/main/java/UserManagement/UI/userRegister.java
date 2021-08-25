@@ -198,7 +198,7 @@ public class userRegister extends javax.swing.JFrame {
         }      
         
         this.dispose();
-        new userInterface().setVisible(true);
+        new MainDriver.MainFrame().setVisible(true);
               }
       
     }//GEN-LAST:event_registerActionPerformed

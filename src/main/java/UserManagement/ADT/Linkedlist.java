@@ -5,10 +5,6 @@
  */
 package UserManagement.ADT;
 
-/**
- *
- * @author ASUS
- */
 public class Linkedlist<T> implements ListInterface<T> {
 
     private Node firstNode;
@@ -33,7 +29,7 @@ public class Linkedlist<T> implements ListInterface<T> {
     @Override
     public boolean addData(int nextPosition, T newEntry) {  //for add the data with choosing position
         Node ptr = firstNode;
-        if ((nextPosition < 1) || (nextPosition > numOfList + 1)) {
+        if ((nextPosition < 0) || (nextPosition > numOfList + 1)) {
             return false;
         }
 
@@ -75,7 +71,7 @@ public class Linkedlist<T> implements ListInterface<T> {
 
     @Override
     public T deleteSelectList(int givenPosition) {
-        if (givenPosition < 1 || givenPosition > numOfList) {
+        if (givenPosition < 0 || givenPosition > numOfList) {
             return null;
         }
 
@@ -118,7 +114,7 @@ public class Linkedlist<T> implements ListInterface<T> {
 
         if ((givenPosition >= 0) && (givenPosition < numOfList)) {
             Node currentNode = firstNode;
-            for (int i = 0; i <= givenPosition; ++i) {
+            for (int i = 0; i < givenPosition; ++i) {
                 if(i == givenPosition){
                     currentNode.data = newEntry;
                 }
@@ -132,7 +128,6 @@ public class Linkedlist<T> implements ListInterface<T> {
 
     @Override
     public T getDataFromFront(int givenPosition) { //get data result of givenPosition
-        var ori = givenPosition;
         if (givenPosition < 1 || givenPosition > numOfList) {
             return null;
         }
@@ -167,7 +162,7 @@ public class Linkedlist<T> implements ListInterface<T> {
         boolean found = true;
         Node currentNode = firstNode;
 
-        while (found && (currentNode != null)) {
+        while (found &&(currentNode != null)) {
             if (anEntry.equals(currentNode.data)) {
                 return found;
             } else {

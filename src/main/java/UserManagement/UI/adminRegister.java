@@ -52,7 +52,7 @@ public class adminRegister extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Member Register");
+        jLabel1.setText("Admin Register");
 
         jLabel2.setText("FirstName:");
 

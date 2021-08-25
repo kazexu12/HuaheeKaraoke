@@ -180,6 +180,7 @@ public class adminLogin extends javax.swing.JFrame {
             }
         }
         
+        
         if (success > 0){
             this.dispose();
             JOptionPane.showMessageDialog(null, "Welcome " + name, "Successfull Login", JOptionPane.PLAIN_MESSAGE);
