@@ -75,13 +75,12 @@ public class MainFrame extends javax.swing.JFrame {
         adminLoginBtn = new javax.swing.JButton();
         memberLoginBtn = new javax.swing.JButton();
         quitBtn = new javax.swing.JButton();
-        playgroundBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Huahee Karaoke");
-        setPreferredSize(new java.awt.Dimension(400, 400));
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanel1.setMinimumSize(new java.awt.Dimension(300, 200));
+        jPanel1.setPreferredSize(new java.awt.Dimension(300, 200));
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWeights = new double[] {1.0};
         jPanel1Layout.rowWeights = new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
@@ -145,19 +144,6 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel1.add(quitBtn, gridBagConstraints);
-
-        playgroundBtn.setText("Playground");
-        playgroundBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                playgroundBtnActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        jPanel1.add(playgroundBtn, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -228,14 +214,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_enterSessKeyBtnActionPerformed
 
-    private void playgroundBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playgroundBtnActionPerformed
-        // TODO add your handling code here:|
-        // Close the menu jframe
-        this.setVisible(false);
-        this.dispose();
-        new Playground().setVisible(true);
-    }//GEN-LAST:event_playgroundBtnActionPerformed
-
     private void adminLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginBtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -290,7 +268,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton enterSessKeyBtn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton memberLoginBtn;
-    private javax.swing.JButton playgroundBtn;
     private javax.swing.JButton quitBtn;
     // End of variables declaration//GEN-END:variables
 }
