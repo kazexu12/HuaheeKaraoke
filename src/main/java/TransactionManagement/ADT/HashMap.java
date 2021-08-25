@@ -6,6 +6,8 @@
 package TransactionManagement.ADT;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -39,12 +41,7 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
                 expandTable();
             }
 
-            index = hash1(key) + turn * hash2(key);
-            
-            // Jump back to starting point if index is larger than array length.
-            index %= hashTable.length;
-            if (index < 0) index *= -1;
-
+            index = hashFunc(turn, key);
             if (hashTable[index] == null) {
                 hashTable[index] = new Node(key, value);
 
@@ -66,20 +63,17 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
         // Double hashing.
         for (int turn = 0; turn < hashTable.length; turn++) {
             
-            index = hash1(key) + turn * hash2(key);
-            index %= hashTable.length;
-            if (index < 0) index *= -1;
-
+            index = hashFunc(turn, key);
             if (hashTable[index] == null) {
                 break;
-            } else if (hashTable[index].key.equals(key)) {
-                removedValue = hashTable[index].value;
+            } else if (hashTable[index].getKey().equals(key)) {
+                removedValue = hashTable[index].getValue();
                 hashTable[index] = null;
-                
+
                 numberOfEntries--;
                 break;
             }
-            
+
         }
 
         return removedValue;
@@ -92,15 +86,12 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
 
         // Double hashing.
         for (int turn = 0; turn < hashTable.length; turn++) {
-            
-            index = hash1(key) + turn * hash2(key);
-            index %= hashTable.length;
-            if (index < 0) index *= -1;
-            
+
+            index = hashFunc(turn, key);
             if (hashTable[index] == null) {
                 break;
-            } else if (hashTable[index].key.equals(key)) {
-                getValue = hashTable[index].value;
+            } else if (hashTable[index].getKey().equals(key)) {
+                getValue = hashTable[index].getValue();
                 break;
             }
         }
@@ -115,11 +106,11 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
 
         // Double hashing.
         for (int turn = 0; turn < hashTable.length; turn++) {
-            index = hash1(key) + turn * hash2(key);
 
+            index = hashFunc(turn, key);
             if (hashTable[index] == null) {
                 break;
-            } else if (hashTable[index].key.equals(key)) {
+            } else if (hashTable[index].getKey().equals(key)) {
                 isContain = true;
                 break;
             }
@@ -131,14 +122,14 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
     @Override
     public boolean containsValue(V value) {
         boolean isContain = false;
-        
+
         for (int i = 0; i < hashTable.length; i++) {
-            if (hashTable[i] != null && hashTable[i].value.equals(value)) {
+            if (hashTable[i] != null && hashTable[i].getValue().equals(value)) {
                 isContain = true;
                 break;
             }
         }
-        
+
         return isContain;
     }
 
@@ -161,6 +152,18 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
         numberOfEntries = 0;
     }
 
+    public Set<Node<K, V>> entrySet() {
+        Set<Node<K, V>> result = new HashSet<>();
+
+        for (int i = 0; i < hashTable.length; i++) {
+            if (hashTable[i] != null) {
+                result.add(hashTable[i]);
+            }
+        }
+
+        return result;
+    }
+
     // -------------------------------------------------------------------------
     private int hash1(K key) {
         return key.hashCode() % 7;
@@ -168,6 +171,19 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
 
     private int hash2(K key) {
         return 5 - (key.hashCode() % 5);
+    }
+
+    private int hashFunc(int turn, K key) {
+
+        int result = hash1(key) + turn * hash2(key);
+        
+        // Jump back to starting point if index is larger than array length.
+        result %= hashTable.length;
+        if (result < 0) {
+            result *= -1;
+        }
+
+        return result;
     }
 
     // https://www.geeksforgeeks.org/program-to-find-the-next-prime-number/
@@ -220,24 +236,12 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
 
     private void expandTable() {
         Node<K, V>[] newTable = new Node[nextPrime(hashTable.length + 1)];
-        
+
         for (int i = 0; i < hashTable.length; i++) {
             newTable[i] = hashTable[i];
         }
-        
+
         hashTable = newTable;
-    }
-    
-    private class Node<K, V> implements Serializable {
-
-        private K key;
-        private V value;
-
-        private Node(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-
     }
 
 }

@@ -5,7 +5,27 @@
  */
 package TransactionManagement.UI;
 
+import DAO.TransactionDAO;
+import DTO.TransactionDTO;
+import TransactionManagement.ADT.HashMap;
+import TransactionManagement.ADT.Node;
+import TransactionManagement.Utility.StatusString;
 import UserManagement.UI.adminInterface;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -13,11 +33,19 @@ import UserManagement.UI.adminInterface;
  */
 public class TransactionMenu extends javax.swing.JFrame {
 
+    TransactionDAO tr;
+    ArrayList<TransactionDTO> db;
+    HashMap<String, TransactionDTO> hm;
+    StatusString statusString;
+
     /**
      * Creates new form TransactionMenu
      */
     public TransactionMenu() {
         initComponents();
+
+        statusString = new StatusString();
+        refreshDataTable(true);
         this.setLocationRelativeTo(null);
     }
 
@@ -30,61 +58,117 @@ public class TransactionMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        transactionTitle = new javax.swing.JLabel();
-        addTransButton = new javax.swing.JButton();
-        searchTransButton = new javax.swing.JButton();
-        refundTransButton = new javax.swing.JButton();
-        deleteTransButton = new javax.swing.JButton();
-        companyName = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        dataTable = new javax.swing.JTable();
+        deleteButton = new javax.swing.JButton();
+        refundButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
+        searchByLabel = new javax.swing.JLabel();
+        searchByField = new javax.swing.JComboBox<>();
+        searchField = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
+        detailsLabel = new javax.swing.JLabel();
+        clearButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        transactionTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        transactionTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        transactionTitle.setText("Transaction Management");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Transaction Management");
 
-        addTransButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        addTransButton.setText("Add a Transaction");
-        addTransButton.addActionListener(new java.awt.event.ActionListener() {
+        dataTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Created At", "Transaction ID", "Session ID", "Member ID", "Final Price", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        dataTable.getTableHeader().setReorderingAllowed(false);
+        dataTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                dataTableMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(dataTable);
+        if (dataTable.getColumnModel().getColumnCount() > 0) {
+            dataTable.getColumnModel().getColumn(0).setResizable(false);
+            dataTable.getColumnModel().getColumn(0).setPreferredWidth(125);
+            dataTable.getColumnModel().getColumn(1).setResizable(false);
+            dataTable.getColumnModel().getColumn(2).setResizable(false);
+            dataTable.getColumnModel().getColumn(3).setResizable(false);
+            dataTable.getColumnModel().getColumn(4).setResizable(false);
+            dataTable.getColumnModel().getColumn(5).setResizable(false);
+        }
+
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addTransButtonActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
-        searchTransButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        searchTransButton.setText("Search a Transaction");
-        searchTransButton.addActionListener(new java.awt.event.ActionListener() {
+        refundButton.setText("Refund");
+        refundButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchTransButtonActionPerformed(evt);
+                refundButtonActionPerformed(evt);
             }
         });
 
-        refundTransButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        refundTransButton.setText("Refund a Transaction");
-        refundTransButton.addActionListener(new java.awt.event.ActionListener() {
+        addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refundTransButtonActionPerformed(evt);
+                addButtonActionPerformed(evt);
             }
         });
 
-        deleteTransButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        deleteTransButton.setText("Delete a Transaction");
-        deleteTransButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteTransButtonActionPerformed(evt);
-            }
-        });
-
-        companyName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        companyName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        companyName.setText("HuaheeKaraoke");
-
-        backButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        backButton.setText("Back to Menu");
+        backButton.setText("Back to Admin Menu");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
+            }
+        });
+
+        searchByLabel.setText("Search By:");
+
+        searchByField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Transaction ID", "Member ID", "Staff ID", "Final Price" }));
+
+        searchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchFieldActionPerformed(evt);
+            }
+        });
+
+        searchButton.setText("Search");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
+
+        detailsLabel.setText("*Double click to show transaction details");
+
+        clearButton.setText("Clear");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
             }
         });
 
@@ -93,64 +177,226 @@ public class TransactionMenu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(deleteTransButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(transactionTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
-                    .addComponent(searchTransButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(refundTransButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addTransButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(companyName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(backButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(addButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(refundButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(deleteButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(searchField)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(clearButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(searchByLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchByField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(detailsLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(companyName)
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(transactionTitle)
-                .addGap(46, 46, 46)
-                .addComponent(addTransButton)
-                .addGap(18, 18, 18)
-                .addComponent(searchTransButton)
-                .addGap(18, 18, 18)
-                .addComponent(refundTransButton)
-                .addGap(18, 18, 18)
-                .addComponent(deleteTransButton)
-                .addGap(18, 18, 18)
-                .addComponent(backButton)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchByLabel)
+                    .addComponent(searchByField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchButton)
+                    .addComponent(clearButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(detailsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteButton)
+                    .addComponent(addButton)
+                    .addComponent(backButton)
+                    .addComponent(refundButton))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTransButtonActionPerformed
-        this.dispose();
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        DefaultTableModel dataTableModel = (DefaultTableModel) dataTable.getModel();
+        String searchText = searchField.getText().trim();
+        int index = searchByField.getSelectedIndex();
+
+        refreshDataTable(true);
+        if (!searchText.isBlank()) {
+            for (int i = 0; i < dataTableModel.getRowCount(); i++) {
+                String value = (String) dataTable.getValueAt(i, 1);
+                TransactionDTO Transaction = hm.get(value);
+
+                boolean containSearch = false;
+                switch (index) {
+                    case 0 ->
+                        containSearch = Transaction.getTransactionId().contains(searchText);
+                    case 1 ->
+                        containSearch = Transaction.getMemberId().contains(searchText);
+                    case 2 ->
+                        containSearch = Transaction.getStaffId().contains(searchText);
+                    case 3 ->
+                        containSearch = String.format("RM %.2f", Transaction.getFinalPrice()).contains(searchText);
+                }
+
+                if (!containSearch) {
+                    hm.remove(value);
+                }
+            }
+            refreshDataTable(false);
+        }
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         new TransactionAdd().setVisible(true);
-    }//GEN-LAST:event_addTransButtonActionPerformed
+    }//GEN-LAST:event_addButtonActionPerformed
 
-    private void searchTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTransButtonActionPerformed
-        this.dispose();
-        new TransactionSearch().setVisible(true);
-    }//GEN-LAST:event_searchTransButtonActionPerformed
+    private void dataTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMousePressed
+        if (evt.getClickCount() == 2 && dataTable.getSelectedRow() != 1) {
+            String selectedId = getTableSelectedId();
 
-    private void refundTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refundTransButtonActionPerformed
-        this.dispose();
-        new TransactionRefund().setVisible(true);
-    }//GEN-LAST:event_refundTransButtonActionPerformed
-
-    private void deleteTransButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTransButtonActionPerformed
-        this.dispose();
-        new TransactionDelete().setVisible(true);
-    }//GEN-LAST:event_deleteTransButtonActionPerformed
+            new TransactionDetails(this, hm.get(selectedId)).run();
+        }
+    }//GEN-LAST:event_dataTableMousePressed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         this.dispose();
         new adminInterface().setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void refundButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refundButtonActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirm refund selected transaction?", "Confirmation",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            String selectedId = getTableSelectedId();
+            TransactionDTO selectedTransaction = hm.get(selectedId);
+
+            try {
+                java.util.HashMap<String, Object> changedData = new java.util.HashMap();
+                changedData.put("date_modified", System.currentTimeMillis() / 1000L);
+                changedData.put("status", 2);
+
+                tr.update(selectedTransaction, changedData);
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Refund successfully."
+                );
+
+                selectedTransaction.setDateModified((int) (System.currentTimeMillis() / 1000L));
+                selectedTransaction.setStatus(2);
+                refreshDataTable(false);
+            } catch (SQLException ex) {
+                Logger.getLogger(TransactionMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_refundButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirm delete?\nNote: Only delete when you think it is a mistake, otherwise use refund instead.", "Confirmation",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            String selectedId = getTableSelectedId();
+            TransactionDTO selectedTransaction = hm.get(selectedId);
+
+            try {
+                tr.delete(selectedTransaction);
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Delete successfully."
+                );
+
+                hm.remove(selectedId);
+                refreshDataTable(false);
+            } catch (SQLException ex) {
+                Logger.getLogger(TransactionMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        searchField.setText("");
+        refreshDataTable(true);
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        searchButtonActionPerformed(evt);
+    }//GEN-LAST:event_searchFieldActionPerformed
+
+    private void refreshDataTable(boolean getDataFromDatabase) {
+
+        if (getDataFromDatabase) {
+            tr = new TransactionDAO();
+            db = tr.getAll();
+
+            hm = new HashMap();
+            for (int i = 0; i < db.size(); i++) {
+                db.get(i).getDateCreated();
+                hm.add(db.get(i).getTransactionId(), db.get(i));
+            }
+        }
+
+        DefaultTableModel dataTableModel = (DefaultTableModel) dataTable.getModel();
+
+        int rowCount = dataTableModel.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dataTableModel.removeRow(i);
+        }
+
+        Iterator it = hm.entrySet().iterator();
+        while (it.hasNext()) {
+            Node data = (Node) it.next();
+            TransactionDTO dataValue = (TransactionDTO) data.getValue();
+
+            Object[] row = {
+                this.toDate(dataValue.getDateCreated()),
+                dataValue.getTransactionId(),
+                dataValue.getSessionId(),
+                dataValue.getMemberId(),
+                String.format("RM %.2f", dataValue.getFinalPrice()),
+                statusString.get(dataValue.getStatus())
+            };
+            dataTableModel.addRow(row);
+        }
+
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(dataTableModel);
+        dataTable.setRowSorter(sorter);
+
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
+        sorter.setSortKeys(sortKeys);
+    }
+
+    public String toDate(int date) {
+        Date resultDate = new Date(date * 1000L);
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateFormatted = formatter.format(resultDate);
+
+        return dateFormatted;
+    }
+
+    public String getTableSelectedId() {
+        return (String) dataTable.getValueAt(dataTable.getSelectedRow(), 1);
+    }
 
     /**
      * @param args the command line arguments
@@ -188,12 +434,18 @@ public class TransactionMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addTransButton;
+    private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
-    private javax.swing.JLabel companyName;
-    private javax.swing.JButton deleteTransButton;
-    private javax.swing.JButton refundTransButton;
-    private javax.swing.JButton searchTransButton;
-    private javax.swing.JLabel transactionTitle;
+    private javax.swing.JButton clearButton;
+    private javax.swing.JTable dataTable;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JLabel detailsLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton refundButton;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JComboBox<String> searchByField;
+    private javax.swing.JLabel searchByLabel;
+    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 }

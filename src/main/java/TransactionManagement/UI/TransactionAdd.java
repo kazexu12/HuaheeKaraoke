@@ -54,13 +54,12 @@ public class TransactionAdd extends javax.swing.JFrame {
         memberTypeDiscount.add('N', 0.00);
         memberTypeDiscount.add('S', 5.00);
         memberTypeDiscount.add('G', 10.00);
-        
+
         roomSizeChar.add(0, 'S');
         roomSizeChar.add(1, 'M');
         roomSizeChar.add(2, 'L');
-        
 
-        this.roomSizeResult = -1;
+        this.roomSizeResult = 0;
         this.setLocationRelativeTo(null);
     }
 
@@ -126,6 +125,11 @@ public class TransactionAdd extends javax.swing.JFrame {
         memberIdLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         memberIdLabel.setText("Member ID:");
 
+        memberIdField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                memberIdFieldFocusLost(evt);
+            }
+        });
         memberIdField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 memberIdFieldActionPerformed(evt);
@@ -206,6 +210,11 @@ public class TransactionAdd extends javax.swing.JFrame {
         dateLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         dateLabel.setText("Date:");
 
+        dateField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                dateFieldFocusLost(evt);
+            }
+        });
         dateField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dateFieldActionPerformed(evt);
@@ -223,10 +232,8 @@ public class TransactionAdd extends javax.swing.JFrame {
                 .addComponent(dateLabel)
                 .addGap(81, 81, 81)
                 .addGroup(jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dateField, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
-                    .addGroup(jInternalFrame2Layout.createSequentialGroup()
-                        .addComponent(formatDateLabel)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(formatDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateField, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jInternalFrame2Layout.setVerticalGroup(
@@ -236,9 +243,9 @@ public class TransactionAdd extends javax.swing.JFrame {
                 .addGroup(jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dateLabel)
                     .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(formatDateLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         staffIdLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -306,7 +313,7 @@ public class TransactionAdd extends javax.swing.JFrame {
                 .addGroup(jInternalFrame6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(headCountLabel)
                     .addComponent(headCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jInternalFrame5.setVisible(true);
@@ -359,7 +366,7 @@ public class TransactionAdd extends javax.swing.JFrame {
                 .addComponent(finalPriceLabel)
                 .addGap(18, 18, 18)
                 .addComponent(finalPriceField)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -370,11 +377,6 @@ public class TransactionAdd extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addTransactionTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(cancelButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(confirmButton)
-                        .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -394,7 +396,11 @@ public class TransactionAdd extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jInternalFrame5)
-                            .addComponent(jInternalFrame6))))
+                            .addComponent(jInternalFrame6)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cancelButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(confirmButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -402,47 +408,38 @@ public class TransactionAdd extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(addTransactionTitle)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(transIdLabel)
-                    .addComponent(transIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(staffIdLabel)
-                    .addComponent(staffIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jInternalFrame6)
-                    .addComponent(jInternalFrame1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jInternalFrame2)
-                    .addComponent(jInternalFrame5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(transIdLabel)
+                            .addComponent(transIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(staffIdLabel)
+                            .addComponent(staffIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jInternalFrame2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 229, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jInternalFrame6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jInternalFrame5)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(confirmButton)
-                    .addComponent(cancelButton))
-                .addGap(18, 18, 18))
+                    .addComponent(cancelButton)
+                    .addComponent(confirmButton))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void memberIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberIdFieldActionPerformed
-
-        UserDAO usersDAO = new UserDAO();
-
-        member = usersDAO.findUserById(memberIdField.getText().toUpperCase());
-        if (member != null && member.getPrivillage() != 1) {
-            memberNameField.setText(member.getFirst_name() + ' ' + member.getLast_name());
-            memberTypeField.setText(memberTypeName.get(member.getMember_level()));
-        } else {
-            memberNameField.setText("");
-            memberTypeField.setText("");
-        }
-
-        handleFinalPrice();
-
+        handleMemberField();
     }//GEN-LAST:event_memberIdFieldActionPerformed
 
     private void memberNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberNameFieldActionPerformed
@@ -473,11 +470,7 @@ public class TransactionAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_staffIdFieldActionPerformed
 
     private void dateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFieldActionPerformed
-        String result = dateField.getText();
-
-        if (!(Pattern.matches("^((?:19|20)\\d\\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$", result))) {
-            dateField.setText("");
-        }
+        handleDate();
     }//GEN-LAST:event_dateFieldActionPerformed
 
     private void headCountFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_headCountFieldActionPerformed
@@ -496,49 +489,66 @@ public class TransactionAdd extends javax.swing.JFrame {
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
 
-        if (JOptionPane.showConfirmDialog(null, "Confirm add?", "Confirmation",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            RegisteredSessionDAO rsDAO = new RegisteredSessionDAO();
-            RegisteredSessionDTO rs = new RegisteredSessionDTO(
-                    roomSizeChar.get(roomSizeField.getSelectedIndex()),
-                    Integer.parseInt(headCountField.getText()),
-                    dateField.getText()
-            );
-            try {
-                rsDAO.save(rs);
-                Object[] response = new AddSuccess(this, rs.getSessionKey()).run();
-                System.out.println(response[0]);
-                this.dispose();
-                new TransactionMenu().setVisible(true);
-            } catch (SQLException ex) {
-                Logger.getLogger(TransactionAdd.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        boolean isFieldEmpty
+                = memberNameField.getText().isEmpty() || dateField.getText().isEmpty() || headCountField.getText().isEmpty();
 
-            double roomPrice = roomSizePrice[roomSizeResult];
-            double discount = memberTypeDiscount.get(member.getMember_level());
-            long unixTime = System.currentTimeMillis() / 1000L;
+        if (!isFieldEmpty) {
+            if (JOptionPane.showConfirmDialog(null, "Confirm add?", "Confirmation",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                RegisteredSessionDAO rsDAO = new RegisteredSessionDAO();
+                RegisteredSessionDTO rs = new RegisteredSessionDTO(
+                        roomSizeChar.get(roomSizeField.getSelectedIndex()),
+                        Integer.parseInt(headCountField.getText()),
+                        dateField.getText()
+                );
+                try {
+                    rsDAO.save(rs);
+                    new AddSuccess(this, rs.getSessionKey()).run();
+                    this.dispose();
+                } catch (SQLException ex) {
+                    Logger.getLogger(TransactionAdd.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-            TransactionDTO newTrans = new TransactionDTO(
-                    transIdField.getText(),
-                    rs,
-                    roomPrice * discount / 100,
-                    roomPrice * (100 - discount) / 100,
-                    member,
-                    memberTypeName.get(member.getMember_level()),
-                    staff,
-                    1,
-                    (int) unixTime,
-                    (int) unixTime
-            );
-            
-            try {
-                transDAO.save(newTrans);
-            } catch (SQLException ex) {
-                Logger.getLogger(TransactionAdd.class.getName()).log(Level.SEVERE, null, ex);
+                double roomPrice = roomSizePrice[roomSizeResult];
+                double discount = memberTypeDiscount.get(member.getMember_level());
+                long unixTime = System.currentTimeMillis() / 1000L;
+
+                TransactionDTO newTrans = new TransactionDTO(
+                        transIdField.getText(),
+                        rs,
+                        roomPrice * discount / 100,
+                        roomPrice * (100 - discount) / 100,
+                        member,
+                        memberTypeName.get(member.getMember_level()),
+                        staff,
+                        1,
+                        (int) unixTime,
+                        (int) unixTime
+                );
+
+                try {
+                    transDAO.save(newTrans);
+                } catch (SQLException ex) {
+                    Logger.getLogger(TransactionAdd.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Enter fill in all blanks.",
+                    "Alert",
+                    JOptionPane.WARNING_MESSAGE
+            );   
         }
-
     }//GEN-LAST:event_confirmButtonActionPerformed
+
+    private void memberIdFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_memberIdFieldFocusLost
+        handleMemberField();
+    }//GEN-LAST:event_memberIdFieldFocusLost
+
+    private void dateFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dateFieldFocusLost
+        handleDate();
+    }//GEN-LAST:event_dateFieldFocusLost
 
     private void handleFinalPrice() {
         if (member != null && roomSizeResult != -1) {
@@ -551,6 +561,31 @@ public class TransactionAdd extends javax.swing.JFrame {
             discountLabel.setText(String.format("Discount (%.0f%%):", discount));
             discountField.setText(String.format("RM %.2f", discountPrice));
             finalPriceField.setText(String.format("RM %.2f", finalPrice));
+        }
+    }
+    
+    private void handleMemberField() {
+        
+        UserDAO usersDAO = new UserDAO();
+
+        member = usersDAO.findUserById(memberIdField.getText().toUpperCase());
+        if (member != null && member.getPrivillage() != 1) {
+            memberNameField.setText(member.getFirst_name() + ' ' + member.getLast_name());
+            memberTypeField.setText(memberTypeName.get(member.getMember_level()));
+        } else {
+            memberNameField.setText("");
+            memberTypeField.setText("");
+        }
+
+        handleFinalPrice(); 
+        
+    }
+    
+    private void handleDate() {
+        String result = dateField.getText();
+
+        if (!(Pattern.matches("^((?:19|20)\\d\\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$", result))) {
+            dateField.setText("");
         }
     }
 
