@@ -200,6 +200,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel6.add(infoBtn, gridBagConstraints);
 
         historyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/history.png"))); // NOI18N
+        historyBtn.setToolTipText("Song Add History");
         historyBtn.setPreferredSize(new java.awt.Dimension(32, 32));
         historyBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
