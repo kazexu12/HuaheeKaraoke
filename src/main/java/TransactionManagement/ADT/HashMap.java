@@ -42,7 +42,7 @@ public class HashMap<K, V> implements DictionaryInterface<K, V>, Serializable {
             }
 
             index = hashFunc(turn, key);
-            if (hashTable[index] == null) {
+            if (hashTable[index] == null || hashTable[index].getKey() == key) {
                 hashTable[index] = new Node(key, value);
 
                 numberOfEntries++;
