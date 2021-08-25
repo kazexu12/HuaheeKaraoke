@@ -111,21 +111,6 @@ public class TransactionDTO {
         return status;
     }
 
-    public String getStatusText() {
-        switch (status) {
-            case 0 -> {
-                return "Unknown";
-            }
-            case 1 -> {
-                return "Active";
-            }
-            case 2 -> {
-                return "Refunded";
-            }
-        }
-        return "Error";
-    }
-
     public void setStatus(int status) {
         this.status = status;
     }

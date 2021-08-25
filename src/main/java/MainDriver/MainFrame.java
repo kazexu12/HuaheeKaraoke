@@ -11,6 +11,7 @@ import DTO.RegisteredSessionDTO;
 import DTO.TransactionDTO;
 import Generic.DBManager;
 import SessionManagement.UI.KaraokeSessionFrame;
+import TransactionManagement.Utility.TransactionDict;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
@@ -30,6 +31,7 @@ public class MainFrame extends javax.swing.JFrame {
     private static final Logger logger = LogManager.getLogger(MainFrame.class.getName());
     private ArrayList<RegisteredSessionDTO> sessions;
     private ArrayList<TransactionDTO> transactions;
+    TransactionDict dict;
 
     /**
      * Creates new form MainFrame
@@ -57,6 +59,8 @@ public class MainFrame extends javax.swing.JFrame {
         // Load DB Data
         sessions = new RegisteredSessionDAO().getAll();
         transactions = new TransactionDAO().getAll();
+        
+        dict = new TransactionDict();
     }
 
     /**
@@ -199,7 +203,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         if (trans.getStatus() != 1) {
-            JOptionPane.showMessageDialog(this, "Transaction is " + trans.getStatusText(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Transaction is " + dict.getStatusLabel(trans.getStatus()), "Error", JOptionPane.ERROR_MESSAGE);
             enterSessKeyBtnActionPerformed(evt);
             return;
         }
