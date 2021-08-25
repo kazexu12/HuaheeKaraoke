@@ -22,6 +22,7 @@ public class AddSuccess extends javax.swing.JDialog {
     public AddSuccess(java.awt.Frame parent, String sessionKey) {
         super(parent, true);
         initComponents();
+        this.setLocationRelativeTo(null);
         this.sessionKey = sessionKey;
         sessionKeyField.setText(sessionKey);
     }
