@@ -56,12 +56,10 @@ public class DoublyLinkedDeque<T> implements DequeInterface<T> {
             size++;
             return;
         }
-        Node<T> ptr = this.front;
-        while (ptr.next != null) {
-            ptr = ptr.next;
-        }
-        ptr.next = new Node<>(item, ptr);
-        this.rear = ptr.next;
+        Node<T> newNode = new Node<>(item);
+        newNode.prev = this.rear;
+        this.rear.next = newNode;
+        this.rear = newNode;
         size++;
     }
 
