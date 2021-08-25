@@ -54,9 +54,9 @@ public class userRegister extends javax.swing.JFrame {
 
         jLabel1.setText("Member Register");
 
-        jLabel2.setText("FirstName:");
+        jLabel2.setText("First Name:");
 
-        jLabel3.setText("LastName:");
+        jLabel3.setText("Last Name:");
 
         memberFirstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,7 +70,7 @@ public class userRegister extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("MemberName:");
+        jLabel4.setText("Member Name:");
 
         membername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,7 +187,7 @@ public class userRegister extends javax.swing.JFrame {
               {
                   long unixTime = System.currentTimeMillis()/1000L;
               int uTime = (int)unixTime;
-              int modifiedtime = 0;
+              int modifiedtime = uTime;
               UserDTO newUser = new DTO.UserDTO(newUserID,0,name,pwd,nameFirst,nameLast,0,'N',uTime,modifiedtime);
               
         try {

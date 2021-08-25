@@ -166,7 +166,7 @@ public class modifiedAdminProfile extends javax.swing.JFrame {
                String name = newFirstName.getText();
                String pwd = new String(newpassword.getPassword());
               
-              if(newFirstName.getText().isEmpty() || newpassword.getPassword().length == 0 ){
+              if(newFirstName.getText().isEmpty() || pwd.isEmpty() ){
             JOptionPane.showMessageDialog(null, "Cannot be empty!", "Error!!", JOptionPane.PLAIN_MESSAGE);
         }
                

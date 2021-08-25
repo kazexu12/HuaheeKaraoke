@@ -166,7 +166,7 @@ public class modifiedProfile extends javax.swing.JFrame {
                String name = newFirstName.getText();
                String pwd = new String(newpassword.getPassword());
               
-              if(newFirstName.getText().isEmpty() || newpassword.getPassword().length == 0 ){
+              if(newFirstName.getText().isEmpty() || pwd.isEmpty() ){
             JOptionPane.showMessageDialog(null, "Cannot be empty!", "Error!!", JOptionPane.PLAIN_MESSAGE);
         }
               else
@@ -176,19 +176,10 @@ public class modifiedProfile extends javax.swing.JFrame {
                for(int i =0; i < llist.size(); i++){
                    if(llist.getDataForChecking(i).getName().equals(replaceName)){
                        
-                       boolean successModified = llist.changeDataFromFront(i,urs);
+                       llist.changeDataFromFront(i,urs);
                        editDataHashMap.put("name", name);
                        editDataHashMap.put("pw_hash", pwd);
 
-                       if (successModified = true){
-                           JOptionPane.showMessageDialog(null, "Modified Success!! " + name, "Congratulation!!", JOptionPane.PLAIN_MESSAGE);
-                           new userInterface().setVisible(true);
-                           this.dispose();
-                       }
-                       else
-                       {
-                           JOptionPane.showMessageDialog(null, "Modified Unsuccess!! " + name, "Error!!", JOptionPane.PLAIN_MESSAGE);
-                       }
 //                       UserDTO newusr = urs.UserDTO(llist.getDataFromFront(i).getName(i),"",privillage,"","","",memberpoint,'',llist.getDataFromFront(i).getDateCreated(),uTime);
                        try{
                              ur.update(urs, editDataHashMap);
