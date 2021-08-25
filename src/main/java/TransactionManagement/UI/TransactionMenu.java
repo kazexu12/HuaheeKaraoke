@@ -275,7 +275,7 @@ public class TransactionMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void dataTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMousePressed
-        if (evt.getClickCount() == 2 && dataTable.getSelectedRow() != 1) {
+        if (evt.getClickCount() == 2 && dataTable.getSelectedRow() != -1) {
             String selectedId = getTableSelectedId();
 
             new TransactionDetails(this, hm.get(selectedId)).run();
