@@ -452,7 +452,6 @@ public class TransactionAdd extends javax.swing.JFrame {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
-        new TransactionMenu().setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void transIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transIdFieldActionPerformed
