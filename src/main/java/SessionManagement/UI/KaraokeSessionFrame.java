@@ -123,6 +123,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         infoBtn = new javax.swing.JButton();
+        historyBtn = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         addSongBtn = new javax.swing.JButton();
         removeSongBtn = new javax.swing.JButton();
@@ -195,8 +196,19 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 50);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPanel6.add(infoBtn, gridBagConstraints);
+
+        historyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/history.png"))); // NOI18N
+        historyBtn.setPreferredSize(new java.awt.Dimension(32, 32));
+        historyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                historyBtnActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
+        jPanel6.add(historyBtn, gridBagConstraints);
 
         jPanel3.add(jPanel6, java.awt.BorderLayout.WEST);
 
@@ -409,6 +421,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, this.sessionData.toString(), "Session Information", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_infoBtnActionPerformed
 
+    private void historyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyBtnActionPerformed
+        KaraokeSessionSongAddHistoryDialog historyDialog = new KaraokeSessionSongAddHistoryDialog(this, this.player.getSongHistory());
+        historyDialog.setVisible(true);
+    }//GEN-LAST:event_historyBtnActionPerformed
+
     // =============================================================================
     // =============================================================================
     // =============================================================================
@@ -583,6 +600,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel centerPanel;
     private javax.swing.JLabel hintLabel;
+    private javax.swing.JButton historyBtn;
     private javax.swing.JButton infoBtn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

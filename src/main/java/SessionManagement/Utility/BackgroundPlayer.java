@@ -37,9 +37,15 @@ public class BackgroundPlayer extends Thread {
      * Boolean on the right indicate is the song is being played at the moment
      */
     private ArrayList<Pair<SongDTO, Boolean>> nowPlayingSongList;
+    
+    /**
+     * Stores history of songs added into list
+     */
+    private final DoublyLinkedDeque<SongDTO> songAddHistory;
 
     public BackgroundPlayer() {
         this.nowPlayingSongList = new ArrayList<>();
+        this.songAddHistory = new DoublyLinkedDeque<>();
         this.playerState = PlayerState.STOPPED;
         this.lyricReader = new LRCReader(LYRICS_LIST[Math.abs(new java.util.Random().nextInt() % LYRICS_LIST.length)], true);
     }
@@ -190,6 +196,7 @@ public class BackgroundPlayer extends Thread {
 
     public void addSong(SongDTO newSong) {
         nowPlayingSongList.add(new Pair<>(newSong, false));
+        songAddHistory.pushFront(newSong);
     }
 
     public void removeSongs(int[] idxs) {
@@ -257,4 +264,9 @@ public class BackgroundPlayer extends Thread {
         return lyricBottom;
 
     }
+
+    public DoublyLinkedDeque<SongDTO> getSongHistory() {
+        return songAddHistory;
+    }
+
 }
