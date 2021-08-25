@@ -225,11 +225,10 @@ public class profileChecking extends javax.swing.JFrame {
 
         model.setRowCount(0);
         if (conform == 1) {
-
             deletellist.deleteSelectList(selectdelete);
         }
 
-        for (int i = 1; i <= db.size(); i++) {
+        for (int i = 1; i <= deletellist.size(); i++) {
             Date date_created = new Date(deletellist.getDataFromFront(i).getDate_created() * 1000L);
             String dateDateCreated = formatter.format(date_created);
             Object[] row = {
@@ -251,7 +250,7 @@ public class profileChecking extends javax.swing.JFrame {
     }//GEN-LAST:event_search_barActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-
+        db = new UserDAO().getAll();
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
         llist.clear();
         for (int i = 0; i < db.size(); i++) {
@@ -265,11 +264,11 @@ public class profileChecking extends javax.swing.JFrame {
         model.setRowCount(0);
         if (search.isEmpty()) {
             llist.clear();
-            
+
             for (int i = 0; i < db.size(); i++) {
-            llist.addData(db.get(i));
-        }
-            
+                llist.addData(db.get(i));
+            }
+
             deletellist.clear();
             for (int i = 0; i < llist.size(); i++) {
                 Date date_created = new Date(llist.getDataForChecking(i).getDate_created() * 1000L);
