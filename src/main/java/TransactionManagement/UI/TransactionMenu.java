@@ -271,7 +271,13 @@ public class TransactionMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        new TransactionAdd().setVisible(true);
+        Generic.Event dataStoreEvent = new Generic.Event(){
+            @Override
+            public void callback(Object[] args) {
+                refreshDataTable(true);
+            }
+        };
+        new TransactionAdd(dataStoreEvent).setVisible(true);
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void dataTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMousePressed
