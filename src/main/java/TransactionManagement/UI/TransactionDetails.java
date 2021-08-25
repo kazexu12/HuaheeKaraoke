@@ -6,8 +6,7 @@
 package TransactionManagement.UI;
 
 import DTO.TransactionDTO;
-import TransactionManagement.ADT.HashMap;
-import TransactionManagement.Utility.StatusString;
+import TransactionManagement.Utility.TransactionDict;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +17,7 @@ import java.util.Date;
  */
 public class TransactionDetails extends javax.swing.JDialog {
     
-    StatusString statusString;
+    TransactionDict dict;
 
     /**
      * Creates new form TransactionDetails
@@ -27,7 +26,7 @@ public class TransactionDetails extends javax.swing.JDialog {
         super(parent, true);
         initComponents();
         
-        statusString = new StatusString();
+        dict = new TransactionDict();
         
         transIdField.setText(tr.getTransactionId());
         sessionIdField.setText(tr.getSessionId());
@@ -36,7 +35,7 @@ public class TransactionDetails extends javax.swing.JDialog {
         finalPriceField.setText(String.format("RM %.2f", tr.getFinalPrice()));
         dateCreatedField.setText(this.toDate(tr.getDateCreated()));
         dateModifiedField.setText(this.toDate(tr.getDateModified()));
-        statusField.setText(statusString.get(tr.getStatus()));
+        statusField.setText(dict.getStatusLabel(tr.getStatus()));
         
         this.setLocationRelativeTo(null);
     }

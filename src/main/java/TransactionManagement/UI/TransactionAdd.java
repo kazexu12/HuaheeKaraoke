@@ -11,7 +11,7 @@ import DAO.UserDAO;
 import DTO.RegisteredSessionDTO;
 import DTO.TransactionDTO;
 import DTO.UserDTO;
-import TransactionManagement.ADT.HashMap;
+import TransactionManagement.Utility.TransactionDict;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -33,10 +33,8 @@ public class TransactionAdd extends javax.swing.JFrame {
 
     int roomSizeResult;
     double[] roomSizePrice = {8.00, 12.00, 15.00};
-
-    HashMap<Character, String> memberTypeName = new HashMap<>();
-    HashMap<Character, Double> memberTypeDiscount = new HashMap<>();
-    HashMap<Integer, Character> roomSizeChar = new HashMap<>();
+    
+    TransactionDict dict;
 
     /**
      * Creates new form TransactionAdd
@@ -47,18 +45,8 @@ public class TransactionAdd extends javax.swing.JFrame {
         transIdField.setText(transDAO.getNewTransactionId());
         staffIdField.setText(staff.getUser_id());
 
-        memberTypeName.add('N', "Normal");
-        memberTypeName.add('S', "Silver");
-        memberTypeName.add('G', "Gold");
-
-        memberTypeDiscount.add('N', 0.00);
-        memberTypeDiscount.add('S', 5.00);
-        memberTypeDiscount.add('G', 10.00);
-
-        roomSizeChar.add(0, 'S');
-        roomSizeChar.add(1, 'M');
-        roomSizeChar.add(2, 'L');
-
+        dict = new TransactionDict();
+        
         this.roomSizeResult = 0;
         this.setLocationRelativeTo(null);
     }
@@ -496,7 +484,7 @@ public class TransactionAdd extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 RegisteredSessionDAO rsDAO = new RegisteredSessionDAO();
                 RegisteredSessionDTO rs = new RegisteredSessionDTO(
-                        roomSizeChar.get(roomSizeField.getSelectedIndex()),
+                        dict.getRoomSizeCharacter(roomSizeField.getSelectedIndex()),
                         Integer.parseInt(headCountField.getText()),
                         dateField.getText()
                 );
@@ -509,7 +497,7 @@ public class TransactionAdd extends javax.swing.JFrame {
                 }
 
                 double roomPrice = roomSizePrice[roomSizeResult];
-                double discount = memberTypeDiscount.get(member.getMember_level());
+                double discount = dict.getMemberTypeDiscountPrice(member.getMember_level());
                 long unixTime = System.currentTimeMillis() / 1000L;
 
                 TransactionDTO newTrans = new TransactionDTO(
@@ -518,7 +506,7 @@ public class TransactionAdd extends javax.swing.JFrame {
                         roomPrice * discount / 100,
                         roomPrice * (100 - discount) / 100,
                         member,
-                        memberTypeName.get(member.getMember_level()),
+                        dict.getMemberTypeLabel(member.getMember_level()),
                         staff,
                         1,
                         (int) unixTime,
@@ -552,7 +540,7 @@ public class TransactionAdd extends javax.swing.JFrame {
     private void handleFinalPrice() {
         if (member != null && roomSizeResult != -1) {
             double roomPrice = roomSizePrice[roomSizeResult];
-            double discount = memberTypeDiscount.get(member.getMember_level());
+            double discount = dict.getMemberTypeDiscountPrice(member.getMember_level());
             double discountPrice = roomPrice * discount / 100;
             double finalPrice = roomPrice * (100 - discount) / 100;
 
@@ -570,7 +558,7 @@ public class TransactionAdd extends javax.swing.JFrame {
         member = usersDAO.findUserById(memberIdField.getText().toUpperCase());
         if (member != null && member.getPrivillage() != 1) {
             memberNameField.setText(member.getFirst_name() + ' ' + member.getLast_name());
-            memberTypeField.setText(memberTypeName.get(member.getMember_level()));
+            memberTypeField.setText(dict.getMemberTypeLabel(member.getMember_level()));
         } else {
             memberNameField.setText("");
             memberTypeField.setText("");

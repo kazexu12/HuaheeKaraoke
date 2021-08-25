@@ -9,7 +9,7 @@ import DAO.TransactionDAO;
 import DTO.TransactionDTO;
 import TransactionManagement.ADT.HashMap;
 import TransactionManagement.ADT.Node;
-import TransactionManagement.Utility.StatusString;
+import TransactionManagement.Utility.TransactionDict;
 import UserManagement.UI.adminInterface;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -36,15 +36,16 @@ public class TransactionMenu extends javax.swing.JFrame {
     TransactionDAO tr;
     ArrayList<TransactionDTO> db;
     HashMap<String, TransactionDTO> hm;
-    StatusString statusString;
+    TransactionDict dict;
 
     /**
      * Creates new form TransactionMenu
      */
     public TransactionMenu() {
         initComponents();
+        
+        dict = new TransactionDict();
 
-        statusString = new StatusString();
         refreshDataTable(true);
         this.setLocationRelativeTo(null);
     }
@@ -373,7 +374,7 @@ public class TransactionMenu extends javax.swing.JFrame {
                 dataValue.getSessionId(),
                 dataValue.getMemberId(),
                 String.format("RM %.2f", dataValue.getFinalPrice()),
-                statusString.get(dataValue.getStatus())
+                dict.getStatusLabel(dataValue.getStatus())
             };
             dataTableModel.addRow(row);
         }
