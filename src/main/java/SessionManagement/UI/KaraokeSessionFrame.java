@@ -28,7 +28,7 @@ import org.apache.logging.log4j.Logger;
  * @author zkang
  */
 public class KaraokeSessionFrame extends javax.swing.JFrame {
-    
+
     private static final Logger logger = LogManager.getLogger(KaraokeSessionFrame.class.getName());
     private BackgroundPlayer player;
     private java.util.ArrayList<SongDTO> songList;
@@ -39,16 +39,16 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
      */
     public KaraokeSessionFrame(RegisteredSessionDTO sessionData) {
         player = new BackgroundPlayer();
-        
+
         songList = new DAO.SongDAO().getAll();
-        
+
         player.onNextSong(new Event() {
             @Override
             public void callback(Object[] args) {
                 updateCurrentPlaylistTable(player.getNowPlayingSongList());
             }
         });
-        
+
         player.onPlaying(new Event() {
             @Override
             public void callback(Object[] args) {
@@ -64,7 +64,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                 );
             }
         });
-        
+
         player.onStopped(new Event() {
             @Override
             public void callback(Object[] args) {
@@ -81,7 +81,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                 );
             }
         });
-        
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -93,10 +93,10 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
                 new MainFrame().setVisible(true);
             }
         });
-        
+
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         this.sessionData = sessionData;
         this.setTitle(String.format("Huahee Karaoke >> Karaoke Session (%s)", new Object[]{sessionData.getSessionId()}));
         // Hide last column
@@ -397,6 +397,14 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
     private void removeSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSongBtnActionPerformed
         DefaultTableModel tabModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
         int[] selectedRows = nowPlayingListTable.getSelectedRows();
+        if (selectedRows.length == 0) {
+            if (this.player.getNowPlayingSongList().size() == 0)  {
+                JOptionPane.showMessageDialog(this, "No song(s) added\n\nPlease add song by using the green \"+\" button", "Tips", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select the song(s) to remove by clicking on it before clicking the \"-\" button", "Tips", JOptionPane.INFORMATION_MESSAGE);
+            }
+            return;
+        }
         this.removeSongs(selectedRows);
     }//GEN-LAST:event_removeSongBtnActionPerformed
 
@@ -444,7 +452,7 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
             table.setValueAt("<html><b>" + table.getValueAt(row, i) + "</b></html>", row, i);
         }
     }
-    
+
     private void removeHtmlTagsFromTable(JTable table) {
         int colCount = table.getColumnCount();
         int rowCount = table.getRowCount();
@@ -477,11 +485,11 @@ public class KaraokeSessionFrame extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel) this.nowPlayingListTable.getModel();
         this.player.changeSong(row);
         this.updateCurrentPlaylistTable(this.player.getNowPlayingSongList());
-        
+
         this.player.setPlayerState(PlayerState.PLAYING);
         setNowPlayingText(this.player.getNowPlayingSongList().get(row).getLeft());
     }
-    
+
     private void setNowPlayingText(SongDTO s) {
         if (s == null) {
             this.nowPlayingLabel.setText("Now Playing: ");
